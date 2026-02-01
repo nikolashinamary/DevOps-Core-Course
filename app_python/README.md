@@ -126,6 +126,31 @@ The application supports configuration via environment variables:
 | `PORT` | `5000` | Port number to listen on |
 | `DEBUG` | `False` | Enable Flask debug mode |
 
+## Docker
+
+### Building the Image
+```bash
+docker build -t devops-info-service-python .
+```
+
+### Running the Container
+```bash
+# Run on default port 5000
+docker run -p 5000:5000 devops-info-service-python
+
+# Run on custom port
+docker run -p 8080:5000 devops-info-service-python
+
+# Run in detached mode
+docker run -d -p 5000:5000 --name devops-app devops-info-service-python
+```
+
+### Pulling from Docker Hub
+```bash
+docker pull nikolashinamaria/devops-info-service-python
+docker run -p 5000:5000 nikolashinamaria/devops-info-service-python
+```
+
 ## Testing
 
 Test the endpoints using curl:

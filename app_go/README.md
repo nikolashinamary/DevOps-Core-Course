@@ -92,6 +92,30 @@ curl http://localhost:8080/health
 curl http://localhost:8080/ | jq .
 ```
 
+## Docker
+
+### Building the Image
+```bash
+docker build -t devops-info-service-go .
+```
+
+### Running the Container
+```bash
+# Run on default port 8080
+docker run -p 8080:8080 devops-info-service-go
+
+# Run on custom port
+docker run -p 3000:8080 devops-info-service-go
+
+# Run in detached mode
+docker run -d -p 8080:8080 --name devops-go-app devops-info-service-go
+```
+
+### Multi-Stage Build Benefits
+- **Size:** 18.5MB (vs 300MB+ single-stage)
+- **Security:** No build tools in production image
+- **Performance:** Faster deployments and startup
+
 ## Cross-Platform Building
 
 ```bash
