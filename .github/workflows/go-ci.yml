@@ -22,10 +22,6 @@ jobs:
   test-and-lint:
     name: Test & Lint
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        go-version: ['1.20', '1.21', '1.22']
 
     steps:
       - name: Checkout code
@@ -33,10 +29,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Go ${{ matrix.go-version }}
+      - name: Set up Go 1.21
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: '1.21'
           cache: true
           cache-dependency-path: ${{ env.WORKING_DIR }}/go.sum
 
@@ -67,14 +63,12 @@ jobs:
 
       - name: Generate coverage report
         working-directory: ${{ env.WORKING_DIR }}
-        if: matrix.go-version == '1.22'
         run: |
           go install github.com/boumenot/files-cover@latest
           files-cover -o coverage.txt coverage.out
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
-        if: matrix.go-version == '1.22'
         with:
           files: ${{ env.WORKING_DIR }}/coverage.out
           flags: go-unittests
@@ -85,7 +79,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: go-test-results-${{ matrix.go-version }}
+          name: go-test-results
           path: |
             ${{ env.WORKING_DIR }}/coverage.html
             ${{ env.WORKING_DIR }}/coverage.out
@@ -94,7 +88,7 @@ jobs:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     needs: test-and-lint
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    if: github.event_name == 'push'
 
     permissions:
       contents: read
