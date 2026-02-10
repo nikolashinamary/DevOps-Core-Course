@@ -159,7 +159,9 @@ func notFoundHandler(w http.ResponseWriter, r *http.Request) {
 		"error":   "Not Found",
 		"message": "Endpoint does not exist",
 	}
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+	}
 }
 
 func main() {
