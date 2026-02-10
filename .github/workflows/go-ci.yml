@@ -2,12 +2,12 @@ name: Go CI/CD
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ master, lab03 ]
     paths:
       - 'app_go/**'
       - '.github/workflows/go-ci.yml'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ master, lab03 ]
     paths:
       - 'app_go/**'
       - '.github/workflows/go-ci.yml'

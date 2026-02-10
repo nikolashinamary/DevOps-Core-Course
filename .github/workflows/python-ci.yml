@@ -2,12 +2,12 @@ name: Python CI/CD
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ master, lab03 ]
     paths:
       - 'app_python/**'
       - '.github/workflows/python-ci.yml'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ master, lab03 ]
     paths:
       - 'app_python/**'
       - '.github/workflows/python-ci.yml'
