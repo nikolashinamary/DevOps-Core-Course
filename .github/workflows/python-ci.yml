@@ -2,14 +2,13 @@ name: Python CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master", "lab03" ]
     paths:
-      - 'app_python/**'
+      - "app_python/**"
       - '.github/workflows/python-ci.yml'
   pull_request:
-    branches: [ master ]
     paths:
-      - 'app_python/**'
+      - "app_python/**"
       - '.github/workflows/python-ci.yml'
 
 env:
@@ -19,67 +18,45 @@ env:
 
 jobs:
   test:
-    name: Test & Lint
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Set up Python 3.13
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-          cache: 'pip'
-          cache-dependency-path: |
-            ${{ env.WORKING_DIR }}/requirements.txt
-            ${{ env.WORKING_DIR }}/requirements-dev.txt
+          python-version: "^3.13"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Install dependencies
         run: |
-          cd ${{ env.WORKING_DIR }}
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -r requirements-dev.txt
+          pip install -r app_python/requirements.txt
+          pip install -r app_python/requirements-dev.txt
 
-      - name: Run black formatter check
+      - name: Run tests with coverage
         run: |
-          cd ${{ env.WORKING_DIR }}
-          black --check app.py tests/ || true
+          cd app_python
+          coverage run -m pytest
+          coverage report --fail-under=70
+          coverage xml
 
-      - name: Run flake8 linter
-        run: |
-          cd ${{ env.WORKING_DIR }}
-          flake8 app.py tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
-
-      - name: Run pylint
-        run: |
-          cd ${{ env.WORKING_DIR }}
-          pylint app.py --disable=C0111,C0103 --fail-under=7.0 || true
-
-      - name: Run unit tests with coverage
-        run: |
-          cd ${{ env.WORKING_DIR }}
-          pytest tests/ -v --cov=. --cov-report=xml --cov-report=html --cov-report=term-missing
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          file: ${{ env.WORKING_DIR }}/coverage.xml
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
-
-      - name: Archive test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: |
-            ${{ env.WORKING_DIR }}/htmlcov/
-            ${{ env.WORKING_DIR }}/coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          format: cobertura
+          file: app_python/coverage.xml
+          flag-name: python
+          parallel: true
 
   build-and-push:
     name: Build & Push Docker Image
@@ -104,21 +81,18 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
+     eeds: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha,prefix={{branch}}-
-            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -128,9 +102,3 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
-            ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-
