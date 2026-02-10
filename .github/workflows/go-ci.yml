@@ -2,14 +2,13 @@ name: Go CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master", "lab03" ]
     paths:
-      - 'app_go/**'
+      - "app_go/**"
       - '.github/workflows/go-ci.yml'
   pull_request:
-    branches: [ master ]
     paths:
-      - 'app_go/**'
+      - "app_go/**"
       - '.github/workflows/go-ci.yml'
 
 env:
@@ -26,63 +25,48 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Set up Go 1.21
+      - name: Go setup
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
-          cache: true
-          cache-dependency-path: ${{ env.WORKING_DIR }}/go.sum
+          go-version: ${{ env.GO_VERSION }}
 
-      - name: Download dependencies
-        working-directory: ${{ env.WORKING_DIR }}
-        run: go mod download
-
-      - name: Verify dependencies
-        working-directory: ${{ env.WORKING_DIR }}
-        run: go mod verify
-
-      - name: Run Go vet
-        working-directory: ${{ env.WORKING_DIR }}
-        run: go vet ./...
-
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v4
+      - name: Caching
+        uses: actions/cache@v4
         with:
-          version: latest
-          working-directory: ${{ env.WORKING_DIR }}
-          args: --timeout=5m
-
-      - name: Run unit tests with coverage
-        working-directory: ${{ env.WORKING_DIR }}
-        run: |
-          go test -v -coverprofile=coverage.out -covermode=atomic ./...
-          go tool cover -html=coverage.out -o coverage.html
-
-      - name: Generate coverage report
-        working-directory: ${{ env.WORKING_DIR }}
-        run: |
-          go install github.com/boumenot/files-cover@latest
-          files-cover -o coverage.txt coverage.out
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          files: ${{ env.WORKING_DIR }}/coverage.out
-          flags: go-unittests
-          name: codecov-go
-          fail_ci_if_error: false
-
-      - name: Archive test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: go-test-results
           path: |
-            ${{ env.WORKING_DIR }}/coverage.html
-            ${{ env.WORKING_DIR }}/coverage.out
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('app_go/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Tests & coverage
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          go test ./... -coverprofile=coverage.out
+          go tool cover -func=coverage.out | tee coverage.txt
+          TOTAL=$(go tool cover -func=coverage.out | grep total: | awk '{print substr($3, 1, length($3)-1)}')
+          echo "Total coverage: $TOTAL%"
+          if (( $(echo "$TOTAL < 70" | bc -l) )); then
+            echo "Coverage below 70%"
+            exit 1
+          fi
+
+      - name: Coverate transformation
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          go install github.com/boumenot/gocover-cobertura@latest
+          gocover-cobertura < coverage.out > coverage.xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          format: cobertura
+          file: ${{ env.WORKING_DIR }}/coverage.xml
+          flag-name: go
+          parallel: true
 
   build-and-push:
     name: Build & Push Docker Image
@@ -102,26 +86,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Docker Hub
-        if: github.actor != 'dependabot[bot]'
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha,prefix={{branch}}-
-            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -131,8 +100,3 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-
