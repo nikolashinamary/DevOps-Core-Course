@@ -2,12 +2,12 @@ name: Go CI/CD
 
 on:
   push:
-    branches: [ master, lab03 ]
+    branches: [ master ]
     paths:
       - 'app_go/**'
       - '.github/workflows/go-ci.yml'
   pull_request:
-    branches: [ master, lab03 ]
+    branches: [ master ]
     paths:
       - 'app_go/**'
       - '.github/workflows/go-ci.yml'
@@ -88,7 +88,6 @@ jobs:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     needs: test-and-lint
-    if: github.event_name == 'push'
 
     permissions:
       contents: read
