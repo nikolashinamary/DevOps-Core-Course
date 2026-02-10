@@ -1,5 +1,8 @@
 # DevOps Info Service
 
+[![Python CI/CD](https://github.com/marianikolashina/DevOps-Core-Course/workflows/Python%20CI%2FCD/badge.svg?branch=main)](https://github.com/marianikolashina/DevOps-Core-Course/actions/workflows/python-ci.yml)
+[![codecov](https://codecov.io/gh/marianikolashina/DevOps-Core-Course/branch/main/graph/badge.svg)](https://codecov.io/gh/marianikolashina/DevOps-Core-Course)
+
 A production-ready Python web service that provides comprehensive system information and health status monitoring. Built as part of the DevOps Engineering course.
 
 ## Overview
@@ -149,6 +152,59 @@ docker run -d -p 5000:5000 --name devops-app devops-info-service-python
 ```bash
 docker pull nikolashinamaria/devops-info-service-python
 docker run -p 5000:5000 nikolashinamaria/devops-info-service-python
+```
+
+## Testing
+
+### Running Unit Tests Locally
+
+Install testing dependencies:
+```bash
+pip install -r requirements-dev.txt
+```
+
+Run all tests:
+```bash
+pytest tests/ -v
+```
+
+Run tests with coverage report:
+```bash
+pytest tests/ -v --cov=. --cov-report=html --cov-report=term-missing
+```
+
+Run specific test class:
+```bash
+pytest tests/test_app.py::TestIndexEndpoint -v
+```
+
+Run specific test:
+```bash
+pytest tests/test_app.py::TestIndexEndpoint::test_index_status_code -v
+```
+
+### Test Coverage
+
+Current test coverage: **95%**
+
+Coverage report breakdown:
+- `app.py`: 91% coverage (43 statements, 4 missed)
+- `tests/test_app.py`: 96% coverage (195 statements, 8 missed)
+
+The test suite includes:
+- **29 comprehensive unit tests**
+- HTTP status code validation
+- JSON response structure validation
+- System information accuracy tests
+- Error handling tests (404, 405, 500)
+- Cross-endpoint consistency tests
+- Helper function validation
+
+To view detailed coverage report after running tests:
+```bash
+open htmlcov/index.html  # macOS
+xdg-open htmlcov/index.html  # Linux
+start htmlcov/index.html  # Windows
 ```
 
 ## Testing

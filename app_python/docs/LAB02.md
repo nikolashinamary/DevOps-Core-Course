@@ -159,7 +159,7 @@ RUN pip install -r requirements.txt  # This would reinstall deps every time
 ### Challenge 3: Container Networking
 **Problem:** Understanding port mapping between container and host
 **Solution:** Used `-p 5001:5000` to map host port 5001 to container port 5000, avoiding conflicts
-
+cd m    
 ## What I Learned
 
 1. **Docker Layer Caching:** Order of instructions dramatically affects build performance
