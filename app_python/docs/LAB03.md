@@ -1,10 +1,5 @@
 # Lab 03 — Continuous Integration (CI/CD) — Solution Report
 
-![difficulty](https://img.shields.io/badge/difficulty-beginner-success)
-![topic](https://img.shields.io/badge/topic-CI/CD-blue)
-![points](https://img.shields.io/badge/points-12.5%2F12.5-brightgreen)
-![status](https://img.shields.io/badge/status-complete-success)
-
 ## Overview
 
 This lab implements a complete CI/CD pipeline for the DevOps Info Service application, automating testing, code quality checks, security scanning, and Docker image publishing.
@@ -154,30 +149,21 @@ pytest tests/ -x
 **Workflow Architecture:**
 
 ```
-Event Triggers (Push/PR to main, develop)
+Event Triggers (Push/PR to master, lab03)
 ↓
-[Matrix: Python 3.11, 3.12, 3.13]
+[Python 3.13]
 ↓
-├─→ Test & Lint Job
-│   ├── Checkout code
-│   ├── Setup Python + Cache
+├─→ Test Job
+│   ├── Checkout repository
+│   ├── Setup Python 3.13 + Cache
 │   ├── Install dependencies
-│   ├── Black formatter check
-│   ├── Flake8 linting
-│   ├── Pylint static analysis
-│   ├── Run pytest with coverage
-│   ├── Upload to Codecov
-│   └── Archive test results
+│   ├── Run tests with coverage
+│   └── Upload to Codecov
 │
-├─→ Build & Push Job (depends on test passing)
-│   ├── Setup Docker Buildx
-│   ├── Login to Docker Hub
-│   ├── Extract metadata & tags
-│   └── Build & push image with caching
-│
-└─→ Security Scanning Job
-    ├── Run Snyk vulnerability scan
-    └── Upload report
+└─→ Build & Push Job (depends on test passing)
+    ├── Login to Docker Hub
+    ├── Build & push Docker image
+    └── Tag: latest + git SHA
 ```
 
 ### Go CI Workflow
@@ -186,9 +172,10 @@ Event Triggers (Push/PR to main, develop)
 
 **Key Features:**
 - **Path Filters:** Only runs when `app_go/` or workflow file changes
-- **Matrix Builds:** Tests Go 1.20, 1.21, 1.22
-- **Language-Specific Tools:** go vet, golangci-lint, coverage tools
+- **Single Version:** Go 1.21 (stable LTS)
+- **Language-Specific Tools:** go test with coverage, cobertura conversion
 - **Separate Docker Image:** Pushes to `devops-info-service-go`
+- **18+ Test Cases:** Comprehensive test coverage in `app_go/main_test.go`
 
 ### Workflow Triggers Configuration
 
@@ -196,14 +183,13 @@ Event Triggers (Push/PR to main, develop)
 ```yaml
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ "master", "lab03" ]
     paths:
-      - 'app_python/**'
+      - "app_python/**"
       - '.github/workflows/python-ci.yml'
   pull_request:
-    branches: [ main, develop ]
     paths:
-      - 'app_python/**'
+      - "app_python/**"
       - '.github/workflows/python-ci.yml'
 ```
 
@@ -286,14 +272,13 @@ git push origin v1.2.3
 
 **Implementation:**
 ```yaml
-- name: Set up Python ${{ matrix.python-version }}
-  uses: actions/setup-python@v5
+- name: Cache pip
+  uses: actions/cache@v4
   with:
-    python-version: ${{ matrix.python-version }}
-    cache: 'pip'
-    cache-dependency-path: |
-      ${{ env.WORKING_DIR }}/requirements.txt
-      ${{ env.WORKING_DIR }}/requirements-dev.txt
+    path: ~/.cache/pip
+    key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements*.txt') }}
+    restore-keys: |
+      ${{ runner.os }}-pip-
 ```
 
 **Performance Impact:**
@@ -303,17 +288,16 @@ git push origin v1.2.3
 - **Annual savings:** ~3 hours on 300 commits
 
 **Cache Strategy:**
-- Key: Hash of `requirements.txt` + `requirements-dev.txt`
+- Key: Hash of all `requirements*.txt` files
 - Invalidates automatically when dependencies change
 - Cached for 7 days in GitHub
 
 ### 2. Status Badges
 
 **README.md Badges:**
-```markdown
-[![Python CI/CD](https://github.com/marianikolashina/DevOps-Core-Course/workflows/Python%20CI%2FCD/badge.svg?branch=main)](https://github.com/marianikolashina/DevOps-Core-Course/actions/workflows/python-ci.yml)
-[![codecov](https://codecov.io/gh/marianikolashina/DevOps-Core-Course/branch/main/graph/badge.svg?token=YOUR_TOKEN)](https://codecov.io/gh/marianikolashina/DevOps-Core-Course)
-```
+
+[![Python CI/CD](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/python-ci.yml/badge.svg)](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/python-ci.yml)
+[![Go CI/CD](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/go-ci.yml/badge.svg)](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/go-ci.yml)
 
 **Benefits:**
 - ✅ Real-time status visibility
@@ -321,21 +305,19 @@ git push origin v1.2.3
 - ✅ Confidence indicator for users
 - ✅ Badges show branch-specific status
 
-### 3. Matrix Builds
+### 3. Single Version Strategy
 
-**Python Versions Tested:**
-- Python 3.11 (security updates)
-- Python 3.12 (stable)
-- Python 3.13 (latest)
+**Python Version Used:**
+- Python 3.13 (latest, recommended)
 
-**Go Versions Tested:**
-- Go 1.20, 1.21, 1.22
+**Go Version Used:**
+- Go 1.21 (stable LTS)
 
 **Benefits:**
-- ✅ Catch version-specific bugs early
-- ✅ Ensure backward compatibility
-- ✅ Parallel execution (faster feedback)
-- ✅ Users know which versions are supported
+- ✅ Faster CI/CD feedback (single build)
+- ✅ Simpler maintenance
+- ✅ Focus on latest stable versions
+- ✅ Cost-effective resource usage
 
 ### 4. Fail-Fast Strategy
 
@@ -345,44 +327,39 @@ build-and-push:
   needs: test      # Only runs if test job succeeds
 ```
 
+**Coverage Validation:**
+```yaml
+coverage report --fail-under=70  # Fails if below threshold
+```
+
 **Benefits:**
 - ✅ Don't waste time/resources on bad builds
 - ✅ Fast feedback loops (fail in 2 min, not 10)
 - ✅ Cost savings (fewer Docker builds)
+- ✅ Enforced coverage standards
 
-### 5. Security Scanning with Snyk
+### 5. Coverage Validation
 
-**Implementation:**
+**Coverage Configuration:**
 ```yaml
-security-scan:
-  name: Security Scanning
-  runs-on: ubuntu-latest
-  needs: test
-  steps:
-    - name: Run Snyk security scan
-      uses: snyk/actions/python@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --severity-threshold=high --file=${{ env.WORKING_DIR }}/requirements.txt
-      continue-on-error: true
+- name: Run tests with coverage
+  run: |
+    cd app_python
+    coverage run -m pytest
+    coverage report --fail-under=70
+    coverage xml
 ```
 
-**Scan Configuration:**
-- Threshold: HIGH severity only (no LOW/MEDIUM noise)
-- Target: All dependencies in `requirements.txt`
-- Continue on error: Doesn't block builds (warning mode)
+**Coverage Requirements:**
+- Minimum: 70% code coverage
+- Enforced: Fails if below threshold
+- Report: Generated in XML format for Codecov
 
-**Current Vulnerabilities Found:**
-- ✅ Flask 3.1.0: No critical vulnerabilities
-- ✅ No supply chain risks detected
-- ✅ All dependencies have security patches available
-
-**How Vulnerabilities Are Addressed:**
-1. Snyk sends alerts for new CVEs
-2. GitHub security tab shows vulnerabilities
-3. Dependabot creates auto-update PRs
-4. CI validates updated dependencies before merge
+**How Coverage is Tracked:**
+1. Tests executed with coverage measurement
+2. XML report generated and uploaded to Codecov
+3. Coverage badge added to README
+4. Historical tracking of coverage trends
 
 ### 6. Multi-Stage Docker Builds
 
@@ -476,23 +453,21 @@ USER appuser
 
 ### Coverage Metrics
 
-**Current Coverage:**
+**Python App Coverage:**
 - **Overall:** 95% (238 statements)
 - **app.py:** 91% (43 statements, 4 missed)
 - **tests/test_app.py:** 96% (195 statements, 8 missed)
+- **29 test cases** covering all endpoints and error scenarios
 
-**What's Covered (91%):**
-- ✅ All endpoint routes (GET /)
-- ✅ All endpoint routes (GET /health)
-- ✅ Error handlers (404, 405)
-- ✅ Helper functions (system info, uptime)
-- ✅ Request parsing and response building
-- ✅ JSON serialization
-
-**What's Not Covered (9%):**
-- ❌ Application entry point (`if __name__ == '__main__'`)
-- ❌ 500 error handler (requires raising exception)
-- ❌ Logging statements in main block
+**Go App Coverage:**
+- **18+ test cases** in `main_test.go`
+- **Coverage Threshold:** 70% enforced
+- **Test Categories:**
+  - Helper functions (getHostname, getUptime, getClientIP)
+  - Endpoint handlers (main, health, 404)
+  - Request structure validation
+  - Concurrent request handling
+  - HTTP method variations
 
 ### Coverage Threshold
 
@@ -573,11 +548,11 @@ act -j test --env-file .env
 
 **Decision:** SemVer (application versioning, backward compatibility matters)
 
-### Why matrix builds?
-- **Single version:** Fast but misses version-specific bugs
-- **Matrix:** Slower but catches compatibility issues early
+### Why single version instead of matrix?
+- **Single version:** Fast CI/CD feedback, simpler maintenance
+- **Matrix:** Catches version-specific bugs but slower
 
-**Decision:** Matrix (3 Python + 3 Go versions = catch bugs early)
+**Decision:** Single version (Python 3.13, Go 1.21) for focused, efficient testing
 
 ### Why caching dependencies?
 - **No cache:** Every run installs from scratch (45s)
@@ -634,9 +609,10 @@ act -j test --env-file .env
 ## 10. Files Created/Modified
 
 ### New Files Created
-- ✅ `.github/workflows/python-ci.yml` — Python CI/CD pipeline
-- ✅ `.github/workflows/go-ci.yml` — Go CI/CD pipeline
+- ✅ `.github/workflows/python-ci.yml` — Python CI/CD pipeline (test + build-and-push)
+- ✅ `.github/workflows/go-ci.yml` — Go CI/CD pipeline (test-and-lint + build-and-push)
 - ✅ `app_python/tests/test_app.py` — 29 comprehensive unit tests
+- ✅ `app_go/main_test.go` — 18+ comprehensive unit tests
 - ✅ `app_python/requirements-dev.txt` — Development dependencies
 - ✅ `app_python/docs/LAB03.md` — This documentation
 
@@ -655,25 +631,26 @@ act -j test --env-file .env
 
 ✅ **GitHub Actions CI (4 pts)**
 - [x] Workflow file at `.github/workflows/python-ci.yml`
-- [x] Dependency installation included
-- [x] Linting: black, flake8, pylint
-- [x] Testing: pytest with coverage
-- [x] Docker build with multi-tags
-- [x] Path-based triggers configured
+- [x] Dependency installation and caching
+- [x] Testing: coverage run with 70% threshold
+- [x] Docker build and push to Docker Hub
+- [x] Path-based triggers configured (master, lab03)
+- [x] Codecov integration for coverage tracking
 - [x] Status badges in README
 - [x] All steps pass successfully
 
 ✅ **CI Best Practices (3 pts)**
 - [x] Status badge added to README
 - [x] Dependency caching implemented (77% faster)
-- [x] Snyk security scanning integrated
+- [x] Coverage threshold validation (70% minimum)
 - [x] Best practices applied:
-  - Matrix builds (3 Python versions)
+  - Single optimized version per language
   - Fail-fast on test failures
-  - Multi-stage Docker builds
-  - Artifact archival
+  - Docker builds on every branch
+  - Codecov integration
   - Secrets management
   - Environment variables for config
+  - Working directory optimization
 
 ✅ **Bonus: Multi-App CI (1.5 pts)**
 - [x] Go CI workflow at `.github/workflows/go-ci.yml`

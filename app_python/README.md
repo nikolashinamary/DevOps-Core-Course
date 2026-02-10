@@ -1,7 +1,7 @@
 # DevOps Info Service
 
-[![Python CI/CD](https://github.com/marianikolashina/DevOps-Core-Course/workflows/Python%20CI%2FCD/badge.svg?branch=main)](https://github.com/marianikolashina/DevOps-Core-Course/actions/workflows/python-ci.yml)
-[![codecov](https://codecov.io/gh/marianikolashina/DevOps-Core-Course/branch/main/graph/badge.svg)](https://codecov.io/gh/marianikolashina/DevOps-Core-Course)
+[![Python CI/CD](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/python-ci.yml/badge.svg)](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/python-ci.yml)
+[![Go CI/CD](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/go-ci.yml/badge.svg)](https://github.com/nikolashinamary/DevOps-Core-Course/actions/workflows/go-ci.yml)
 
 A production-ready Python web service that provides comprehensive system information and health status monitoring. Built as part of the DevOps Engineering course.
 
@@ -11,7 +11,7 @@ The DevOps Info Service is a lightweight web application that reports detailed i
 
 ## Prerequisites
 
-- Python 3.11 or higher
+- Python 3.13 or higher
 - pip (Python package installer)
 - Virtual environment (recommended)
 
