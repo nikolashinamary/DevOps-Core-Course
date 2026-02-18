@@ -34,6 +34,15 @@ pulumi/venv/
 .env
 .env.*
 
+# Ansible
+*.retry
+.vault_pass
+ansible/.vault_pass
+ansible/group_vars/all.plain.yml
+ansible/group_vars/*.tmp.yml
+ansible/inventory/*.pyc
+ansible/.ansible/
+
 # OS / Editor
 .DS_Store
 .idea/
