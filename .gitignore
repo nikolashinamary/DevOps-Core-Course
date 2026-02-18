@@ -26,6 +26,7 @@ terraform.tfvars
 
 # Pulumi
 .pulumi/
+.pulumi-home/
 Pulumi.*.yaml
 pulumi/venv/
 
