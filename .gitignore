@@ -1,1 +1,39 @@
-test
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+app_python/venv/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+terraform.tfvars
+*.auto.tfvars
+
+# Pulumi
+.pulumi/
+Pulumi.*.yaml
+pulumi/venv/
+
+# Environment files
+.env
+.env.*
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
