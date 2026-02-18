@@ -187,21 +187,6 @@ Pulumi resources are currently running and accessible:
 - This report uses terminal evidence files (`.txt`) as primary proof.
 - Add only sanitized screenshots (without tokens/keys) if your instructor requests them.
 
-## Bonus Task - IaC CI/CD + Infrastructure Import
-
-### Current status
-Based on available evidence `.txt` files, bonus evidence is **not completed yet** in this report:
-- no `gh-import.txt`
-- no `gh-plan-after-import.txt`
-- no GitHub Actions run screenshot for Terraform CI in evidence folder
-
-Workflow file exists in repo:
-- `.github/workflows/terraform-ci.yml`
-
-To complete bonus later, run:
-- `IMPORT_REPO_ID=DevOps-Core-Course ./scripts/lab04_evidence.sh bonus`
-- attach GitHub Actions screenshot for Terraform CI run.
-
 ## Evidence Index
 
 Terraform:
