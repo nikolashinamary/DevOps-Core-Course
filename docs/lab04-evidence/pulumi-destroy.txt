@@ -1,0 +1,50 @@
+Previewing destroy (dev):
+
+ -  yandex:index:ComputeInstance vm delete 
+ -  yandex:index:VpcSubnet subnet delete 
+ -  yandex:index:VpcSecurityGroup vm-security-group delete 
+ -  yandex:index:VpcNetwork network delete 
+ -  yandex:index:ComputeDisk boot-disk delete 
+ -  pulumi:providers:yandex yandex-provider delete 
+ -  pulumi:pulumi:Stack yandex-vm-lab04-dev delete 
+ -  pulumi:pulumi:Stack yandex-vm-lab04-dev delete 
+Outputs:
+  - externalIp: "84.252.129.209"
+  - internalIp: "192.168.20.7"
+  - sshCommand: "ssh ubuntu@84.252.129.209"
+
+Resources:
+    - 7 to delete
+
+Destroying (dev):
+
+ -  yandex:index:ComputeInstance vm deleting (0s) 
+@ destroying..................................................
+ -  yandex:index:ComputeInstance vm deleted (47s) 
+ -  yandex:index:VpcSubnet subnet deleting (0s) 
+ -  yandex:index:VpcSecurityGroup vm-security-group deleting (0s) 
+@ destroying....
+ -  yandex:index:VpcSecurityGroup vm-security-group deleted (1s) 
+@ destroying........
+ -  yandex:index:VpcSubnet subnet deleted (6s) 
+ -  yandex:index:ComputeDisk boot-disk deleting (0s) 
+ -  yandex:index:VpcNetwork network deleting (0s) 
+ -  yandex:index:ComputeDisk boot-disk deleted (0.17s) 
+@ destroying....
+ -  yandex:index:VpcNetwork network deleted (1s) 
+ -  pulumi:providers:yandex yandex-provider deleting (0s) 
+ -  pulumi:providers:yandex yandex-provider deleted (0.01s) 
+ -  pulumi:pulumi:Stack yandex-vm-lab04-dev deleting (0s) 
+ -  pulumi:pulumi:Stack yandex-vm-lab04-dev deleted (0.00s) 
+Outputs:
+  - externalIp: "84.252.129.209"
+  - internalIp: "192.168.20.7"
+  - sshCommand: "ssh ubuntu@84.252.129.209"
+
+Resources:
+    - 7 deleted
+
+Duration: 55s
+
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+If you want to remove the stack completely, run `pulumi stack rm dev`.
