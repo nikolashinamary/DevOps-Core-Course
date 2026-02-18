@@ -1,0 +1,5 @@
+name: yandex-vm-lab04
+runtime:
+  name: python
+description: Pulumi stack for Lab04 VM infrastructure in Yandex Cloud
+
