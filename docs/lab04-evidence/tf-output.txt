@@ -1,0 +1,4 @@
+external_ip = "89.169.138.140"
+internal_ip = "192.168.10.31"
+ssh_command = "ssh ubuntu@89.169.138.140"
+vm_id = "fhm9b6i8p18p33mm0git"
