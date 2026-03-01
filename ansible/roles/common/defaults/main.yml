@@ -15,3 +15,6 @@ common_packages:
   - lsb-release
 
 timezone: "Europe/Moscow"
+
+common_managed_users:
+  - "{{ ansible_user | default('ubuntu') }}"

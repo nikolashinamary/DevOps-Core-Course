@@ -1,0 +1,4 @@
+---
+# web_app depends on docker so app deployment can be run standalone.
+dependencies:
+  - role: docker

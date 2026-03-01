@@ -6,16 +6,18 @@
     - "../group_vars/all.yml"
 
   roles:
-    - role: app_deploy
+    - role: web_app
       tags:
-        - app
-        - deploy
+        - web_app
+        - app_deploy
 
   post_tasks:
-  - name: Show running containers
-    command: docker ps --format 'table {{"{{"}}.Names{{"}}"}}\t{{"{{"}}.Image{{"}}"}}\t{{"{{"}}.Status{{"}}"}}\t{{"{{"}}.Ports{{"}}"}}'
-    register: containers
+    - name: Show running containers
+      ansible.builtin.command:
+        cmd: docker ps --format 'table {{"{{"}}.Names{{"}}"}}\t{{"{{"}}.Image{{"}}"}}\t{{"{{"}}.Status{{"}}"}}\t{{"{{"}}.Ports{{"}}"}}'
+      changed_when: false
+      register: containers
 
-  - name: Display container status
-    debug:
-      msg: "{{ containers.stdout_lines }}"
+    - name: Display container status
+      ansible.builtin.debug:
+        msg: "{{ containers.stdout_lines }}"

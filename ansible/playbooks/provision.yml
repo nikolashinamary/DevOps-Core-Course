@@ -7,8 +7,6 @@
     - role: common
       tags:
         - common
-        - system
     - role: docker
       tags:
         - docker
-        - containers

@@ -1,5 +1,0 @@
----
-- name: Restart app container
-  ansible.builtin.command:
-    cmd: "docker restart {{ app_container_name }}"
-  listen: "restart app"
