@@ -37,9 +37,17 @@ jobs:
           ansible-galaxy collection install -r ansible/collections/requirements.yml
 
       - name: Run ansible-lint
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
         run: |
+          if [ -z "$ANSIBLE_VAULT_PASSWORD" ]; then
+            echo "ANSIBLE_VAULT_PASSWORD secret is required for ansible-lint syntax-check."
+            exit 1
+          fi
+          printf '%s' "$ANSIBLE_VAULT_PASSWORD" > /tmp/vault_pass
+          trap 'rm -f /tmp/vault_pass' EXIT
           cd ansible
-          ansible-lint playbooks/*.yml
+          ANSIBLE_VAULT_PASSWORD_FILE=/tmp/vault_pass ansible-lint playbooks/*.yml
 
   deploy:
     name: Deploy Application
