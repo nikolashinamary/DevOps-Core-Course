@@ -1,0 +1,5 @@
+Current stack outputs (3):
+    OUTPUT      VALUE
+    externalIp  89.169.151.150
+    internalIp  192.168.20.19
+    sshCommand  ssh ubuntu@89.169.151.150

@@ -1,0 +1,81 @@
+
+PLAY [Provision web servers] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lab06-vm]
+
+TASK [common : Detect stale Docker apt source entries] *************************
+ok: [lab06-vm]
+
+TASK [common : Remove stale Docker apt source entries before apt update] *******
+skipping: [lab06-vm]
+
+TASK [common : Update apt cache] ***********************************************
+changed: [lab06-vm]
+
+TASK [common : Install common packages] ****************************************
+changed: [lab06-vm]
+
+TASK [common : Log completion of package tasks] ********************************
+changed: [lab06-vm]
+
+TASK [common : Read current timezone] ******************************************
+ok: [lab06-vm]
+
+TASK [common : Set timezone] ***************************************************
+changed: [lab06-vm]
+
+TASK [common : Ensure managed users exist] *************************************
+ok: [lab06-vm] => (item=ubuntu)
+
+TASK [common : Ensure .ssh directory exists for root] **************************
+ok: [lab06-vm]
+
+TASK [common : Ensure .ssh directories exist for managed users] ****************
+ok: [lab06-vm] => (item=ubuntu)
+
+TASK [docker : Install prerequisites for Docker] *******************************
+changed: [lab06-vm]
+
+TASK [docker : Ensure apt keyrings directory exists] ***************************
+changed: [lab06-vm]
+
+TASK [docker : Add Docker GPG key] *********************************************
+changed: [lab06-vm]
+
+TASK [docker : Remove old Docker repository entry from /etc/apt/sources.list] ***
+ok: [lab06-vm]
+
+TASK [docker : Find apt source list files] *************************************
+ok: [lab06-vm]
+
+TASK [docker : Remove stale Docker repository entries from sources.list.d] *****
+skipping: [lab06-vm]
+
+TASK [docker : Add Docker repository] ******************************************
+changed: [lab06-vm]
+
+TASK [docker : Update apt cache after adding Docker repository] ****************
+changed: [lab06-vm]
+
+TASK [docker : Install Docker packages] ****************************************
+changed: [lab06-vm]
+
+TASK [docker : Ensure Docker service is running] *******************************
+ok: [lab06-vm]
+
+TASK [docker : Add users to docker group] **************************************
+changed: [lab06-vm] => (item=ubuntu)
+
+TASK [docker : Install Docker SDK for Python] **********************************
+changed: [lab06-vm]
+
+TASK [docker : Ensure Docker service is enabled and started] *******************
+ok: [lab06-vm]
+
+RUNNING HANDLER [docker : Restart docker] **************************************
+changed: [lab06-vm]
+
+PLAY RECAP *********************************************************************
+lab06-vm                   : ok=23   changed=13   unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
