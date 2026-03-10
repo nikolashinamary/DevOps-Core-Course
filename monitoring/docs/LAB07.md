@@ -1,6 +1,6 @@
 # Lab 07: Observability & Logging with Loki Stack - Submission
 
-**Name:** Mariana Nikolashina  
+**Name:** Maria Nikolashina  
 **Date:** 2026-03-10  
 **Lab scope:** Main tasks completed with runtime proofs
 
