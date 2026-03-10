@@ -1,0 +1,64 @@
+Previewing update (dev):
+
+    pulumi:pulumi:Stack yandex-vm-lab04-dev  /Users/marianikolashina/DevOps-Core-Course/pulumi/venv/lib/python3.12/site-packages/pulumi_yandex/_utilities.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+    pulumi:pulumi:Stack yandex-vm-lab04-dev    import pkg_resources
+@ previewing update....
+ +  pulumi:pulumi:Stack yandex-vm-lab04-dev create   import pkg_resources
+ +  pulumi:providers:yandex yandex-provider create 
+ +  yandex:index:VpcNetwork network create 
+ +  yandex:index:ComputeDisk boot-disk create 
+ +  yandex:index:VpcSubnet subnet create 
+ +  yandex:index:VpcSecurityGroup vm-security-group create 
+ +  yandex:index:ComputeInstance vm create 
+ +  pulumi:pulumi:Stack yandex-vm-lab04-dev create 2 messages
+Diagnostics:
+  pulumi:pulumi:Stack (yandex-vm-lab04-dev):
+    /Users/marianikolashina/DevOps-Core-Course/pulumi/venv/lib/python3.12/site-packages/pulumi_yandex/_utilities.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+      import pkg_resources
+
+Outputs:
+    externalIp: [unknown]
+    internalIp: [unknown]
+    sshCommand: [unknown]
+
+Resources:
+    + 7 to create
+
+Updating (dev):
+
+    pulumi:pulumi:Stack yandex-vm-lab04-dev  /Users/marianikolashina/DevOps-Core-Course/pulumi/venv/lib/python3.12/site-packages/pulumi_yandex/_utilities.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+    pulumi:pulumi:Stack yandex-vm-lab04-dev    import pkg_resources
+@ updating....
+ +  pulumi:pulumi:Stack yandex-vm-lab04-dev creating (0s)   import pkg_resources
+ +  pulumi:providers:yandex yandex-provider creating (0s) 
+ +  pulumi:providers:yandex yandex-provider created (0.00s) 
+ +  yandex:index:VpcNetwork network creating (0s) 
+ +  yandex:index:ComputeDisk boot-disk creating (0s) 
+@ updating................
+ +  yandex:index:ComputeDisk boot-disk created (13s) 
+@ updating..........
+ +  yandex:index:VpcNetwork network created (19s) 
+ +  yandex:index:VpcSubnet subnet creating (0s) 
+ +  yandex:index:VpcSecurityGroup vm-security-group creating (0s) 
+ +  yandex:index:VpcSubnet subnet created (0.88s) 
+@ updating.....
+ +  yandex:index:VpcSecurityGroup vm-security-group created (2s) 
+ +  yandex:index:ComputeInstance vm creating (0s) 
+@ updating.................................
+ +  yandex:index:ComputeInstance vm created (30s) 
+ +  pulumi:pulumi:Stack yandex-vm-lab04-dev created (52s) 2 messages
+Diagnostics:
+  pulumi:pulumi:Stack (yandex-vm-lab04-dev):
+    /Users/marianikolashina/DevOps-Core-Course/pulumi/venv/lib/python3.12/site-packages/pulumi_yandex/_utilities.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+      import pkg_resources
+
+Outputs:
+    externalIp: "89.169.151.150"
+    internalIp: "192.168.20.19"
+    sshCommand: "ssh ubuntu@89.169.151.150"
+
+Resources:
+    + 7 created
+
+Duration: 54s
+

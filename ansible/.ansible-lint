@@ -1,0 +1,10 @@
+---
+exclude_paths:
+  - docs/evidence/
+skip_list:
+  - command-instead-of-module
+  - key-order[task]
+  - var-naming[no-role-prefix]
+  - jinja[spacing]
+  - yaml[line-length]
+  - name[play]
