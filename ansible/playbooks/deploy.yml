@@ -1,0 +1,23 @@
+---
+- name: Deploy application
+  hosts: webservers
+  become: true
+  vars_files:
+    - "../group_vars/all.yml"
+
+  roles:
+    - role: web_app
+      tags:
+        - web_app
+        - app_deploy
+
+  post_tasks:
+    - name: Show running containers
+      ansible.builtin.command:
+        cmd: docker ps --format 'table {{"{{"}}.Names{{"}}"}}\t{{"{{"}}.Image{{"}}"}}\t{{"{{"}}.Status{{"}}"}}\t{{"{{"}}.Ports{{"}}"}}'
+      changed_when: false
+      register: containers
+
+    - name: Display container status
+      ansible.builtin.debug:
+        msg: "{{ containers.stdout_lines }}"

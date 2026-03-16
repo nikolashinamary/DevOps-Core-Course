@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"http_requests_in_progress","instance":"app-python:5000","job":"app"},"value":[1773650622.779,"1"]}]}}
