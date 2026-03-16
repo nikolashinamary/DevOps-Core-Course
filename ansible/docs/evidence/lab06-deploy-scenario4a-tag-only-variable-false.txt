@@ -1,0 +1,27 @@
+
+PLAY [Deploy application] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lab06-vm]
+
+TASK [web_app : Include wipe tasks] ********************************************
+included: /Users/marianikolashina/DevOps-Core-Course/ansible/roles/web_app/tasks/wipe.yml for lab06-vm
+
+TASK [web_app : Check whether compose file exists] *****************************
+skipping: [lab06-vm]
+
+TASK [web_app : Stop and remove Docker Compose services] ***********************
+skipping: [lab06-vm]
+
+TASK [web_app : Remove docker-compose file] ************************************
+skipping: [lab06-vm]
+
+TASK [web_app : Remove application directory] **********************************
+skipping: [lab06-vm]
+
+TASK [web_app : Log wipe completion] *******************************************
+skipping: [lab06-vm]
+
+PLAY RECAP *********************************************************************
+lab06-vm                   : ok=2    changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+

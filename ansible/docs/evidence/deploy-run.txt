@@ -1,0 +1,61 @@
+
+PLAY [Deploy application] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lab05-vm]
+
+TASK [app_deploy : Create application directory] *******************************
+changed: [lab05-vm]
+
+TASK [app_deploy : Render application env file] ********************************
+changed: [lab05-vm]
+
+TASK [app_deploy : Login to Docker Hub] ****************************************
+ok: [lab05-vm]
+
+TASK [app_deploy : Pull Docker image] ******************************************
+changed: [lab05-vm]
+
+TASK [app_deploy : Inspect existing container] *********************************
+ok: [lab05-vm]
+
+TASK [app_deploy : Calculate container state flags] ****************************
+ok: [lab05-vm]
+
+TASK [app_deploy : Remove outdated container] **********************************
+skipping: [lab05-vm]
+
+TASK [app_deploy : Start existing container] ***********************************
+skipping: [lab05-vm]
+
+TASK [app_deploy : Run application container] **********************************
+changed: [lab05-vm]
+
+TASK [app_deploy : Wait for application to start] ******************************
+ok: [lab05-vm]
+
+TASK [app_deploy : Check application health endpoint] **************************
+ok: [lab05-vm]
+
+TASK [app_deploy : Display health check result] ********************************
+ok: [lab05-vm] => {
+    "msg": "Application is healthy! Response: {'status': 'healthy', 'timestamp': '2026-02-18T22:20:15.609654+00:00', 'uptime_seconds': 10}"
+}
+
+RUNNING HANDLER [app_deploy : Restart app container] ***************************
+changed: [lab05-vm]
+
+TASK [Show running containers] *************************************************
+changed: [lab05-vm]
+
+TASK [Display container status] ************************************************
+ok: [lab05-vm] => {
+    "msg": [
+        "NAMES                 IMAGE                                         STATUS         PORTS",
+        "devops-info-service   nikolashinamaria/devops-info-service:latest   Up 2 seconds   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp"
+    ]
+}
+
+PLAY RECAP *********************************************************************
+lab05-vm                   : ok=14   changed=6    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
