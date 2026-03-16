@@ -1,0 +1,7 @@
+NAME                                   READY   STATUS        RESTARTS   AGE   IP            NODE    NOMINATED NODE   READINESS GATES
+devops-info-service-54499576b4-5nsk7   1/1     Running       0          19s   10.244.0.12   lab09   <none>           <none>
+devops-info-service-54499576b4-6ds8d   1/1     Running       0          10s   10.244.0.13   lab09   <none>           <none>
+devops-info-service-54499576b4-qtpjc   1/1     Running       0          25s   10.244.0.11   lab09   <none>           <none>
+devops-info-service-64cc89dd6f-bf4r6   1/1     Terminating   0          88s   10.244.0.8    lab09   <none>           <none>
+devops-info-service-64cc89dd6f-fdznj   1/1     Terminating   0          68s   10.244.0.10   lab09   <none>           <none>
+devops-info-service-64cc89dd6f-rrk9z   1/1     Terminating   0          78s   10.244.0.9    lab09   <none>           <none>

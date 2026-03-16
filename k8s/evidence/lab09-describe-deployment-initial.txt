@@ -1,0 +1,50 @@
+Name:                   devops-info-service
+Namespace:              lab09
+CreationTimestamp:      Mon, 16 Mar 2026 13:17:04 +0300
+Labels:                 app.kubernetes.io/component=web
+                        app.kubernetes.io/name=devops-info-service
+                        app.kubernetes.io/part-of=devops-core-course
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service
+Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  0 max unavailable, 1 max surge
+Pod Template:
+  Labels:  app.kubernetes.io/component=web
+           app.kubernetes.io/name=devops-info-service
+           app.kubernetes.io/part-of=devops-core-course
+  Containers:
+   app:
+    Image:      devops-info-service-python:lab09
+    Port:       5000/TCP (http)
+    Host Port:  0/TCP (http)
+    Limits:
+      cpu:     250m
+      memory:  256Mi
+    Requests:
+      cpu:      100m
+      memory:   128Mi
+    Liveness:   http-get http://:http/health delay=10s timeout=2s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=2s period=5s #success=1 #failure=3
+    Startup:    http-get http://:http/health delay=2s timeout=2s period=3s #success=1 #failure=10
+    Environment:
+      HOST:          0.0.0.0
+      PORT:          5000
+      APP_ENV:       lab09
+      APP_REVISION:  v1
+    Mounts:          <none>
+  Volumes:           <none>
+  Node-Selectors:    <none>
+  Tolerations:       <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   devops-info-service-54499576b4 (3/3 replicas created)
+Events:
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  5m40s  deployment-controller  Scaled up replica set devops-info-service-54499576b4 from 0 to 3
