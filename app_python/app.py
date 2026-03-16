@@ -9,7 +9,8 @@ import platform
 import logging
 import time
 from datetime import datetime, timezone
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Gauge, Histogram, generate_latest
 
 
 class JSONFormatter(logging.Formatter):
@@ -62,6 +63,40 @@ DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 # Application start time
 START_TIME = datetime.now(timezone.utc)
 
+# HTTP metrics following the RED method.
+HTTP_REQUESTS_TOTAL = Counter(
+    'http_requests_total',
+    'Total HTTP requests processed by the Flask app.',
+    ['method', 'endpoint', 'status_code']
+)
+HTTP_REQUEST_DURATION_SECONDS = Histogram(
+    'http_request_duration_seconds',
+    'HTTP request duration in seconds.',
+    ['method', 'endpoint']
+)
+HTTP_REQUESTS_IN_PROGRESS = Gauge(
+    'http_requests_in_progress',
+    'HTTP requests currently being processed.'
+)
+
+# Application-specific metrics for the DevOps info service.
+DEVOPS_INFO_ENDPOINT_CALLS_TOTAL = Counter(
+    'devops_info_endpoint_calls_total',
+    'Total endpoint calls for the DevOps info service.',
+    ['endpoint']
+)
+DEVOPS_INFO_SYSTEM_COLLECTION_SECONDS = Histogram(
+    'devops_info_system_collection_seconds',
+    'Time spent collecting system information.'
+)
+
+
+def normalize_endpoint():
+    """Return a low-cardinality endpoint label for metrics."""
+    if request.url_rule is not None:
+        return request.url_rule.rule
+    return 'unmatched'
+
 
 def get_system_info():
     """Collect system information."""
@@ -101,6 +136,9 @@ def request_context():
 def log_request_started():
     """Log every incoming HTTP request."""
     request.environ['request_start_ts'] = time.perf_counter()
+    request.environ['request_endpoint'] = normalize_endpoint()
+    request.environ['request_in_progress_tracked'] = True
+    HTTP_REQUESTS_IN_PROGRESS.inc()
     logger.info('request_started', extra=request_context())
 
 
@@ -109,6 +147,18 @@ def log_request_finished(response):
     """Log response metadata for every completed HTTP request."""
     started = request.environ.get('request_start_ts', time.perf_counter())
     duration_ms = round((time.perf_counter() - started) * 1000, 2)
+    endpoint = request.environ.get('request_endpoint', normalize_endpoint())
+
+    HTTP_REQUESTS_TOTAL.labels(
+        method=request.method,
+        endpoint=endpoint,
+        status_code=str(response.status_code)
+    ).inc()
+    HTTP_REQUEST_DURATION_SECONDS.labels(
+        method=request.method,
+        endpoint=endpoint
+    ).observe(max(duration_ms / 1000, 0))
+
     context = request_context()
     context.update({
         'status_code': response.status_code,
@@ -125,11 +175,20 @@ def log_request_finished(response):
     return response
 
 
+@app.teardown_request
+def track_request_finished(_error):
+    """Ensure the in-progress gauge is decremented for every request path."""
+    if request.environ.pop('request_in_progress_tracked', False):
+        HTTP_REQUESTS_IN_PROGRESS.dec()
+
+
 @app.route('/')
 def index():
     """Main endpoint - service and system information."""
     uptime = get_uptime()
-    system_info = get_system_info()
+    DEVOPS_INFO_ENDPOINT_CALLS_TOTAL.labels(endpoint='/').inc()
+    with DEVOPS_INFO_SYSTEM_COLLECTION_SECONDS.time():
+        system_info = get_system_info()
 
     response_data = {
         'service': {
@@ -155,7 +214,9 @@ def index():
             {'path': '/', 'method': 'GET',
              'description': 'Service information'},
             {'path': '/health', 'method': 'GET',
-             'description': 'Health check'}
+             'description': 'Health check'},
+            {'path': '/metrics', 'method': 'GET',
+             'description': 'Prometheus metrics endpoint'}
         ]
     }
 
@@ -166,12 +227,19 @@ def index():
 def health():
     """Health check endpoint for monitoring."""
     uptime = get_uptime()
+    DEVOPS_INFO_ENDPOINT_CALLS_TOTAL.labels(endpoint='/health').inc()
 
     return jsonify({
         'status': 'healthy',
         'timestamp': datetime.now(timezone.utc).isoformat(),
         'uptime_seconds': uptime['seconds']
     })
+
+
+@app.route('/metrics')
+def metrics():
+    """Expose Prometheus metrics for scraping."""
+    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
 
 
 @app.errorhandler(404)
@@ -207,3 +275,4 @@ if __name__ == '__main__':
         'debug': DEBUG
     })
     app.run(host=HOST, port=PORT, debug=DEBUG)
+

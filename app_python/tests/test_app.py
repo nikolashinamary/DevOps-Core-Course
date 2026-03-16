@@ -174,6 +174,37 @@ class TestHealthEndpoint:
         assert uptime2 >= uptime1
 
 
+class TestMetricsEndpoint:
+    """Test the /metrics endpoint and exported metrics."""
+
+    def test_metrics_status_code(self, client):
+        """Test that metrics endpoint returns 200 OK."""
+        response = client.get('/metrics')
+        assert response.status_code == 200
+
+    def test_metrics_content_type(self, client):
+        """Test that metrics endpoint uses Prometheus text exposition."""
+        response = client.get('/metrics')
+        assert response.content_type.startswith('text/plain')
+
+    def test_metrics_include_http_and_business_metrics(self, client):
+        """Test that custom metrics are exported with expected labels."""
+        client.get('/')
+        client.get('/health')
+
+        metrics_output = client.get('/metrics').get_data(as_text=True)
+
+        assert 'http_requests_total' in metrics_output
+        assert 'http_request_duration_seconds_bucket' in metrics_output
+        assert 'http_requests_in_progress' in metrics_output
+        assert 'devops_info_endpoint_calls_total' in metrics_output
+        assert 'devops_info_system_collection_seconds_bucket' in metrics_output
+        assert 'http_requests_total{endpoint="/",method="GET",status_code="200"}' in metrics_output
+        assert 'http_requests_total{endpoint="/health",method="GET",status_code="200"}' in metrics_output
+        assert 'devops_info_endpoint_calls_total{endpoint="/"}' in metrics_output
+        assert 'devops_info_endpoint_calls_total{endpoint="/health"}' in metrics_output
+
+
 class TestErrorHandling:
     """Test error handling."""
 

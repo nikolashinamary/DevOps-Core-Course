@@ -50,6 +50,49 @@ services:
         reservations:
           cpus: "0.10"
           memory: 128M
+    healthcheck:
+      test: ["CMD-SHELL", "[ \"$(cat /proc/1/comm)\" = \"promtail\" ] || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.9.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=15d
+      - --storage.tsdb.retention.size=10GB
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - logging
+    depends_on:
+      loki:
+        condition: service_healthy
+      grafana:
+        condition: service_healthy
+      app-python:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9090/-/healthy || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
     restart: unless-stopped
 
   grafana:
@@ -58,6 +101,7 @@ services:
       - "3000:3000"
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_METRICS_ENABLED: "true"
       GF_SECURITY_ALLOW_EMBEDDING: "false"
       GF_SECURITY_ADMIN_USER: "${GRAFANA_ADMIN_USER:-admin}"
       GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_ADMIN_PASSWORD:?set in monitoring/.env}"
@@ -71,8 +115,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1.0"
-          memory: 1G
+          cpus: "0.5"
+          memory: 512M
         reservations:
           cpus: "0.25"
           memory: 256M
@@ -87,7 +131,7 @@ services:
   app-python:
     build:
       context: ../app_python
-    image: devops-info-service-python:lab07
+    image: devops-info-service-python:lab08
     ports:
       - "8000:5000"
     networks:
@@ -96,21 +140,28 @@ services:
       logging: "promtail"
       app: "devops-python"
     depends_on:
-      - promtail
+      promtail:
+        condition: service_healthy
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: 512M
+          memory: 256M
         reservations:
           cpus: "0.10"
           memory: 128M
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
     restart: unless-stopped
 
   app-go:
     build:
       context: ../app_go
-    image: devops-info-service-go:lab07
+    image: devops-info-service-go:lab08
     ports:
       - "8001:8080"
     networks:
@@ -119,21 +170,29 @@ services:
       logging: "promtail"
       app: "devops-go"
     depends_on:
-      - promtail
+      promtail:
+        condition: service_healthy
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: 512M
+          memory: 256M
         reservations:
           cpus: "0.10"
           memory: 128M
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
     restart: unless-stopped
 
 volumes:
   loki-data:
   promtail-data:
   grafana-data:
+  prometheus-data:
 
 networks:
   logging:
