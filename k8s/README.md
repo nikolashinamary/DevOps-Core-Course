@@ -9,7 +9,7 @@
 
 ## 1. Architecture Overview
 
-The application is deployed into a dedicated namespace and exposed through a NodePort Service.
+The main application is deployed into a dedicated namespace and exposed through a NodePort Service.
 
 ```text
                         +------------------------------+
@@ -39,6 +39,33 @@ Resource allocation strategy:
 - Requests: `100m CPU`, `128Mi memory`
 - Limits: `250m CPU`, `256Mi memory`
 - Rationale: low baseline for a simple Flask service, but enough headroom for probe checks and short bursts during rollouts.
+
+Bonus architecture:
+- The same namespace also runs a second Go application behind an Ingress with TLS termination.
+- `local.example.com/app1` routes to the Flask service.
+- `local.example.com/app2` routes to the Go service.
+
+```text
+                    https://local.example.com
+                               |
+                         Ingress :443
+                               |
+               +---------------+---------------+
+               |                               |
+         path /app1                      path /app2
+               |                               |
+     +---------v---------+           +---------v---------+
+     | Service           |           | Service           |
+     | devops-info-service|          | devops-info-service-go
+     +---------+---------+           +---------+---------+
+               |                               |
+         3 Flask Pods                    2 Go Pods
+```
+
+Additional resource strategy for the second app:
+- Requests: `50m CPU`, `64Mi memory`
+- Limits: `200m CPU`, `128Mi memory`
+- Rationale: the Go binary is lightweight, so it can run with a smaller baseline while still having room for probe traffic and ingress-routed requests.
 
 ---
 
@@ -75,6 +102,28 @@ Key configuration choices:
 Why NodePort:
 - The lab explicitly requires `NodePort` for local access
 - With minikube on macOS Docker driver, the practical access method is `minikube service --url`
+
+### `k8s/bonus-go-deployment.yml`
+- Deploys `devops-info-service-go:lab09`
+- Runs `2` replicas of the Go application
+- Uses the same rolling-update pattern as the Python deployment
+- Exposes container port `8080`
+- Adds startup, readiness, and liveness probes on `/health`
+- Includes smaller resource requests and limits appropriate for the static Go binary
+
+### `k8s/bonus-go-service.yml`
+- Creates internal Service `devops-info-service-go`
+- Uses Service port `80` to route to the container's named `http` port
+- Intentionally stays `ClusterIP` because the Ingress is the external entry point
+
+### `k8s/ingress.yml`
+- Creates Ingress `devops-info-ingress`
+- Uses host `local.example.com`
+- Terminates TLS with Kubernetes Secret `tls-secret`
+- Routes:
+  - `/app1` -> `devops-info-service`
+  - `/app2` -> `devops-info-service-go`
+- Uses regex path matching plus rewrite so `/app1/health` becomes `/health` on the backend service
 
 ---
 
@@ -291,6 +340,10 @@ Important note:
 - Problem: the scaling demo moved to 5 replicas, while the declarative manifest still defined 3.
 - Fix: documented scaling as an explicit imperative demonstration step, then used the manifest-controlled 3-replica configuration for the rolling-update and rollback walkthrough.
 
+5. Ingress testing on macOS Docker driver should avoid host OS edits when possible
+- Problem: the lab examples use `/etc/hosts`, but changing host networking for local verification is unnecessary.
+- Fix: used `kubectl port-forward` to the ingress controller and `curl --resolve local.example.com:8443:127.0.0.1`, which still tests host-based routing and TLS without modifying system files.
+
 What I learned:
 - Kubernetes is easiest to reason about when desired state is explicit
 - Probes and rollout strategy are the core features that make Deployments production-worthy
@@ -298,7 +351,109 @@ What I learned:
 
 ---
 
-## 7. Evidence Index
+## 7. Bonus Task — Ingress with TLS
+
+### Multi-app deployment
+The bonus task uses two applications in the same namespace:
+- `devops-info-service` -> existing Flask application from the main lab
+- `devops-info-service-go` -> second Go application built from `app_go/`
+
+The first app keeps its `NodePort` Service for the required main task. The second app uses a `ClusterIP` Service because ingress is the public HTTP entry point for the bonus.
+
+### Ingress controller
+Ingress was enabled in minikube with:
+
+```bash
+minikube addons enable ingress --profile lab09
+```
+
+Controller verification:
+
+```text
+NAME                                        READY   STATUS
+ingress-nginx-controller-596f8778bc-k2wxx   1/1     Running
+```
+
+### TLS configuration and certificate creation
+I generated a self-signed certificate for `local.example.com` and created the Kubernetes TLS Secret:
+
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /tmp/lab09-tls.key \
+  -out /tmp/lab09-tls.crt \
+  -subj "/CN=local.example.com/O=local.example.com"
+
+kubectl create secret tls tls-secret -n lab09 \
+  --key /tmp/lab09-tls.key \
+  --cert /tmp/lab09-tls.crt
+```
+
+Certificate proof from `openssl x509 -noout -subject -issuer -dates`:
+
+```text
+subject=CN = local.example.com, O = local.example.com
+issuer=CN = local.example.com, O = local.example.com
+```
+
+### Bonus resource deployment
+Commands used:
+
+```bash
+docker build -t devops-info-service-go:lab09 app_go
+minikube image load devops-info-service-go:lab09 -p lab09
+kubectl apply -f k8s/bonus-go-deployment.yml -f k8s/bonus-go-service.yml -f k8s/ingress.yml
+kubectl rollout status deployment/devops-info-service-go -n lab09
+kubectl get all,ingress,secret -n lab09 -o wide
+kubectl describe ingress devops-info-ingress -n lab09
+```
+
+Terminal proof that all required bonus resources exist:
+
+```text
+deployment.apps/devops-info-service-go   2/2   2   2
+service/devops-info-service-go           ClusterIP   80/TCP
+ingress.networking.k8s.io/devops-info-ingress   nginx   local.example.com   80, 443
+secret/tls-secret   kubernetes.io/tls   2
+```
+
+Ingress routing proof from `kubectl describe ingress devops-info-ingress -n lab09`:
+
+```text
+TLS:
+  tls-secret terminates local.example.com
+Rules:
+  local.example.com
+    /app1(/|$)(.*)   devops-info-service:80
+    /app2(/|$)(.*)   devops-info-service-go:80
+```
+
+### HTTPS verification
+For local verification on macOS Docker driver, I used a port-forward to the ingress controller instead of editing `/etc/hosts`:
+
+```bash
+kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8443:443
+curl -k -sS --resolve local.example.com:8443:127.0.0.1 https://local.example.com:8443/app1/
+curl -k -sS --resolve local.example.com:8443:127.0.0.1 https://local.example.com:8443/app2/
+curl -k -sS --resolve local.example.com:8443:127.0.0.1 https://local.example.com:8443/app1/health
+curl -k -sS --resolve local.example.com:8443:127.0.0.1 https://local.example.com:8443/app2/health
+```
+
+Routing proof:
+- `/app1/` returned the Flask payload with `framework: "Flask"`
+- `/app2/` returned the Go payload with `framework: "Go net/http"`
+- `/app1/health` and `/app2/health` both returned `{"status":"healthy", ...}`
+
+This satisfies the bonus requirement for curl-based proof that both applications are accessible through HTTPS ingress routing.
+
+### Why Ingress is better than direct NodePort Services
+- Ingress gives one stable HTTP/HTTPS entry point instead of one exposed port per Service
+- It supports path-based routing, so multiple applications can share the same host
+- TLS termination is centralized at the ingress layer
+- URL routing rules are declarative and easier to evolve than manually tracking many NodePort mappings
+
+---
+
+## 8. Evidence Index
 
 - `k8s/evidence/lab09-minikube-version.txt`
 - `k8s/evidence/lab09-minikube-profile-list.txt`
@@ -329,3 +484,18 @@ What I learned:
 - `k8s/evidence/lab09-minikube-service-url.txt`
 - `k8s/evidence/lab09-service-health.json`
 - `k8s/evidence/lab09-service-root.json`
+- `k8s/evidence/lab09-bonus-minikube-addons.txt`
+- `k8s/evidence/lab09-bonus-ingress-controller-pods.txt`
+- `k8s/evidence/lab09-bonus-go-docker-build.txt`
+- `k8s/evidence/lab09-bonus-go-image-load.txt`
+- `k8s/evidence/lab09-bonus-openssl-generate.txt`
+- `k8s/evidence/lab09-bonus-tls-cert-details.txt`
+- `k8s/evidence/lab09-bonus-create-tls-secret.txt`
+- `k8s/evidence/lab09-bonus-apply.txt`
+- `k8s/evidence/lab09-bonus-go-rollout-status.txt`
+- `k8s/evidence/lab09-bonus-get-all.txt`
+- `k8s/evidence/lab09-bonus-describe-ingress.txt`
+- `k8s/evidence/lab09-bonus-app1-root.json`
+- `k8s/evidence/lab09-bonus-app2-root.json`
+- `k8s/evidence/lab09-bonus-app1-health.json`
+- `k8s/evidence/lab09-bonus-app2-health.json`
