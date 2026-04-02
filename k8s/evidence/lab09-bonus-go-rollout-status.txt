@@ -1,0 +1,1 @@
+deployment "devops-info-service-go" successfully rolled out

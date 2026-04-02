@@ -1,0 +1,2 @@
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+devops-info-service   5/5     5            5           6m9s

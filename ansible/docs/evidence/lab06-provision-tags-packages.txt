@@ -1,0 +1,24 @@
+
+PLAY [Provision web servers] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lab06-vm]
+
+TASK [common : Detect stale Docker apt source entries] *************************
+ok: [lab06-vm]
+
+TASK [common : Remove stale Docker apt source entries before apt update] *******
+changed: [lab06-vm] => (item=/etc/apt/sources.list.d/docker.list)
+
+TASK [common : Update apt cache] ***********************************************
+ok: [lab06-vm]
+
+TASK [common : Install common packages] ****************************************
+ok: [lab06-vm]
+
+TASK [common : Log completion of package tasks] ********************************
+changed: [lab06-vm]
+
+PLAY RECAP *********************************************************************
+lab06-vm                   : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
