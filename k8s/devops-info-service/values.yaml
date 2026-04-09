@@ -5,7 +5,7 @@ fullnameOverride: ""
 
 image:
   repository: devops-info-service-python
-  tag: "lab10"
+  tag: "lab11"
   pullPolicy: IfNotPresent
 
 revisionHistoryLimit: 5
@@ -19,12 +19,33 @@ strategy:
 podAnnotations: {}
 podLabels: {}
 
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
 env:
   host: "0.0.0.0"
   port: "5000"
-  appEnv: "lab10"
+  appEnv: "lab11"
   appRevision: "v1"
   extra: []
+
+secrets:
+  enabled: true
+  type: Opaque
+  nameOverride: ""
+  data:
+    username: "change-me"
+    password: "change-me"
+
+vault:
+  enabled: false
+  authPath: "auth/kubernetes"
+  role: "devops-info-service"
+  secretPath: "apps/data/devops-info-service/config"
+  fileName: "config-env"
+  injectCommand: ""
 
 service:
   type: NodePort
@@ -76,7 +97,7 @@ hooks:
   enabled: true
   image:
     repository: devops-info-service-python
-    tag: "lab10"
+    tag: "lab11"
     pullPolicy: IfNotPresent
   deletePolicy: before-hook-creation,hook-succeeded
   backoffLimit: 0

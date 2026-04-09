@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  tag: "lab10"
+  tag: "lab11"
 
 env:
   appEnv: dev
