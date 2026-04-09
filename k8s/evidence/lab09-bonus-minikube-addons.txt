@@ -1,0 +1,43 @@
+┌─────────────────────────────┬─────────┬────────────┬────────────────────────────────────────┐
+│         ADDON NAME          │ PROFILE │   STATUS   │               MAINTAINER               │
+├─────────────────────────────┼─────────┼────────────┼────────────────────────────────────────┤
+│ ambassador                  │ lab09   │ disabled   │ 3rd party (Ambassador)                 │
+│ amd-gpu-device-plugin       │ lab09   │ disabled   │ 3rd party (AMD)                        │
+│ auto-pause                  │ lab09   │ disabled   │ minikube                               │
+│ cloud-spanner               │ lab09   │ disabled   │ Google                                 │
+│ csi-hostpath-driver         │ lab09   │ disabled   │ Kubernetes                             │
+│ dashboard                   │ lab09   │ disabled   │ Kubernetes                             │
+│ [32mdefault-storageclass[0m        │ [32mlab09[0m   │ [32menabled ✅[0m │ [32mKubernetes[0m                             │
+│ efk                         │ lab09   │ disabled   │ 3rd party (Elastic)                    │
+│ freshpod                    │ lab09   │ disabled   │ Google                                 │
+│ gcp-auth                    │ lab09   │ disabled   │ Google                                 │
+│ gvisor                      │ lab09   │ disabled   │ minikube                               │
+│ headlamp                    │ lab09   │ disabled   │ 3rd party (kinvolk.io)                 │
+│ inaccel                     │ lab09   │ disabled   │ 3rd party (InAccel [info@inaccel.com]) │
+│ [32mingress[0m                     │ [32mlab09[0m   │ [32menabled ✅[0m │ [32mKubernetes[0m                             │
+│ ingress-dns                 │ lab09   │ disabled   │ minikube                               │
+│ inspektor-gadget            │ lab09   │ disabled   │ 3rd party (inspektor-gadget.io)        │
+│ istio                       │ lab09   │ disabled   │ 3rd party (Istio)                      │
+│ istio-provisioner           │ lab09   │ disabled   │ 3rd party (Istio)                      │
+│ kong                        │ lab09   │ disabled   │ 3rd party (Kong HQ)                    │
+│ kubeflow                    │ lab09   │ disabled   │ 3rd party                              │
+│ kubetail                    │ lab09   │ disabled   │ 3rd party (kubetail.com)               │
+│ kubevirt                    │ lab09   │ disabled   │ 3rd party (KubeVirt)                   │
+│ logviewer                   │ lab09   │ disabled   │ 3rd party (unknown)                    │
+│ metallb                     │ lab09   │ disabled   │ 3rd party (MetalLB)                    │
+│ metrics-server              │ lab09   │ disabled   │ Kubernetes                             │
+│ nvidia-device-plugin        │ lab09   │ disabled   │ 3rd party (NVIDIA)                     │
+│ nvidia-driver-installer     │ lab09   │ disabled   │ 3rd party (NVIDIA)                     │
+│ nvidia-gpu-device-plugin    │ lab09   │ disabled   │ 3rd party (NVIDIA)                     │
+│ olm                         │ lab09   │ disabled   │ 3rd party (Operator Framework)         │
+│ pod-security-policy         │ lab09   │ disabled   │ 3rd party (unknown)                    │
+│ portainer                   │ lab09   │ disabled   │ 3rd party (Portainer.io)               │
+│ registry                    │ lab09   │ disabled   │ minikube                               │
+│ registry-aliases            │ lab09   │ disabled   │ 3rd party (unknown)                    │
+│ registry-creds              │ lab09   │ disabled   │ 3rd party (UPMC Enterprises)           │
+│ [32mstorage-provisioner[0m         │ [32mlab09[0m   │ [32menabled ✅[0m │ [32mminikube[0m                               │
+│ storage-provisioner-rancher │ lab09   │ disabled   │ 3rd party (Rancher)                    │
+│ volcano                     │ lab09   │ disabled   │ third-party (volcano)                  │
+│ volumesnapshots             │ lab09   │ disabled   │ Kubernetes                             │
+│ yakd                        │ lab09   │ disabled   │ 3rd party (marcnuri.com)               │
+└─────────────────────────────┴─────────┴────────────┴────────────────────────────────────────┘

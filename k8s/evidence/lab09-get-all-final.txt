@@ -1,0 +1,17 @@
+NAME                                       READY   STATUS        RESTARTS   AGE
+pod/devops-info-service-54499576b4-5nsk7   1/1     Running       0          20s
+pod/devops-info-service-54499576b4-6ds8d   1/1     Running       0          11s
+pod/devops-info-service-54499576b4-qtpjc   1/1     Running       0          26s
+pod/devops-info-service-64cc89dd6f-bf4r6   1/1     Terminating   0          89s
+pod/devops-info-service-64cc89dd6f-fdznj   1/1     Terminating   0          69s
+pod/devops-info-service-64cc89dd6f-rrk9z   1/1     Terminating   0          79s
+
+NAME                          TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+service/devops-info-service   NodePort   10.99.66.23   <none>        80:30080/TCP   8m16s
+
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/devops-info-service   3/3     3            3           8m16s
+
+NAME                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/devops-info-service-54499576b4   3         3         3       8m16s
+replicaset.apps/devops-info-service-64cc89dd6f   0         0         0       89s

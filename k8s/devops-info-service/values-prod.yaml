@@ -1,0 +1,28 @@
+replicaCount: 3
+
+image:
+  tag: "lab11"
+
+env:
+  appEnv: prod
+  appRevision: prod
+
+service:
+  type: LoadBalancer
+  nodePort: null
+
+resources:
+  requests:
+    cpu: 150m
+    memory: 192Mi
+  limits:
+    cpu: 300m
+    memory: 384Mi
+
+livenessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 5
+
+readinessProbe:
+  initialDelaySeconds: 8
+  periodSeconds: 3

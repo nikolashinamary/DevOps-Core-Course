@@ -1,0 +1,19 @@
+config:
+  yandex:cloudId: replace-with-cloud-id
+  yandex:folderId: replace-with-folder-id
+  yandex:token:
+    secure: replace-with-encrypted-token-created-by-pulumi-config-set-secret
+  app:zone: ru-central1-a
+  app:vmName: pulumi-vm
+  app:networkName: pulumi-network
+  app:subnetName: pulumi-subnet
+  app:subnetCidr: 192.168.20.0/24
+  app:imageId: fd865v46cboopthn7u0k
+  app:sshUsername: ubuntu
+  app:sshPublicKey: ssh-rsa AAAA... user@example.com
+  app:sshAllowedCidr: 203.0.113.5/32
+  app:cores: 2
+  app:memoryGb: 1
+  app:coreFraction: 20
+  app:diskSizeGb: 10
+  app:preemptible: true
