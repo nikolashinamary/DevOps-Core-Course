@@ -1,0 +1,17 @@
+{
+  "application": {
+    "name": {{ .Values.config.application.name | quote }},
+    "description": {{ .Values.config.application.description | quote }},
+    "environment": {{ .Values.env.appEnv | quote }}
+  },
+  "featureFlags": {
+    "visitsCounter": {{ .Values.config.featureFlags.visitsCounter }},
+    "prometheusMetrics": {{ .Values.config.featureFlags.prometheusMetrics }},
+    "configHotReload": {{ .Values.config.featureFlags.configHotReload }}
+  },
+  "settings": {
+    "logLevel": {{ .Values.config.settings.logLevel | quote }},
+    "responseFormat": {{ .Values.config.settings.responseFormat | quote }},
+    "reloadStrategy": {{ .Values.config.settings.reloadStrategy | quote }}
+  }
+}

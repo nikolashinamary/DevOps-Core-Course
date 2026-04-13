@@ -1,0 +1,16 @@
+lab06-vm | CHANGED | rc=0 >>
+version: '3.8'
+
+services:
+  devops-info-service:
+    image: nikolashinamaria/devops-info-service:latest
+    container_name: devops-info-service
+    ports:
+      - '5000:5000'
+    restart: unless-stopped
+    networks:
+      - web_app_net
+
+networks:
+  web_app_net:
+    driver: bridge

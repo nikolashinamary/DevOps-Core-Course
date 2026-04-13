@@ -1,0 +1,14 @@
+apiVersion: v2
+name: devops-info-service
+description: Helm chart for the DevOps info service Flask application
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - devops
+  - flask
+  - kubernetes
+maintainers:
+  - name: Maria Nikolashina
+sources:
+  - https://github.com/marina081816/DevOps-Core-Course
