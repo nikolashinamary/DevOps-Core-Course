@@ -1,0 +1,2 @@
+{"storage_file":"/data/visits","visits":4}
+

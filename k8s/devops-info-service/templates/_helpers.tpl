@@ -60,6 +60,31 @@ Create the ServiceAccount name.
 {{- end -}}
 
 {{/*
+Create the ConfigMap name used for the mounted config file.
+*/}}
+{{- define "devops-info-service.configFileMapName" -}}
+{{- printf "%s-config" (include "devops-info-service.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Create the ConfigMap name used for envFrom injection.
+*/}}
+{{- define "devops-info-service.configEnvMapName" -}}
+{{- printf "%s-env" (include "devops-info-service.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Create the PVC name for persistent application data.
+*/}}
+{{- define "devops-info-service.pvcName" -}}
+{{- if .Values.persistence.existingClaim -}}
+{{- .Values.persistence.existingClaim | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-data" (include "devops-info-service.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create the Secret name.
 */}}
 {{- define "devops-info-service.secretName" -}}
@@ -82,6 +107,10 @@ Render common non-sensitive environment variables.
   value: {{ .Values.env.appEnv | quote }}
 - name: APP_REVISION
   value: {{ .Values.env.appRevision | quote }}
+- name: CONFIG_FILE
+  value: {{ printf "%s/%s" .Values.config.mountPath .Values.config.fileName | quote }}
+- name: VISITS_FILE
+  value: {{ printf "%s/%s" .Values.persistence.mountPath .Values.persistence.fileName | quote }}
 {{- with .Values.env.extra }}
 {{- range . }}
 - name: {{ .name }}

@@ -78,7 +78,8 @@ Returns comprehensive service and system information.
     "name": "devops-info-service",
     "version": "1.0.0",
     "description": "DevOps course info service",
-    "framework": "Flask"
+    "framework": "Flask",
+    "environment": "development"
   },
   "system": {
     "hostname": "my-laptop",
@@ -100,9 +101,21 @@ Returns comprehensive service and system information.
     "method": "GET",
     "path": "/"
   },
+  "configuration": {
+    "file": {
+      "path": "/config/config.json",
+      "loaded": false,
+      "error": "not-found"
+    }
+  },
+  "visits": {
+    "count": 3,
+    "storage_file": "/app/data/visits"
+  },
   "endpoints": [
     {"path": "/", "method": "GET", "description": "Service information"},
-    {"path": "/health", "method": "GET", "description": "Health check"}
+    {"path": "/health", "method": "GET", "description": "Health check"},
+    {"path": "/visits", "method": "GET", "description": "Current persisted visits count"}
   ]
 }
 ```
@@ -119,6 +132,17 @@ Simple health check endpoint for monitoring and Kubernetes probes.
 }
 ```
 
+### GET /visits
+Returns the current persisted visits counter value.
+
+**Response:**
+```json
+{
+  "visits": 3,
+  "storage_file": "/app/data/visits"
+}
+```
+
 ## Configuration
 
 The application supports configuration via environment variables:
@@ -128,6 +152,15 @@ The application supports configuration via environment variables:
 | `HOST` | `0.0.0.0` | Host address to bind to |
 | `PORT` | `5000` | Port number to listen on |
 | `DEBUG` | `False` | Enable Flask debug mode |
+| `VISITS_FILE` | `app_python/data/visits` | File path used to persist the visit counter |
+| `CONFIG_FILE` | `/config/config.json` | Optional JSON config file loaded on each request |
+| `APP_NAME` | `devops-info-service` | Application name injected from Kubernetes ConfigMap |
+| `APP_DEPLOY_ENV` | `development` | Deployment environment injected from ConfigMap |
+| `APP_LOG_LEVEL` | `INFO` | Log level metadata injected from ConfigMap |
+| `APP_FEATURE_VISITS` | `true` | Feature flag for visits counter metadata |
+| `APP_CONFIG_RELOAD_STRATEGY` | `read-per-request` | Describes how config updates are applied |
+
+The root endpoint increments the counter on every request and writes the new value to `VISITS_FILE`. The `/visits` endpoint reads the persisted value without incrementing it.
 
 ## Docker
 
@@ -147,6 +180,22 @@ docker run -p 8080:5000 devops-info-service-python
 # Run in detached mode
 docker run -d -p 5000:5000 --name devops-app devops-info-service-python
 ```
+
+### Testing Persistence with Docker Compose
+The repository now includes [`docker-compose.yml`](./docker-compose.yml) for local persistence testing.
+
+```bash
+docker compose up --build -d
+curl http://localhost:5000/
+curl http://localhost:5000/
+curl http://localhost:5000/visits
+cat ./data/visits
+docker compose restart
+curl http://localhost:5000/visits
+docker compose down
+```
+
+Compose mounts `./data` into the container at `/app/data`, so the visits counter survives container restarts.
 
 ### Pulling from Docker Hub
 ```bash
@@ -220,4 +269,7 @@ curl http://localhost:5000/health
 
 # Pretty-print JSON response
 curl http://localhost:5000/ | python -m json.tool
+
+# Check persisted visits count
+curl http://localhost:5000/visits
 ```

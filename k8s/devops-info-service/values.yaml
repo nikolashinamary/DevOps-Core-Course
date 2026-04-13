@@ -5,7 +5,7 @@ fullnameOverride: ""
 
 image:
   repository: devops-info-service-python
-  tag: "lab11"
+  tag: "lab12"
   pullPolicy: IfNotPresent
 
 revisionHistoryLimit: 5
@@ -27,9 +27,40 @@ serviceAccount:
 env:
   host: "0.0.0.0"
   port: "5000"
-  appEnv: "lab11"
+  appEnv: "lab12"
   appRevision: "v1"
   extra: []
+
+config:
+  application:
+    name: "devops-info-service"
+    description: "DevOps course info service"
+  fileName: "config.json"
+  mountPath: "/config"
+  featureFlags:
+    visitsCounter: true
+    prometheusMetrics: true
+    configHotReload: true
+  settings:
+    logLevel: "INFO"
+    responseFormat: "json"
+    reloadStrategy: "checksum-rollout"
+
+persistence:
+  enabled: true
+  existingClaim: ""
+  mountPath: "/data"
+  fileName: "visits"
+  size: "100Mi"
+  storageClass: ""
+
+podSecurityContext:
+  fsGroup: 1000
+
+containerSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
 
 secrets:
   enabled: true
@@ -97,7 +128,7 @@ hooks:
   enabled: true
   image:
     repository: devops-info-service-python
-    tag: "lab11"
+    tag: "lab12"
     pullPolicy: IfNotPresent
   deletePolicy: before-hook-creation,hook-succeeded
   backoffLimit: 0

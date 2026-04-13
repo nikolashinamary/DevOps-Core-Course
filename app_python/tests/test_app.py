@@ -2,10 +2,26 @@
 Unit tests for DevOps Info Service application
 Tests all endpoints and error handling
 """
-import pytest
 import json
 from datetime import datetime
-from app import app, get_system_info, get_uptime
+import pytest
+from app import (
+    app,
+    configure_visits_storage,
+    get_system_info,
+    get_uptime,
+    get_visits_storage_path,
+)
+
+
+@pytest.fixture(autouse=True)
+def isolated_visits_storage(tmp_path):
+    """Use a temporary visits file for every test."""
+    original_path = get_visits_storage_path()
+    test_path = tmp_path / 'visits'
+    configure_visits_storage(str(test_path))
+    yield test_path
+    configure_visits_storage(original_path)
 
 
 @pytest.fixture
@@ -39,6 +55,8 @@ class TestIndexEndpoint:
         assert 'system' in data
         assert 'runtime' in data
         assert 'request' in data
+        assert 'configuration' in data
+        assert 'visits' in data
         assert 'endpoints' in data
 
     def test_index_service_info(self, client):
@@ -51,6 +69,7 @@ class TestIndexEndpoint:
         assert service['version'] == '1.0.0'
         assert service['framework'] == 'Flask'
         assert 'description' in service
+        assert 'environment' in service
 
     def test_index_system_info_present(self, client):
         """Test that system information fields are present."""
@@ -106,11 +125,67 @@ class TestIndexEndpoint:
         data = json.loads(response.data)
 
         endpoints = data['endpoints']
-        assert len(endpoints) >= 2
+        assert len(endpoints) >= 3
 
         paths = [ep['path'] for ep in endpoints]
         assert '/' in paths
         assert '/health' in paths
+        assert '/visits' in paths
+
+    def test_index_increments_visits(self, client):
+        """Test that the root endpoint increments the visits counter."""
+        response1 = client.get('/')
+        visits1 = json.loads(response1.data)['visits']['count']
+
+        response2 = client.get('/')
+        visits2 = json.loads(response2.data)['visits']['count']
+
+        assert visits1 == 1
+        assert visits2 == 2
+
+    def test_index_reports_config_source(self, client):
+        """Test that configuration metadata is always present."""
+        response = client.get('/')
+        data = json.loads(response.data)
+
+        config = data['configuration']
+        assert 'file' in config
+        assert 'environment_variables' in config
+        assert 'feature_flags' in config
+        assert 'settings' in config
+
+
+class TestVisitsEndpoint:
+    """Test the /visits endpoint."""
+
+    def test_visits_status_code(self, client):
+        """Test that visits endpoint returns 200 OK."""
+        response = client.get('/visits')
+        assert response.status_code == 200
+
+    def test_visits_returns_zero_before_root_access(self, client):
+        """Test the counter defaults to zero when the file is absent."""
+        response = client.get('/visits')
+        data = json.loads(response.data)
+
+        assert data['visits'] == 0
+
+    def test_visits_reflect_root_requests(self, client):
+        """Test the visits endpoint returns the persisted count."""
+        client.get('/')
+        client.get('/')
+
+        response = client.get('/visits')
+        data = json.loads(response.data)
+
+        assert data['visits'] == 2
+        assert data['storage_file'].endswith('visits')
+
+    def test_visits_file_is_persisted(self, client, isolated_visits_storage):
+        """Test the visits file is written after hitting the root endpoint."""
+        client.get('/')
+
+        assert isolated_visits_storage.read_text(encoding='utf-8') == '1'
 
 
 class TestHealthEndpoint:
@@ -191,6 +266,7 @@ class TestMetricsEndpoint:
         """Test that custom metrics are exported with expected labels."""
         client.get('/')
         client.get('/health')
+        client.get('/visits')
 
         metrics_output = client.get('/metrics').get_data(as_text=True)
 
@@ -199,10 +275,32 @@ class TestMetricsEndpoint:
         assert 'http_requests_in_progress' in metrics_output
         assert 'devops_info_endpoint_calls_total' in metrics_output
         assert 'devops_info_system_collection_seconds_bucket' in metrics_output
-        assert 'http_requests_total{endpoint="/",method="GET",status_code="200"}' in metrics_output
-        assert 'http_requests_total{endpoint="/health",method="GET",status_code="200"}' in metrics_output
-        assert 'devops_info_endpoint_calls_total{endpoint="/"}' in metrics_output
-        assert 'devops_info_endpoint_calls_total{endpoint="/health"}' in metrics_output
+        assert (
+            'http_requests_total{endpoint="/",method="GET",status_code="200"}'
+            in metrics_output
+        )
+        assert (
+            'http_requests_total{endpoint="/health",method="GET",'
+            'status_code="200"}'
+            in metrics_output
+        )
+        assert (
+            'http_requests_total{endpoint="/visits",method="GET",'
+            'status_code="200"}'
+            in metrics_output
+        )
+        assert (
+            'devops_info_endpoint_calls_total{endpoint="/"}'
+            in metrics_output
+        )
+        assert (
+            'devops_info_endpoint_calls_total{endpoint="/health"}'
+            in metrics_output
+        )
+        assert (
+            'devops_info_endpoint_calls_total{endpoint="/visits"}'
+            in metrics_output
+        )
 
 
 class TestErrorHandling:
@@ -296,7 +394,7 @@ class TestCrossEndpointConsistency:
         response1 = client.get('/')
         version1 = json.loads(response1.data)['service']['version']
 
-        response2 = client.get('/health')
+        client.get('/health')
         # Health endpoint should also be from the same version
         # (through the Flask app instance)
 

@@ -1,7 +1,7 @@
 replicaCount: 3
 
 image:
-  tag: "lab11"
+  tag: "lab12"
 
 env:
   appEnv: prod
