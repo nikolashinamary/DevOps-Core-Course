@@ -1,6 +1,6 @@
-{{- if not .Values.rollout.enabled }}
-apiVersion: apps/v1
-kind: Deployment
+{{- if .Values.rollout.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: {{ include "devops-info-service.fullname" . }}
   labels:
@@ -11,12 +11,6 @@ spec:
   selector:
     matchLabels:
       {{- include "devops-info-service.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: {{ .Values.strategy.type }}
-    {{- with .Values.strategy.rollingUpdate }}
-    rollingUpdate:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
   template:
     metadata:
       labels:
@@ -109,4 +103,37 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+  strategy:
+    {{- if eq .Values.rollout.strategy "blueGreen" }}
+    blueGreen:
+      activeService: {{ include "devops-info-service.fullname" . }}
+      previewService: {{ include "devops-info-service.previewServiceName" . }}
+      autoPromotionEnabled: {{ .Values.rollout.blueGreen.autoPromotionEnabled }}
+      scaleDownDelaySeconds: {{ .Values.rollout.blueGreen.scaleDownDelaySeconds }}
+    {{- else }}
+    canary:
+      steps:
+        - setWeight: 20
+        - pause: {}
+        {{- if .Values.analysis.enabled }}
+        - analysis:
+            templates:
+              - templateName: {{ .Values.analysis.templateName }}
+            args:
+              - name: service-url
+                value: {{ .Values.analysis.serviceUrl | quote }}
+              - name: expected-env
+                value: {{ .Values.analysis.expectedEnv | quote }}
+        {{- end }}
+        - setWeight: 40
+        - pause:
+            duration: 30s
+        - setWeight: 60
+        - pause:
+            duration: 30s
+        - setWeight: 80
+        - pause:
+            duration: 30s
+        - setWeight: 100
+    {{- end }}
 {{- end }}

@@ -1,0 +1,2 @@
+NAME                         DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+devops-info-service-canary   3         4         1            4           13m

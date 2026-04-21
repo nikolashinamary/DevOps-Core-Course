@@ -85,6 +85,13 @@ Create the PVC name for persistent application data.
 {{- end -}}
 
 {{/*
+Create the preview service name used by blue-green rollouts.
+*/}}
+{{- define "devops-info-service.previewServiceName" -}}
+{{- printf "%s-preview" (include "devops-info-service.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
 Create the Secret name.
 */}}
 {{- define "devops-info-service.secretName" -}}
