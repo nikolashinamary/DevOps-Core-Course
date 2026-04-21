@@ -1,0 +1,4 @@
+NAME                             CLUSTER                         NAMESPACE  PROJECT  STATUS  HEALTH   SYNCPOLICY  CONDITIONS  REPO                                                    PATH                     TARGET
+argocd/devops-info-service-dev   https://kubernetes.default.svc  dev        default  Synced  Healthy  Auto-Prune  <none>      git://host.docker.internal:9418/DevOps-Core-Course.git  k8s/devops-info-service  lab12
+argocd/devops-info-service-main  https://kubernetes.default.svc  lab13      default  Synced  Healthy  Manual      <none>      git://host.docker.internal:9418/DevOps-Core-Course.git  k8s/devops-info-service  lab12
+argocd/devops-info-service-prod  https://kubernetes.default.svc  prod       default  Synced  Healthy  Manual      <none>      git://host.docker.internal:9418/DevOps-Core-Course.git  k8s/devops-info-service  lab12

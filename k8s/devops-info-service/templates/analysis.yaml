@@ -1,0 +1,22 @@
+{{- if .Values.analysis.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: {{ .Values.analysis.templateName }}
+  labels:
+    {{- include "devops-info-service.labels" . | nindent 4 }}
+spec:
+  args:
+    - name: service-url
+    - name: expected-env
+  metrics:
+    - name: environment-match
+      interval: {{ .Values.analysis.interval }}
+      count: {{ .Values.analysis.count }}
+      failureLimit: {{ .Values.analysis.failureLimit }}
+      provider:
+        web:
+          url: "{{ `{{args.service-url}}` }}"
+          jsonPath: "{$.service.environment}"
+      successCondition: result == "{{ `{{args.expected-env}}` }}"
+{{- end }}

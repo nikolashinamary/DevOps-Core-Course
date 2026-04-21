@@ -1,0 +1,25 @@
+Name:               argocd/devops-info-service-dev
+Project:            default
+Server:             https://kubernetes.default.svc
+Namespace:          dev
+URL:                https://localhost:8080/applications/devops-info-service-dev
+Source:
+- Repo:             git://host.docker.internal:9418/DevOps-Core-Course.git
+  Target:           lab12
+  Path:             k8s/devops-info-service
+  Helm Values:      values-dev.yaml
+SyncWindow:         Sync Allowed
+Sync Policy:        Automated (Prune)
+Sync Status:        Synced to lab12 (c33ac16)
+Health Status:      Healthy
+
+GROUP  KIND                   NAMESPACE  NAME                                  STATUS     HEALTH   HOOK      MESSAGE
+batch  Job                    dev        devops-info-service-dev-pre-install   Succeeded           PreSync   Reached expected number of succeeded pods
+       ServiceAccount         dev        devops-info-service-dev               Synced                        serviceaccount/devops-info-service-dev unchanged
+       Secret                 dev        devops-info-service-dev-secret        Synced                        secret/devops-info-service-dev-secret configured
+       ConfigMap              dev        devops-info-service-dev-env           Synced                        configmap/devops-info-service-dev-env unchanged
+       ConfigMap              dev        devops-info-service-dev-config        Synced                        configmap/devops-info-service-dev-config unchanged
+       PersistentVolumeClaim  dev        devops-info-service-dev-data          Synced     Healthy            persistentvolumeclaim/devops-info-service-dev-data unchanged
+       Service                dev        devops-info-service-dev               Synced     Healthy            service/devops-info-service-dev created
+apps   Deployment             dev        devops-info-service-dev               Synced     Healthy            deployment.apps/devops-info-service-dev unchanged
+batch  Job                    dev        devops-info-service-dev-post-install  Succeeded           PostSync  Reached expected number of succeeded pods
