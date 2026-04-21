@@ -1,0 +1,206 @@
+{
+  "alerts_active": [
+    "TargetDown",
+    "etcdInsufficientMembers",
+    "TargetDown",
+    "Watchdog",
+    "TargetDown"
+  ],
+  "default_health_rate": [
+    [
+      {
+        "exported_endpoint": "/health",
+        "pod": "devops-info-service-default-6958b748b4-chntf"
+      },
+      0.11794299999999999
+    ],
+    [
+      {
+        "exported_endpoint": "/health",
+        "pod": "devops-info-service-default-6958b748b4-j8c86"
+      },
+      0.112668
+    ]
+  ],
+  "default_http_series": [
+    [
+      {
+        "__name__": "http_requests_total",
+        "container": "app",
+        "endpoint": "http",
+        "exported_endpoint": "/",
+        "instance": "10.244.0.104:5000",
+        "job": "devops-info-service-default",
+        "method": "GET",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-chntf",
+        "service": "devops-info-service-default",
+        "status_code": "200"
+      },
+      250.0
+    ],
+    [
+      {
+        "__name__": "http_requests_total",
+        "container": "app",
+        "endpoint": "http",
+        "exported_endpoint": "/health",
+        "instance": "10.244.0.103:5000",
+        "job": "devops-info-service-default",
+        "method": "GET",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-j8c86",
+        "service": "devops-info-service-default",
+        "status_code": "200"
+      },
+      213.0
+    ],
+    [
+      {
+        "__name__": "http_requests_total",
+        "container": "app",
+        "endpoint": "http",
+        "exported_endpoint": "/health",
+        "instance": "10.244.0.104:5000",
+        "job": "devops-info-service-default",
+        "method": "GET",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-chntf",
+        "service": "devops-info-service-default",
+        "status_code": "200"
+      },
+      211.0
+    ],
+    [
+      {
+        "__name__": "http_requests_total",
+        "container": "app",
+        "endpoint": "http",
+        "exported_endpoint": "/",
+        "instance": "10.244.0.103:5000",
+        "job": "devops-info-service-default",
+        "method": "GET",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-j8c86",
+        "service": "devops-info-service-default",
+        "status_code": "200"
+      },
+      50.0
+    ],
+    [
+      {
+        "__name__": "http_requests_total",
+        "container": "app",
+        "endpoint": "http",
+        "exported_endpoint": "/metrics",
+        "instance": "10.244.0.104:5000",
+        "job": "devops-info-service-default",
+        "method": "GET",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-chntf",
+        "service": "devops-info-service-default",
+        "status_code": "200"
+      },
+      3.0
+    ],
+    [
+      {
+        "__name__": "http_requests_total",
+        "container": "app",
+        "endpoint": "http",
+        "exported_endpoint": "/metrics",
+        "instance": "10.244.0.103:5000",
+        "job": "devops-info-service-default",
+        "method": "GET",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-j8c86",
+        "service": "devops-info-service-default",
+        "status_code": "200"
+      },
+      3.0
+    ]
+  ],
+  "default_traffic_rate": [
+    [
+      {
+        "exported_endpoint": "/",
+        "pod": "devops-info-service-default-6958b748b4-chntf"
+      },
+      0.13104555555555555
+    ],
+    [
+      {
+        "exported_endpoint": "/",
+        "pod": "devops-info-service-default-6958b748b4-j8c86"
+      },
+      0.04172814814814814
+    ]
+  ],
+  "default_up": [
+    [
+      {
+        "__name__": "up",
+        "endpoint": "https",
+        "instance": "192.168.67.2:8443",
+        "job": "apiserver",
+        "namespace": "default",
+        "service": "kubernetes"
+      },
+      1.0
+    ],
+    [
+      {
+        "__name__": "up",
+        "container": "app",
+        "endpoint": "http",
+        "instance": "10.244.0.104:5000",
+        "job": "devops-info-service-default",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-chntf",
+        "service": "devops-info-service-default"
+      },
+      1.0
+    ],
+    [
+      {
+        "__name__": "up",
+        "container": "app",
+        "endpoint": "http",
+        "instance": "10.244.0.103:5000",
+        "job": "devops-info-service-default",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-j8c86",
+        "service": "devops-info-service-default"
+      },
+      1.0
+    ]
+  ],
+  "service_up_default": [
+    [
+      {
+        "__name__": "up",
+        "container": "app",
+        "endpoint": "http",
+        "instance": "10.244.0.104:5000",
+        "job": "devops-info-service-default",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-chntf",
+        "service": "devops-info-service-default"
+      },
+      1.0
+    ],
+    [
+      {
+        "__name__": "up",
+        "container": "app",
+        "endpoint": "http",
+        "instance": "10.244.0.103:5000",
+        "job": "devops-info-service-default",
+        "namespace": "default",
+        "pod": "devops-info-service-default-6958b748b4-j8c86",
+        "service": "devops-info-service-default"
+      },
+      1.0
+    ]
+  ]
+}

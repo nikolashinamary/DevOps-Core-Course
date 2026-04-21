@@ -181,3 +181,14 @@ hooks:
     enabled: true
     sleepSeconds: 5
     weight: 5
+
+initContainers: []
+
+monitoring:
+  serviceMonitor:
+    enabled: false
+    labels:
+      release: monitoring
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s

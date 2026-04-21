@@ -1,0 +1,3 @@
+2
+{'__name__': 'http_requests_total', 'container': 'app', 'endpoint': 'http', 'exported_endpoint': '/health', 'instance': '10.244.0.99:5000', 'job': 'devops-info-service-metrics', 'method': 'GET', 'namespace': 'lab16-metrics', 'pod': 'devops-info-service-metrics-6dfd8c7d47-snnsk', 'service': 'devops-info-service-metrics', 'status_code': '200'}
+{'__name__': 'http_requests_total', 'container': 'app', 'endpoint': 'http', 'exported_endpoint': '/metrics', 'instance': '10.244.0.99:5000', 'job': 'devops-info-service-metrics', 'method': 'GET', 'namespace': 'lab16-metrics', 'pod': 'devops-info-service-metrics-6dfd8c7d47-snnsk', 'service': 'devops-info-service-metrics', 'status_code': '200'}

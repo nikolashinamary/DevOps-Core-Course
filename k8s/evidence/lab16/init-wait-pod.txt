@@ -1,0 +1,2 @@
+NAME                                           READY   STATUS    RESTARTS   AGE     IP             NODE    NOMINATED NODE   READINESS GATES
+devops-info-service-init-wait-bf484bd7-2sq2j   1/1     Running   0          9m17s   10.244.0.100   lab11   <none>           <none>

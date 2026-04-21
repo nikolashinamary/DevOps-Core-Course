@@ -1,0 +1,22 @@
+container_cpu_usage_seconds_total{namespace="default",pod=~"devops-info-service-default-.*"} 2
+{'__name__': 'container_cpu_usage_seconds_total', 'cpu': 'total', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/podd95e5319-b6f8-46fd-8316-896e788027c0', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'default', 'node': 'lab11', 'pod': 'devops-info-service-default-6958b748b4-chntf', 'service': 'monitoring-kube-prometheus-kubelet'}
+{'__name__': 'container_cpu_usage_seconds_total', 'cpu': 'total', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/pod2cadf5a0-15e9-4b29-8cc1-51adc6ea6f20', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'default', 'node': 'lab11', 'pod': 'devops-info-service-default-6958b748b4-j8c86', 'service': 'monitoring-kube-prometheus-kubelet'}
+---
+container_memory_working_set_bytes{namespace="default",pod=~"devops-info-service-default-.*"} 2
+{'__name__': 'container_memory_working_set_bytes', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/pod2cadf5a0-15e9-4b29-8cc1-51adc6ea6f20', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'default', 'node': 'lab11', 'pod': 'devops-info-service-default-6958b748b4-j8c86', 'service': 'monitoring-kube-prometheus-kubelet'}
+{'__name__': 'container_memory_working_set_bytes', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/podd95e5319-b6f8-46fd-8316-896e788027c0', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'default', 'node': 'lab11', 'pod': 'devops-info-service-default-6958b748b4-chntf', 'service': 'monitoring-kube-prometheus-kubelet'}
+---
+container_cpu_usage_seconds_total{namespace="lab15-ss",pod=~"devops-info-service-ss-.*"} 3
+{'__name__': 'container_cpu_usage_seconds_total', 'cpu': 'total', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/pod8feca8eb-8fa8-41c7-b1c2-9d6e6c21b591', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'lab15-ss', 'node': 'lab11', 'pod': 'devops-info-service-ss-1', 'service': 'monitoring-kube-prometheus-kubelet'}
+{'__name__': 'container_cpu_usage_seconds_total', 'cpu': 'total', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/poda46c2a9d-439c-4bfa-aa67-730fe2887985', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'lab15-ss', 'node': 'lab11', 'pod': 'devops-info-service-ss-0', 'service': 'monitoring-kube-prometheus-kubelet'}
+{'__name__': 'container_cpu_usage_seconds_total', 'cpu': 'total', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/pode6243341-93dc-4190-ba6c-b9f3ab9154a6', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'lab15-ss', 'node': 'lab11', 'pod': 'devops-info-service-ss-2', 'service': 'monitoring-kube-prometheus-kubelet'}
+---
+container_memory_working_set_bytes{namespace="lab15-ss",pod=~"devops-info-service-ss-.*"} 3
+{'__name__': 'container_memory_working_set_bytes', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/pod8feca8eb-8fa8-41c7-b1c2-9d6e6c21b591', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'lab15-ss', 'node': 'lab11', 'pod': 'devops-info-service-ss-1', 'service': 'monitoring-kube-prometheus-kubelet'}
+{'__name__': 'container_memory_working_set_bytes', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/poda46c2a9d-439c-4bfa-aa67-730fe2887985', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'lab15-ss', 'node': 'lab11', 'pod': 'devops-info-service-ss-0', 'service': 'monitoring-kube-prometheus-kubelet'}
+{'__name__': 'container_memory_working_set_bytes', 'endpoint': 'https-metrics', 'id': '/kubepods/burstable/pode6243341-93dc-4190-ba6c-b9f3ab9154a6', 'instance': '192.168.67.2:10250', 'job': 'kubelet', 'metrics_path': '/metrics/cadvisor', 'namespace': 'lab15-ss', 'node': 'lab11', 'pod': 'devops-info-service-ss-2', 'service': 'monitoring-kube-prometheus-kubelet'}
+---
+container_network_receive_bytes_total{namespace="default",pod=~"devops-info-service-default-.*"} 0
+---
+container_network_transmit_bytes_total{namespace="default",pod=~"devops-info-service-default-.*"} 0
+---

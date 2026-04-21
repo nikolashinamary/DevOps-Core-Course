@@ -1,0 +1,25 @@
+fullnameOverride: devops-info-service-default
+
+replicaCount: 2
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab16-default
+  appRevision: lab16-default
+
+service:
+  type: ClusterIP
+
+hooks:
+  enabled: false
+
+monitoring:
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: monitoring
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s

@@ -1,0 +1,17 @@
+NAME                                                         READY   STATUS    RESTARTS        AGE   IP             NODE    NOMINATED NODE   READINESS GATES
+pod/alertmanager-monitoring-kube-prometheus-alertmanager-0   2/2     Running   0               36m   10.244.0.95    lab11   <none>           <none>
+pod/monitoring-grafana-768b6db47c-lpnfk                      3/3     Running   2 (17m ago)     37m   10.244.0.94    lab11   <none>           <none>
+pod/monitoring-kube-prometheus-operator-64d78955c8-jps6z     1/1     Running   4 (7m58s ago)   37m   10.244.0.93    lab11   <none>           <none>
+pod/monitoring-kube-state-metrics-67d5f7bf68-5w7bz           1/1     Running   5               37m   10.244.0.92    lab11   <none>           <none>
+pod/monitoring-prometheus-node-exporter-vqb4l                1/1     Running   0               37m   192.168.67.2   lab11   <none>           <none>
+pod/prometheus-monitoring-kube-prometheus-prometheus-0       2/2     Running   2 (8m5s ago)    36m   10.244.0.96    lab11   <none>           <none>
+
+NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE   SELECTOR
+service/alertmanager-operated                     ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   36m   app.kubernetes.io/name=alertmanager
+service/monitoring-grafana                        ClusterIP   10.106.141.131   <none>        80/TCP                       37m   app.kubernetes.io/instance=monitoring,app.kubernetes.io/name=grafana
+service/monitoring-kube-prometheus-alertmanager   ClusterIP   10.96.189.27     <none>        9093/TCP,8080/TCP            37m   alertmanager=monitoring-kube-prometheus-alertmanager,app.kubernetes.io/name=alertmanager
+service/monitoring-kube-prometheus-operator       ClusterIP   10.111.107.144   <none>        443/TCP                      37m   app=kube-prometheus-stack-operator,release=monitoring
+service/monitoring-kube-prometheus-prometheus     ClusterIP   10.99.14.62      <none>        9090/TCP,8080/TCP            37m   app.kubernetes.io/name=prometheus,operator.prometheus.io/name=monitoring-kube-prometheus-prometheus
+service/monitoring-kube-state-metrics             ClusterIP   10.108.233.109   <none>        8080/TCP                     37m   app.kubernetes.io/instance=monitoring,app.kubernetes.io/name=kube-state-metrics
+service/monitoring-prometheus-node-exporter       ClusterIP   10.106.179.239   <none>        9100/TCP                     37m   app.kubernetes.io/instance=monitoring,app.kubernetes.io/name=prometheus-node-exporter
+service/prometheus-operated                       ClusterIP   None             <none>        9090/TCP                     36m   app.kubernetes.io/name=prometheus

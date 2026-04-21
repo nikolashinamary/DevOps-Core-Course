@@ -1,0 +1,12 @@
+default_http_total_rate
+sum by (pod, endpoint) (rate(http_requests_total{namespace="default",pod=~"devops-info-service-default-.*"}[5m]))
+[]
+---
+default_root_rate
+sum by (pod) (rate(http_requests_total{namespace="default",pod=~"devops-info-service-default-.*",endpoint="/"}[5m]))
+[]
+---
+default_health_rate
+sum by (pod) (rate(http_requests_total{namespace="default",pod=~"devops-info-service-default-.*",endpoint="/health"}[5m]))
+[]
+---
