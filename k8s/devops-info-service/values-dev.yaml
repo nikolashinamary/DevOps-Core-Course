@@ -9,7 +9,7 @@ env:
 
 service:
   type: NodePort
-  nodePort: 30081
+  nodePort: 30083
 
 resources:
   requests:

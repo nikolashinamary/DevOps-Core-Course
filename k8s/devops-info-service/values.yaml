@@ -83,7 +83,7 @@ service:
   port: 80
   targetPort: http
   containerPort: 5000
-  nodePort: 30080
+  nodePort: 30082
   annotations: {}
 
 resources:
