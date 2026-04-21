@@ -1,0 +1,25 @@
+Name:               argocd/devops-info-service-prod
+Project:            default
+Server:             https://kubernetes.default.svc
+Namespace:          prod
+URL:                https://localhost:8080/applications/devops-info-service-prod
+Source:
+- Repo:             git://host.docker.internal:9418/DevOps-Core-Course.git
+  Target:           lab12
+  Path:             k8s/devops-info-service
+  Helm Values:      values-prod.yaml
+SyncWindow:         Sync Allowed
+Sync Policy:        Manual
+Sync Status:        Synced to lab12 (c33ac16)
+Health Status:      Healthy
+
+GROUP  KIND                   NAMESPACE  NAME                                   STATUS     HEALTH   HOOK      MESSAGE
+batch  Job                    prod       devops-info-service-prod-pre-install   Succeeded           PreSync   Reached expected number of succeeded pods
+       ServiceAccount         prod       devops-info-service-prod               Synced                        serviceaccount/devops-info-service-prod unchanged
+       Secret                 prod       devops-info-service-prod-secret        Synced                        secret/devops-info-service-prod-secret configured
+       ConfigMap              prod       devops-info-service-prod-env           Synced                        configmap/devops-info-service-prod-env unchanged
+       ConfigMap              prod       devops-info-service-prod-config        Synced                        configmap/devops-info-service-prod-config unchanged
+       PersistentVolumeClaim  prod       devops-info-service-prod-data          Synced     Healthy            persistentvolumeclaim/devops-info-service-prod-data unchanged
+       Service                prod       devops-info-service-prod               Synced     Healthy            service/devops-info-service-prod configured
+apps   Deployment             prod       devops-info-service-prod               Synced     Healthy            deployment.apps/devops-info-service-prod unchanged
+batch  Job                    prod       devops-info-service-prod-post-install  Succeeded           PostSync  Reached expected number of succeeded pods

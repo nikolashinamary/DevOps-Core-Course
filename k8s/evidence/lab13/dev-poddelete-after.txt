@@ -1,0 +1,2 @@
+NAME                                       READY   STATUS    RESTARTS   AGE   IP            NODE    NOMINATED NODE   READINESS GATES
+devops-info-service-dev-5b8f65969c-ndtrj   1/1     Running   0          12m   10.244.0.27   lab11   <none>           <none>

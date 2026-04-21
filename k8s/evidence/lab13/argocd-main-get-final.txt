@@ -1,0 +1,25 @@
+Name:               argocd/devops-info-service-main
+Project:            default
+Server:             https://kubernetes.default.svc
+Namespace:          lab13
+URL:                https://localhost:8080/applications/devops-info-service-main
+Source:
+- Repo:             git://host.docker.internal:9418/DevOps-Core-Course.git
+  Target:           lab12
+  Path:             k8s/devops-info-service
+  Helm Values:      values.yaml
+SyncWindow:         Sync Allowed
+Sync Policy:        Manual
+Sync Status:        Synced to lab12 (c33ac16)
+Health Status:      Healthy
+
+GROUP  KIND                   NAMESPACE  NAME                                   STATUS     HEALTH   HOOK      MESSAGE
+batch  Job                    lab13      devops-info-service-main-pre-install   Succeeded           PreSync   Reached expected number of succeeded pods
+       ServiceAccount         lab13      devops-info-service-main               Synced                        serviceaccount/devops-info-service-main unchanged
+       Secret                 lab13      devops-info-service-main-secret        Synced                        secret/devops-info-service-main-secret configured
+       ConfigMap              lab13      devops-info-service-main-config        Synced                        configmap/devops-info-service-main-config unchanged
+       ConfigMap              lab13      devops-info-service-main-env           Synced                        configmap/devops-info-service-main-env unchanged
+       PersistentVolumeClaim  lab13      devops-info-service-main-data          Synced     Healthy            persistentvolumeclaim/devops-info-service-main-data unchanged
+       Service                lab13      devops-info-service-main               Synced     Healthy            service/devops-info-service-main created
+apps   Deployment             lab13      devops-info-service-main               Synced     Healthy            deployment.apps/devops-info-service-main unchanged
+batch  Job                    lab13      devops-info-service-main-post-install  Succeeded           PostSync  Reached expected number of succeeded pods

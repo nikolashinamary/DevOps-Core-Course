@@ -1,0 +1,12 @@
+NAME              STATUS   AGE
+argocd            Active   30m
+default           Active   12d
+dev               Active   30m
+kube-node-lease   Active   12d
+kube-public       Active   12d
+kube-system       Active   12d
+lab11             Active   12d
+lab12             Active   8d
+lab13             Active   30m
+prod              Active   30m
+vault             Active   12d

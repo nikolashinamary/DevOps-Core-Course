@@ -1,0 +1,2 @@
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                             SELECTOR
+devops-info-service-dev   1/5     5            1           11m   app          devops-info-service-python:lab12   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-dev,app.kubernetes.io/name=devops-info-service
