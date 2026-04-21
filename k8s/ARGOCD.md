@@ -108,7 +108,7 @@ For the GitOps workflow test, I changed the Helm chart values, committed the cha
 
 ## 6. Bonus: ApplicationSet
 
-I also prepared an ApplicationSet pattern for generating the dev and prod applications from a single template. The list generator is the right fit here because the environments are known and small in number.
+I documented the ApplicationSet approach in the lab notes, but I did not add a separate ApplicationSet manifest in this submission.
 
 Use ApplicationSet when:
 
