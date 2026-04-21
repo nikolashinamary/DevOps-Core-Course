@@ -92,6 +92,13 @@ Create the preview service name used by blue-green rollouts.
 {{- end -}}
 
 {{/*
+Create the headless service name used by StatefulSets.
+*/}}
+{{- define "devops-info-service.headlessServiceName" -}}
+{{- printf "%s-headless" (include "devops-info-service.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
 Create the Secret name.
 */}}
 {{- define "devops-info-service.secretName" -}}

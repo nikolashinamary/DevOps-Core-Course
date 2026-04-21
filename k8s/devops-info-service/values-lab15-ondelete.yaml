@@ -1,0 +1,26 @@
+fullnameOverride: devops-info-service-ondelete
+
+workload:
+  kind: StatefulSet
+
+replicaCount: 3
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab15-ondelete-v1
+  appRevision: lab15-ondelete
+
+service:
+  type: NodePort
+  nodePort: 30095
+  headless: true
+
+statefulset:
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: OnDelete
+
+hooks:
+  enabled: false

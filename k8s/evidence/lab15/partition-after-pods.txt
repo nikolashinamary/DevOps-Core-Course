@@ -1,0 +1,4 @@
+NAME                              READY   STATUS    RESTARTS   AGE     IP            NODE    NOMINATED NODE   READINESS GATES
+devops-info-service-partition-0   1/1     Running   0          2m59s   10.244.0.83   lab11   <none>           <none>
+devops-info-service-partition-1   1/1     Running   0          2m53s   10.244.0.84   lab11   <none>           <none>
+devops-info-service-partition-2   1/1     Running   0          40s     10.244.0.86   lab11   <none>           <none>

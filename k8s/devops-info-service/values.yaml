@@ -10,6 +10,9 @@ image:
 
 revisionHistoryLimit: 5
 
+workload:
+  kind: Deployment
+
 rollout:
   enabled: false
   strategy: canary
@@ -114,7 +117,15 @@ service:
   targetPort: http
   containerPort: 5000
   nodePort: 30082
+  headless: false
   annotations: {}
+
+statefulset:
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
 
 resources:
   requests:

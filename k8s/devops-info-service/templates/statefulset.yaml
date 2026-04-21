@@ -1,21 +1,25 @@
-{{- if and (not .Values.rollout.enabled) (ne .Values.workload.kind "StatefulSet") }}
+{{- if eq .Values.workload.kind "StatefulSet" }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "devops-info-service.fullname" . }}
   labels:
     {{- include "devops-info-service.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "devops-info-service.headlessServiceName" . }}
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: {{ .Values.statefulset.podManagementPolicy }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "devops-info-service.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: {{ .Values.strategy.type }}
-    {{- with .Values.strategy.rollingUpdate }}
+  updateStrategy:
+    type: {{ .Values.statefulset.updateStrategy.type }}
+    {{- with .Values.statefulset.updateStrategy.rollingUpdate }}
+    {{- if eq $.Values.statefulset.updateStrategy.type "RollingUpdate" }}
     rollingUpdate:
       {{- toYaml . | nindent 6 }}
+    {{- end }}
     {{- end }}
   template:
     metadata:
@@ -67,7 +71,7 @@ spec:
             - name: config-volume
               mountPath: {{ .Values.config.mountPath | quote }}
               readOnly: true
-            - name: data-volume
+            - name: data
               mountPath: {{ .Values.persistence.mountPath | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -102,11 +106,16 @@ spec:
         - name: config-volume
           configMap:
             name: {{ include "devops-info-service.configFileMapName" . }}
-        - name: data-volume
-          {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ include "devops-info-service.pvcName" . }}
-          {{- else }}
-          emptyDir: {}
-          {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
+        {{- if .Values.persistence.storageClass }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        {{- end }}
 {{- end }}
