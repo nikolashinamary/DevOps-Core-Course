@@ -71,7 +71,7 @@ I used the existing Helm values files from Lab 12:
 The environment-specific differences are:
 
 - dev runs with `replicaCount: 1`, smaller requests and limits, and a `NodePort`
-- prod runs with `replicaCount: 3`, larger requests and limits, and `LoadBalancer`
+- prod runs with `replicaCount: 3`, larger requests and limits, and a dedicated `NodePort`
 
 This keeps dev fast and cheap while leaving production changes gated behind a manual sync.
 

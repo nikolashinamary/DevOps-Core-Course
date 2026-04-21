@@ -8,8 +8,8 @@ env:
   appRevision: prod
 
 service:
-  type: LoadBalancer
-  nodePort: null
+  type: NodePort
+  nodePort: 30084
 
 resources:
   requests:
