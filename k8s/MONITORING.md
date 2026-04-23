@@ -1,8 +1,8 @@
 # Lab 16: Kubernetes Monitoring & Init Containers - Submission
 
 **Name:** Maria Nikolashina  
-**Date:** 2026-04-21  
-**Cluster:** `minikube` on context `lab11`  
+**Date:** 2026-04-23  
+**Cluster:** `minikube` on context `lab16`  
 **Monitoring stack:** `prometheus-community/kube-prometheus-stack`
 
 ## 1. Stack Components
@@ -50,7 +50,7 @@ alertmanager-monitoring-kube-prometheus-alertmanager-0
 
 ## 3. Grafana / Dashboard Answers
 
-I used Prometheus and Alertmanager API outputs behind the Grafana dashboards to extract the requested values.
+I used Grafana dashboards and Alertmanager UI directly, and cross-checked values with Prometheus/Alertmanager API outputs.
 
 ### 3.1 StatefulSet Pod Resources
 
@@ -78,6 +78,7 @@ Interpretation:
 Evidence:
 
 - [final Prometheus answers](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/final-prometheus-answers-2.txt)
+- [screenshot: StatefulSet resources](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/01-statefulset-resources.png)
 
 ### 3.2 Default Namespace CPU
 
@@ -96,13 +97,21 @@ Least CPU:
 
 - `devops-info-service-default-6958b748b4-j8c86`
 
+Evidence:
+
+- [screenshot: default namespace CPU most/least](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/02-default-cpu-most-least.png)
+
 ### 3.3 Node Metrics
 
-Node `lab11`:
+Node `lab16`:
 
 - CPU cores: `10`
 - Memory used: `3928.1953125 MiB`
 - Memory used: `74.84041995024124%`
+
+Evidence:
+
+- [screenshot: node metrics](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/03-node-metrics.png)
 
 ### 3.4 Kubelet
 
@@ -110,6 +119,10 @@ Cluster totals from kubelet / kube-state metrics:
 
 - pods managed: `54`
 - containers managed: `86`
+
+Evidence:
+
+- [screenshot: kubelet pods/containers](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/04-kubelet-pods-containers.png)
 
 ### 3.5 Traffic
 
@@ -133,6 +146,7 @@ Evidence:
 
 - [default traffic query output](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/final-prometheus-answers-2.txt)
 - [default HTTP series](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/http-request-series-default.txt)
+- [screenshot: default namespace traffic](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/05-default-traffic.png)
 
 ### 3.6 Alerts
 
@@ -151,6 +165,16 @@ The active alerts are cluster-level alerts from the kube-prometheus stack, which
 Evidence:
 
 - [Alertmanager query output](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/final-prometheus-answers-2.txt)
+- [screenshot: active alerts in Alertmanager](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/06-alertmanager-active-alerts.png)
+
+### 3.7 Screenshot Evidence Index
+
+- [01-statefulset-resources.png](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/01-statefulset-resources.png)
+- [02-default-cpu-most-least.png](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/02-default-cpu-most-least.png)
+- [03-node-metrics.png](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/03-node-metrics.png)
+- [04-kubelet-pods-containers.png](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/04-kubelet-pods-containers.png)
+- [05-default-traffic.png](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/05-default-traffic.png)
+- [06-alertmanager-active-alerts.png](/Users/marianikolashina/DevOps-Core-Course/k8s/evidence/lab16/screenshots/06-alertmanager-active-alerts.png)
 
 ## 4. Init Containers
 
