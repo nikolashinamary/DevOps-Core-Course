@@ -1,0 +1,4 @@
+NAME                             REVISION
+devops-info-service-ondelete-0   devops-info-service-ondelete-74f87577
+devops-info-service-ondelete-1   devops-info-service-ondelete-74f87577
+devops-info-service-ondelete-2   devops-info-service-ondelete-74f87577

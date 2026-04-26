@@ -1,0 +1,2 @@
+NAME                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+devops-info-service-bluegreen   3         3         3            3           10m

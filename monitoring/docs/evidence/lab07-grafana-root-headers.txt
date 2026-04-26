@@ -1,0 +1,9 @@
+HTTP/1.1 302 Found
+Cache-Control: no-store
+Content-Type: text/html; charset=utf-8
+Location: /login
+X-Content-Type-Options: nosniff
+X-Frame-Options: deny
+X-Xss-Protection: 1; mode=block
+Date: Tue, 10 Mar 2026 16:30:49 GMT
+

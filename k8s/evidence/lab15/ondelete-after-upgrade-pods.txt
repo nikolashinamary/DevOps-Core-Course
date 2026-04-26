@@ -1,0 +1,4 @@
+NAME                             READY   STATUS    RESTARTS   AGE   IP            NODE    NOMINATED NODE   READINESS GATES
+devops-info-service-ondelete-0   1/1     Running   0          37s   10.244.0.87   lab11   <none>           <none>
+devops-info-service-ondelete-1   1/1     Running   0          31s   10.244.0.88   lab11   <none>           <none>
+devops-info-service-ondelete-2   1/1     Running   0          26s   10.244.0.89   lab11   <none>           <none>

@@ -1,0 +1,28 @@
+fullnameOverride: devops-info-service-ss
+
+workload:
+  kind: StatefulSet
+
+replicaCount: 3
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab15-ss-v1
+  appRevision: lab15-ss
+
+service:
+  type: NodePort
+  nodePort: 30093
+  headless: true
+
+statefulset:
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+
+hooks:
+  enabled: false

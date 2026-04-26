@@ -1,0 +1,13 @@
+NAME                                             DATA   AGE
+configmap/kube-root-ca.crt                       1      9m6s
+configmap/lab12-app-devops-info-service-config   1      8m56s
+configmap/lab12-app-devops-info-service-env      5      8m56s
+
+NAME                                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/lab12-app-devops-info-service-data   Bound    pvc-4ede7260-dc94-4685-b46a-7796842b4aa7   100Mi      RWO            standard       <unset>                 8m56s
+
+NAME                                                 READY   STATUS    RESTARTS   AGE
+pod/lab12-app-devops-info-service-7f59cdc74d-466cz   1/1     Running   0          8m56s
+
+NAME                                    TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/lab12-app-devops-info-service   NodePort   10.100.9.142   <none>        80:30081/TCP   53s
