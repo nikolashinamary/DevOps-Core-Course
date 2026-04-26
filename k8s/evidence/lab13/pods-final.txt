@@ -1,0 +1,16 @@
+argocd        argocd-application-controller-0                     1/1     Running   0             33m     10.244.0.23    lab11   <none>           <none>
+argocd        argocd-applicationset-controller-7d696bd579-2m752   1/1     Running   0             33m     10.244.0.18    lab11   <none>           <none>
+argocd        argocd-dex-server-5954b69674-kqnxl                  1/1     Running   1 (21m ago)   33m     10.244.0.20    lab11   <none>           <none>
+argocd        argocd-notifications-controller-7979cb44f5-pvj9g    1/1     Running   0             33m     10.244.0.19    lab11   <none>           <none>
+argocd        argocd-redis-7c5cc5bb45-qzdw8                       1/1     Running   0             29m     10.244.0.24    lab11   <none>           <none>
+argocd        argocd-repo-server-6d559c8c5f-6w9nk                 1/1     Running   0             33m     10.244.0.17    lab11   <none>           <none>
+argocd        argocd-server-589f7f8584-lnw79                      1/1     Running   0             29m     10.244.0.25    lab11   <none>           <none>
+dev           devops-info-service-dev-5b8f65969c-ndtrj            1/1     Running   0             13m     10.244.0.27    lab11   <none>           <none>
+lab11         lab11-app-devops-info-service-6b7d95986d-tdkpd      0/2     Error     0             12d     10.244.0.12    lab11   <none>           <none>
+lab12         lab12-app-devops-info-service-7f59cdc74d-hl2ld      1/1     Running   1 (54m ago)   8d      10.244.0.16    lab11   <none>           <none>
+lab13         devops-info-service-main-669995575f-g2xbn           1/1     Running   0             12m     10.244.0.30    lab11   <none>           <none>
+lab13         devops-info-service-main-669995575f-jknjx           1/1     Running   0             12m     10.244.0.29    lab11   <none>           <none>
+lab13         devops-info-service-main-669995575f-p525n           1/1     Running   0             12m     10.244.0.31    lab11   <none>           <none>
+prod          devops-info-service-prod-6949764bcd-dlfpk           1/1     Running   0             8m22s   10.244.0.40    lab11   <none>           <none>
+prod          devops-info-service-prod-6949764bcd-p2kzz           1/1     Running   0             8m22s   10.244.0.39    lab11   <none>           <none>
+prod          devops-info-service-prod-6949764bcd-zgtsg           1/1     Running   0             8m22s   10.244.0.41    lab11   <none>           <none>

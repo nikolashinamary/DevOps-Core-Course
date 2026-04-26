@@ -1,0 +1,36 @@
+{{- if and .Values.hooks.enabled .Values.hooks.preInstall.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "devops-info-service.fullname" . }}-pre-install"
+  labels:
+    {{- include "devops-info-service.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "{{ .Values.hooks.preInstall.weight }}"
+    "helm.sh/hook-delete-policy": "{{ .Values.hooks.deletePolicy }}"
+spec:
+  backoffLimit: {{ .Values.hooks.backoffLimit }}
+  template:
+    metadata:
+      labels:
+        {{- include "devops-info-service.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: pre-install-validation
+          image: "{{ .Values.hooks.image.repository }}:{{ .Values.hooks.image.tag }}"
+          imagePullPolicy: {{ .Values.hooks.image.pullPolicy }}
+          command:
+            - python
+            - -u
+            - -c
+            - |
+              import time
+              print("Preparing release {{ .Release.Name }}")
+              print("Namespace: {{ .Release.Namespace }}")
+              print("Image: {{ .Values.image.repository }}:{{ .Values.image.tag }}")
+              print("Replicas: {{ .Values.replicaCount }}")
+              time.sleep({{ .Values.hooks.preInstall.sleepSeconds }})
+              print("Pre-install validation passed")
+{{- end }}

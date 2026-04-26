@@ -1,0 +1,12 @@
+Release {{ .Release.Name }} has been installed into namespace {{ .Release.Namespace }}.
+
+Service name: {{ include "devops-info-service.fullname" . }}
+Service type: {{ .Values.service.type }}
+
+{{- if eq .Values.service.type "NodePort" }}
+Access with Minikube:
+  minikube service {{ include "devops-info-service.fullname" . }} -n {{ .Release.Namespace }} --url
+{{- else }}
+Access locally:
+  kubectl port-forward svc/{{ include "devops-info-service.fullname" . }} -n {{ .Release.Namespace }} 8080:{{ .Values.service.port }}
+{{- end }}

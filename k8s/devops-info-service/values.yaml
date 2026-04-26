@@ -1,0 +1,142 @@
+replicaCount: 3
+
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: devops-info-service-python
+  tag: "lab12"
+  pullPolicy: IfNotPresent
+
+revisionHistoryLimit: 5
+
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+
+podAnnotations: {}
+podLabels: {}
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+env:
+  host: "0.0.0.0"
+  port: "5000"
+  appEnv: "lab12"
+  appRevision: "v1"
+  extra: []
+
+config:
+  application:
+    name: "devops-info-service"
+    description: "DevOps course info service"
+  fileName: "config.json"
+  mountPath: "/config"
+  featureFlags:
+    visitsCounter: true
+    prometheusMetrics: true
+    configHotReload: true
+  settings:
+    logLevel: "INFO"
+    responseFormat: "json"
+    reloadStrategy: "checksum-rollout"
+
+persistence:
+  enabled: true
+  existingClaim: ""
+  mountPath: "/data"
+  fileName: "visits"
+  size: "100Mi"
+  storageClass: ""
+
+podSecurityContext:
+  fsGroup: 1000
+
+containerSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+
+secrets:
+  enabled: true
+  type: Opaque
+  nameOverride: ""
+  data:
+    username: "change-me"
+    password: "change-me"
+
+vault:
+  enabled: false
+  authPath: "auth/kubernetes"
+  role: "devops-info-service"
+  secretPath: "apps/data/devops-info-service/config"
+  fileName: "config-env"
+  injectCommand: ""
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: http
+  containerPort: 5000
+  nodePort: 30082
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+startupProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 2
+  periodSeconds: 3
+  timeoutSeconds: 2
+  successThreshold: 1
+  failureThreshold: 10
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 2
+  successThreshold: 1
+  failureThreshold: 3
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 2
+  successThreshold: 1
+  failureThreshold: 3
+
+hooks:
+  enabled: true
+  image:
+    repository: devops-info-service-python
+    tag: "lab12"
+    pullPolicy: IfNotPresent
+  deletePolicy: before-hook-creation,hook-succeeded
+  backoffLimit: 0
+  preInstall:
+    enabled: true
+    sleepSeconds: 5
+    weight: -5
+  postInstall:
+    enabled: true
+    sleepSeconds: 5
+    weight: 5

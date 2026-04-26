@@ -1,0 +1,13 @@
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab12
+  appRevision: vault
+
+vault:
+  enabled: true
+  authPath: "auth/kubernetes"
+  role: "devops-info-service"
+  secretPath: "apps/data/devops-info-service/config"
+  fileName: "config-env"

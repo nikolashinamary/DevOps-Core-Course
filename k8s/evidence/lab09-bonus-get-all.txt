@@ -1,0 +1,25 @@
+NAME                                          READY   STATUS    RESTARTS   AGE     IP            NODE    NOMINATED NODE   READINESS GATES
+pod/devops-info-service-54499576b4-5nsk7      1/1     Running   0          53m     10.244.0.12   lab09   <none>           <none>
+pod/devops-info-service-54499576b4-6ds8d      1/1     Running   0          53m     10.244.0.13   lab09   <none>           <none>
+pod/devops-info-service-54499576b4-qtpjc      1/1     Running   0          53m     10.244.0.11   lab09   <none>           <none>
+pod/devops-info-service-go-7c4c5d78fd-6t5rb   1/1     Running   0          3m37s   10.244.0.17   lab09   <none>           <none>
+pod/devops-info-service-go-7c4c5d78fd-stqhz   1/1     Running   0          3m37s   10.244.0.18   lab09   <none>           <none>
+
+NAME                             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE     SELECTOR
+service/devops-info-service      NodePort    10.99.66.23     <none>        80:30080/TCP   61m     app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service
+service/devops-info-service-go   ClusterIP   10.109.46.105   <none>        80/TCP         3m37s   app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service-go
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                             SELECTOR
+deployment.apps/devops-info-service      3/3     3            3           61m     app          devops-info-service-python:lab09   app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service
+deployment.apps/devops-info-service-go   2/2     2            2           3m37s   app          devops-info-service-go:lab09       app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service-go
+
+NAME                                                DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES                             SELECTOR
+replicaset.apps/devops-info-service-54499576b4      3         3         3       61m     app          devops-info-service-python:lab09   app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service,pod-template-hash=54499576b4
+replicaset.apps/devops-info-service-64cc89dd6f      0         0         0       54m     app          devops-info-service-python:lab09   app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service,pod-template-hash=64cc89dd6f
+replicaset.apps/devops-info-service-go-7c4c5d78fd   2         2         2       3m37s   app          devops-info-service-go:lab09       app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service-go,pod-template-hash=7c4c5d78fd
+
+NAME                                            CLASS   HOSTS               ADDRESS        PORTS     AGE
+ingress.networking.k8s.io/devops-info-ingress   nginx   local.example.com   192.168.49.2   80, 443   3m37s
+
+NAME                TYPE                DATA   AGE
+secret/tls-secret   kubernetes.io/tls   2      3m49s

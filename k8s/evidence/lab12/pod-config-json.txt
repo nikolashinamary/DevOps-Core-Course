@@ -1,0 +1,17 @@
+{
+  "application": {
+    "name": "devops-info-service",
+    "description": "DevOps course info service",
+    "environment": "dev"
+  },
+  "featureFlags": {
+    "visitsCounter": true,
+    "prometheusMetrics": true,
+    "configHotReload": true
+  },
+  "settings": {
+    "logLevel": "INFO",
+    "responseFormat": "json",
+    "reloadStrategy": "checksum-rollout"
+  }
+}
