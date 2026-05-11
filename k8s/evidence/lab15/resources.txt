@@ -1,0 +1,16 @@
+NAME                           READY   STATUS    RESTARTS   AGE   IP            NODE    NOMINATED NODE   READINESS GATES
+pod/devops-info-service-ss-0   1/1     Running   0          76s   10.244.0.79   lab11   <none>           <none>
+pod/devops-info-service-ss-1   1/1     Running   0          66s   10.244.0.80   lab11   <none>           <none>
+pod/devops-info-service-ss-2   1/1     Running   0          56s   10.244.0.81   lab11   <none>           <none>
+
+NAME                                      READY   AGE   CONTAINERS   IMAGES
+statefulset.apps/devops-info-service-ss   3/3     76s   app          devops-info-service-python:lab12
+
+NAME                                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+service/devops-info-service-ss            NodePort    10.109.56.136   <none>        80:30093/TCP   76s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-ss,app.kubernetes.io/name=devops-info-service
+service/devops-info-service-ss-headless   ClusterIP   None            <none>        80/TCP         76s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-ss,app.kubernetes.io/name=devops-info-service
+
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE
+persistentvolumeclaim/data-devops-info-service-ss-0   Bound    pvc-b5be876a-6092-454e-af63-22cd15356154   100Mi      RWO            standard       <unset>                 76s   Filesystem
+persistentvolumeclaim/data-devops-info-service-ss-1   Bound    pvc-ff39e317-5988-4e1c-8a1f-de09887c0070   100Mi      RWO            standard       <unset>                 66s   Filesystem
+persistentvolumeclaim/data-devops-info-service-ss-2   Bound    pvc-a0c7aa7a-d7c6-493c-a8c0-18bd26bbf9cd   100Mi      RWO            standard       <unset>                 56s   Filesystem

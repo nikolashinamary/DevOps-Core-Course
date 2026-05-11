@@ -1,0 +1,3 @@
+WARNING  Rule ComplexityRule has an invalid version_changed field '', is should be a 'X.Y.Z' format value.
+
+Passed: 0 failure(s), 0 warning(s) in 12 files processed of 12 encountered. Last profile that met the validation criteria was 'production'.

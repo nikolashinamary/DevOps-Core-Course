@@ -1,0 +1,33 @@
+fullnameOverride: devops-info-service-bluegreen
+
+replicaCount: 3
+
+rollout:
+  enabled: true
+  strategy: blueGreen
+  blueGreen:
+    autoPromotionEnabled: false
+    scaleDownDelaySeconds: 30
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab14-blue-v1
+  appRevision: lab14-bluegreen
+
+service:
+  type: NodePort
+  nodePort: 30091
+  previewNodePort: 30092
+
+resources:
+  requests:
+    cpu: 150m
+    memory: 192Mi
+  limits:
+    cpu: 300m
+    memory: 384Mi
+
+hooks:
+  enabled: false

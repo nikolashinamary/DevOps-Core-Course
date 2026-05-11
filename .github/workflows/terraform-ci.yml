@@ -1,0 +1,56 @@
+name: Terraform CI
+
+on:
+  push:
+    branches: ["master", "lab04"]
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform-ci.yml"
+  pull_request:
+    branches: ["master", "lab04"]
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform-ci.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: terraform-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [docker, yandex, github]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Terraform fmt check
+        run: terraform -chdir=terraform/${{ matrix.target }} fmt -check -recursive
+
+      - name: Terraform init
+        run: terraform -chdir=terraform/${{ matrix.target }} init -backend=false
+
+      - name: Terraform validate
+        run: terraform -chdir=terraform/${{ matrix.target }} validate
+
+      - name: TFLint init and run
+        run: |
+          cd terraform/${{ matrix.target }}
+          tflint --init --config=../.tflint.hcl
+          tflint --config=../.tflint.hcl
+

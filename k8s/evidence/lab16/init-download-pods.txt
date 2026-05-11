@@ -1,0 +1,2 @@
+NAME                                                 READY   STATUS    RESTARTS   AGE   IP             NODE    NOMINATED NODE   READINESS GATES
+devops-info-service-init-download-858b766964-mlqlr   1/1     Running   0          18s   10.244.0.102   lab11   <none>           <none>
