@@ -26,3 +26,4 @@ htmlcov/
 
 # Local persistence test data
 data/visits
+result
