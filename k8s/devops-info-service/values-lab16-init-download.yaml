@@ -1,0 +1,32 @@
+fullnameOverride: devops-info-service-init-download
+
+replicaCount: 1
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab16-init-download
+  appRevision: lab16-init
+
+service:
+  type: NodePort
+  nodePort: 30096
+
+hooks:
+  enabled: false
+
+initContainers:
+  - name: init-download
+    image: busybox:1.36
+    command:
+      - sh
+      - -c
+      - wget -O /data/index.html http://example.com
+    volumeMounts:
+      - name: data-volume
+        mountPath: /data
+
+monitoring:
+  serviceMonitor:
+    enabled: false

@@ -1,0 +1,17 @@
+NAMESPACE       NAME                                                 AGE
+default         devops-info-service-default                          3m44s
+lab16-metrics   devops-info-service-metrics                          22m
+monitoring      devops-info-service-default                          97s
+monitoring      monitoring-grafana                                   37m
+monitoring      monitoring-kube-prometheus-alertmanager              37m
+monitoring      monitoring-kube-prometheus-apiserver                 37m
+monitoring      monitoring-kube-prometheus-coredns                   37m
+monitoring      monitoring-kube-prometheus-kube-controller-manager   37m
+monitoring      monitoring-kube-prometheus-kube-etcd                 37m
+monitoring      monitoring-kube-prometheus-kube-proxy                37m
+monitoring      monitoring-kube-prometheus-kube-scheduler            37m
+monitoring      monitoring-kube-prometheus-kubelet                   37m
+monitoring      monitoring-kube-prometheus-operator                  37m
+monitoring      monitoring-kube-prometheus-prometheus                37m
+monitoring      monitoring-kube-state-metrics                        37m
+monitoring      monitoring-prometheus-node-exporter                  37m

@@ -1,0 +1,16 @@
+NAME                                  READY   STATUS    RESTARTS   AGE   IP            NODE    NOMINATED NODE   READINESS GATES
+pod/devops-info-service-partition-0   1/1     Running   0          58s   10.244.0.83   lab11   <none>           <none>
+pod/devops-info-service-partition-1   1/1     Running   0          52s   10.244.0.84   lab11   <none>           <none>
+pod/devops-info-service-partition-2   1/1     Running   0          47s   10.244.0.85   lab11   <none>           <none>
+
+NAME                                             READY   AGE   CONTAINERS   IMAGES
+statefulset.apps/devops-info-service-partition   3/3     58s   app          devops-info-service-python:lab12
+
+NAME                                             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+service/devops-info-service-partition            NodePort    10.109.105.25   <none>        80:30094/TCP   58s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-partition,app.kubernetes.io/name=devops-info-service
+service/devops-info-service-partition-headless   ClusterIP   None            <none>        80/TCP         58s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-partition,app.kubernetes.io/name=devops-info-service
+
+NAME                                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE
+persistentvolumeclaim/data-devops-info-service-partition-0   Bound    pvc-826bce39-da4c-4446-a46d-43d4fd0c7c65   100Mi      RWO            standard       <unset>                 58s   Filesystem
+persistentvolumeclaim/data-devops-info-service-partition-1   Bound    pvc-080ee74c-ea06-4826-b572-eee3c1b8040d   100Mi      RWO            standard       <unset>                 52s   Filesystem
+persistentvolumeclaim/data-devops-info-service-partition-2   Bound    pvc-f73ec160-bc38-4fa5-9071-96508ee064b5   100Mi      RWO            standard       <unset>                 47s   Filesystem

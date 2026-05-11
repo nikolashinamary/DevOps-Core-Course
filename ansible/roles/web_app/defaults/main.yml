@@ -1,0 +1,20 @@
+---
+app_name: "devops-info-service"
+docker_image: "{{ dockerhub_username | default('your_dockerhub_username') }}/{{ app_name }}"
+docker_tag: "{{ docker_image_tag | default('latest') }}"
+docker_image_tag: "latest"
+app_port: 5000
+app_internal_port: "{{ app_port }}"
+docker_restart_policy: "unless-stopped"
+compose_project_dir: "/opt/{{ app_name }}"
+docker_compose_version: "3.8"
+app_health_check_path: "/health"
+app_health_check_timeout: 60
+app_health_check_interval: 5
+app_environment: "{{ app_env | default({}) }}"
+app_secret_key: ""
+
+# Set to true to remove the deployed application before (or instead of) deployment.
+# Wipe only: ansible-playbook playbooks/deploy.yml -e "web_app_wipe=true" --tags web_app_wipe
+# Clean install: ansible-playbook playbooks/deploy.yml -e "web_app_wipe=true"
+web_app_wipe: false

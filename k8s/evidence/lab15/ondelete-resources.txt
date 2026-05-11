@@ -1,0 +1,16 @@
+NAME                                 READY   STATUS    RESTARTS   AGE   IP            NODE    NOMINATED NODE   READINESS GATES
+pod/devops-info-service-ondelete-0   1/1     Running   0          23s   10.244.0.87   lab11   <none>           <none>
+pod/devops-info-service-ondelete-1   1/1     Running   0          17s   10.244.0.88   lab11   <none>           <none>
+pod/devops-info-service-ondelete-2   1/1     Running   0          12s   10.244.0.89   lab11   <none>           <none>
+
+NAME                                            READY   AGE   CONTAINERS   IMAGES
+statefulset.apps/devops-info-service-ondelete   3/3     23s   app          devops-info-service-python:lab12
+
+NAME                                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+service/devops-info-service-ondelete            NodePort    10.106.148.122   <none>        80:30095/TCP   24s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-ondelete,app.kubernetes.io/name=devops-info-service
+service/devops-info-service-ondelete-headless   ClusterIP   None             <none>        80/TCP         24s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-ondelete,app.kubernetes.io/name=devops-info-service
+
+NAME                                                        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE
+persistentvolumeclaim/data-devops-info-service-ondelete-0   Bound    pvc-2e97d50c-faa4-4907-b8fe-68c03f07e2f9   100Mi      RWO            standard       <unset>                 24s   Filesystem
+persistentvolumeclaim/data-devops-info-service-ondelete-1   Bound    pvc-1e919ecf-06bf-4b92-903a-7bc31577a2f7   100Mi      RWO            standard       <unset>                 18s   Filesystem
+persistentvolumeclaim/data-devops-info-service-ondelete-2   Bound    pvc-a6e7cad9-4b5a-4d6e-80ff-98f2dc5eb83b   100Mi      RWO            standard       <unset>                 13s   Filesystem

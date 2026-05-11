@@ -1,0 +1,2 @@
+NAME                                TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+devops-info-service-init-download   NodePort   10.96.214.148   <none>        80:30096/TCP   15m   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-init-download,app.kubernetes.io/name=devops-info-service

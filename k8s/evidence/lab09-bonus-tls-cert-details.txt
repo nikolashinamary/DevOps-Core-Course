@@ -1,0 +1,4 @@
+subject=CN=local.example.com, O=local.example.com
+issuer=CN=local.example.com, O=local.example.com
+notBefore=Mar 16 11:14:13 2026 GMT
+notAfter=Mar 16 11:14:13 2027 GMT

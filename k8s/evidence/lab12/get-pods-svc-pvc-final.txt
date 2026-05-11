@@ -1,0 +1,8 @@
+NAME                                                 READY   STATUS    RESTARTS   AGE
+pod/lab12-app-devops-info-service-7f59cdc74d-hl2ld   1/1     Running   0          2m32s
+
+NAME                                    TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/lab12-app-devops-info-service   NodePort   10.100.9.142   <none>        80:30081/TCP   4m33s
+
+NAME                                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/lab12-app-devops-info-service-data   Bound    pvc-4ede7260-dc94-4685-b46a-7796842b4aa7   100Mi      RWO            standard       <unset>                 12m

@@ -1,0 +1,26 @@
+fullnameOverride: devops-info-service-metrics
+
+replicaCount: 1
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab16-metrics
+  appRevision: lab16-metrics
+
+service:
+  type: NodePort
+  nodePort: 30098
+
+hooks:
+  enabled: false
+
+monitoring:
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: monitoring
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s

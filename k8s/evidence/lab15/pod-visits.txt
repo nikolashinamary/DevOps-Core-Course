@@ -1,0 +1,17 @@
+DNS resolution:
+devops-info-service-ss-1.devops-info-service-ss-headless.lab15-ss.svc.cluster.local -> 10.244.0.80
+devops-info-service-ss-2.devops-info-service-ss-headless.lab15-ss.svc.cluster.local -> 10.244.0.81
+
+Per-pod counters:
+devops-info-service-ss-0
+  root_count = 1
+  visits_count = 1
+  storage_file = /data/visits
+devops-info-service-ss-1
+  root_count = 2
+  visits_count = 2
+  storage_file = /data/visits
+devops-info-service-ss-2
+  root_count = 3
+  visits_count = 3
+  storage_file = /data/visits

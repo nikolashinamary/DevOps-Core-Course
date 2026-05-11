@@ -1,0 +1,35 @@
+fullnameOverride: devops-info-service-canary
+
+replicaCount: 3
+
+rollout:
+  enabled: true
+  strategy: canary
+
+analysis:
+  enabled: true
+  templateName: environment-match
+  serviceUrl: http://devops-info-service-canary.lab14-canary.svc/
+  expectedEnv: lab14-canary-v1
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab14-canary-v1
+  appRevision: lab14-canary
+
+service:
+  type: NodePort
+  nodePort: 30090
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+hooks:
+  enabled: false

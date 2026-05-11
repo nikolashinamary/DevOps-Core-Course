@@ -1,0 +1,116 @@
+---
+- name: Install baseline packages
+  block:
+    - name: Detect stale Docker apt source entries
+      ansible.builtin.command:
+        cmd: grep -RIl "download.docker.com/linux/ubuntu" /etc/apt/sources.list /etc/apt/sources.list.d
+      register: docker_apt_source_files
+      changed_when: false
+      failed_when: false
+
+    - name: Remove stale Docker apt source entries before apt update
+      ansible.builtin.lineinfile:
+        path: "{{ item }}"
+        regexp: ".*download\\.docker\\.com/linux/ubuntu.*"
+        state: absent
+      loop: "{{ docker_apt_source_files.stdout_lines }}"
+      when:
+        - docker_apt_source_files.rc == 0
+        - docker_apt_source_files.stdout_lines | length > 0
+        - item != "/etc/apt/sources.list.d/docker.list"
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+        lock_timeout: 600
+        update_cache_retries: 10
+        update_cache_retry_max_delay: 30
+
+    - name: Install common packages
+      ansible.builtin.apt:
+        name: "{{ common_packages }}"
+        state: present
+        lock_timeout: 600
+
+  rescue:
+    - name: Retry apt cache update with --fix-missing
+      ansible.builtin.command:
+        cmd: apt-get update --fix-missing
+      changed_when: false
+
+    - name: Retry common package installation after apt cache recovery
+      ansible.builtin.apt:
+        name: "{{ common_packages }}"
+        state: present
+        lock_timeout: 600
+
+  always:
+    - name: Log completion of package tasks
+      ansible.builtin.copy:
+        dest: /tmp/ansible-common-packages.log
+        content: "Common package block completed at {{ ansible_date_time.iso8601 }}\n"
+        mode: "0644"
+
+  become: true
+  tags:
+    - common
+    - packages
+
+- name: Read current timezone
+  ansible.builtin.command:
+    cmd: cat /etc/timezone
+  register: current_timezone
+  changed_when: false
+  failed_when: false
+  when:
+    - timezone is defined
+    - timezone | length > 0
+  tags:
+    - common
+    - timezone
+
+- name: Set timezone
+  ansible.builtin.command:
+    cmd: "timedatectl set-timezone {{ timezone }}"
+  changed_when: true
+  when:
+    - timezone is defined
+    - timezone | length > 0
+    - current_timezone.stdout | default('') | trim != timezone
+  tags:
+    - common
+    - timezone
+
+- name: Manage users and SSH directories
+  block:
+    - name: Ensure managed users exist
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        create_home: true
+        shell: /bin/bash
+      loop: "{{ common_managed_users }}"
+
+    - name: Ensure .ssh directory exists for root
+      ansible.builtin.file:
+        path: /root/.ssh
+        state: directory
+        owner: root
+        group: root
+        mode: "0700"
+
+    - name: Ensure .ssh directories exist for managed users
+      ansible.builtin.file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0700"
+      loop: "{{ common_managed_users }}"
+      when: item != "root"
+
+  become: true
+  tags:
+    - common
+    - users

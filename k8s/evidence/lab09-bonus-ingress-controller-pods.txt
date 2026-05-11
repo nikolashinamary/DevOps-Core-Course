@@ -1,0 +1,4 @@
+NAME                                        READY   STATUS      RESTARTS   AGE     IP            NODE    NOMINATED NODE   READINESS GATES
+ingress-nginx-admission-create-t2qmz        0/1     Completed   0          2m53s   10.244.0.15   lab09   <none>           <none>
+ingress-nginx-admission-patch-964dm         0/1     Completed   1          2m53s   10.244.0.14   lab09   <none>           <none>
+ingress-nginx-controller-596f8778bc-k2wxx   1/1     Running     0          2m53s   10.244.0.16   lab09   <none>           <none>

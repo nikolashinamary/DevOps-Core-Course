@@ -1,0 +1,221 @@
+{
+  "alerts_active": {
+    "alerts": [
+      "TargetDown",
+      "TargetDown",
+      "KubeAPIErrorBudgetBurn",
+      "Watchdog",
+      "TargetDown"
+    ],
+    "count": 5
+  },
+  "default_cpu_irate": {
+    "expr": "sum by (pod) (irate(container_cpu_usage_seconds_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\",cpu=\"total\"}[1m]))",
+    "result": [
+      [
+        {
+          "pod": "devops-info-service-default-6958b748b4-j8c86"
+        },
+        0.006236726546906177
+      ],
+      [
+        {
+          "pod": "devops-info-service-default-6958b748b4-chntf"
+        },
+        0.005845007004202533
+      ]
+    ]
+  },
+  "default_cpu_rate": {
+    "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\",cpu=\"total\"}[5m]))",
+    "result": [
+      [
+        {
+          "pod": "devops-info-service-default-6958b748b4-chntf"
+        },
+        0.011210288856569604
+      ],
+      [
+        {
+          "pod": "devops-info-service-default-6958b748b4-j8c86"
+        },
+        0.00556941705549988
+      ]
+    ]
+  },
+  "default_rx_irate": {
+    "expr": "sum by (pod) (irate(container_network_receive_bytes_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\"}[1m]))",
+    "result": []
+  },
+  "default_rx_rate": {
+    "expr": "sum by (pod) (rate(container_network_receive_bytes_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\"}[5m]))",
+    "result": []
+  },
+  "default_tx_irate": {
+    "expr": "sum by (pod) (irate(container_network_transmit_bytes_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\"}[1m]))",
+    "result": []
+  },
+  "default_tx_rate": {
+    "expr": "sum by (pod) (rate(container_network_transmit_bytes_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\"}[5m]))",
+    "result": []
+  },
+  "kube_containers": {
+    "expr": "count(kube_pod_container_info)",
+    "result": [
+      [
+        {},
+        59.0
+      ]
+    ]
+  },
+  "kube_pods": {
+    "expr": "count(kube_pod_info)",
+    "result": [
+      [
+        {},
+        54.0
+      ]
+    ]
+  },
+  "kubelet_running_containers": {
+    "expr": "sum(kubelet_running_containers)",
+    "result": [
+      [
+        {},
+        85.0
+      ]
+    ]
+  },
+  "kubelet_running_pods": {
+    "expr": "sum(kubelet_running_pods)",
+    "result": [
+      [
+        {},
+        54.0
+      ]
+    ]
+  },
+  "node_cpu_cores": {
+    "expr": "machine_cpu_cores",
+    "result": [
+      [
+        {
+          "__name__": "machine_cpu_cores",
+          "boot_id": "d659d895-5d07-46ea-ab6d-36d9815fd9c0",
+          "endpoint": "https-metrics",
+          "instance": "192.168.67.2:10250",
+          "job": "kubelet",
+          "machine_id": "e366bd4b77b9d6be2d67552f69964f40",
+          "metrics_path": "/metrics/cadvisor",
+          "namespace": "kube-system",
+          "node": "lab11",
+          "service": "monitoring-kube-prometheus-kubelet",
+          "system_uuid": "e366bd4b77b9d6be2d67552f69964f40"
+        },
+        10.0
+      ]
+    ]
+  },
+  "node_mem_used_mib": {
+    "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / 1024 / 1024",
+    "result": [
+      [
+        {
+          "container": "node-exporter",
+          "endpoint": "http-metrics",
+          "instance": "192.168.67.2:9100",
+          "job": "node-exporter",
+          "namespace": "monitoring",
+          "pod": "monitoring-prometheus-node-exporter-vqb4l",
+          "service": "monitoring-prometheus-node-exporter"
+        },
+        3776.83203125
+      ]
+    ]
+  },
+  "node_mem_used_pct": {
+    "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))",
+    "result": [
+      [
+        {
+          "container": "node-exporter",
+          "endpoint": "http-metrics",
+          "instance": "192.168.67.2:9100",
+          "job": "node-exporter",
+          "namespace": "monitoring",
+          "pod": "monitoring-prometheus-node-exporter-vqb4l",
+          "service": "monitoring-prometheus-node-exporter"
+        },
+        71.95662965148775
+      ]
+    ]
+  },
+  "service_up": {
+    "expr": "up{namespace=\"lab16-metrics\",service=\"devops-info-service-metrics\"}",
+    "result": [
+      [
+        {
+          "__name__": "up",
+          "container": "app",
+          "endpoint": "http",
+          "instance": "10.244.0.99:5000",
+          "job": "devops-info-service-metrics",
+          "namespace": "lab16-metrics",
+          "pod": "devops-info-service-metrics-6dfd8c7d47-snnsk",
+          "service": "devops-info-service-metrics"
+        },
+        1.0
+      ]
+    ]
+  },
+  "ss_cpu_rate": {
+    "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"lab15-ss\",pod=~\"devops-info-service-ss-.*\",cpu=\"total\"}[5m]))",
+    "result": [
+      [
+        {
+          "pod": "devops-info-service-ss-1"
+        },
+        0.005975000613417368
+      ],
+      [
+        {
+          "pod": "devops-info-service-ss-0"
+        },
+        0.005627280305097998
+      ],
+      [
+        {
+          "pod": "devops-info-service-ss-2"
+        },
+        0.004471029063082759
+      ]
+    ]
+  },
+  "ss_mem_mib": {
+    "expr": "sum by (pod) (container_memory_working_set_bytes{namespace=\"lab15-ss\",pod=~\"devops-info-service-ss-.*\"}) / 1024 / 1024",
+    "result": [
+      [
+        {
+          "pod": "devops-info-service-ss-2"
+        },
+        23.25
+      ],
+      [
+        {
+          "pod": "devops-info-service-ss-1"
+        },
+        23.23828125
+      ],
+      [
+        {
+          "pod": "devops-info-service-ss-0"
+        },
+        23.2265625
+      ]
+    ]
+  },
+  "ss_up": {
+    "expr": "up{namespace=\"lab15-ss\",service=\"devops-info-service-ss\"}",
+    "result": []
+  }
+}

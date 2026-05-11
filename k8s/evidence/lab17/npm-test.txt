@@ -1,0 +1,84 @@
+
+> edge-api@0.0.0 test
+> vitest
+
+
+ RUN  v3.2.4 /Users/marianikolashina/DevOps-Core-Course/edge-api
+
+[vpw:debug] Adding `enable_nodejs_tty_module` compatibility flag during tests as this feature is needed to support the Vitest runner.
+[vpw:debug] Adding `enable_nodejs_fs_module` compatibility flag during tests as this feature is needed to support the Vitest runner.
+[vpw:debug] Adding `enable_nodejs_http_modules` compatibility flag during tests as this feature is needed to support the Vitest runner.
+[vpw:debug] Adding `enable_nodejs_perf_hooks_module` compatibility flag during tests as this feature is needed to support the Vitest runner.
+[vpw:info] Starting isolated runtimes for vitest.config.mts...
+stdout | test/index.spec.ts > Edge API worker > returns app metadata on / (unit style)
+request {
+  method: 'GET',
+  path: '/',
+  colo: undefined,
+  country: undefined,
+  stage: 'test'
+}
+
+stdout | test/index.spec.ts > Edge API worker > increments KV-backed counter on /counter (unit style)
+request {
+  method: 'GET',
+  path: '/counter',
+  colo: undefined,
+  country: undefined,
+  stage: 'test'
+}
+
+stdout | test/index.spec.ts > Edge API worker > increments KV-backed counter on /counter (unit style)
+request {
+  method: 'GET',
+  path: '/counter',
+  colo: undefined,
+  country: undefined,
+  stage: 'test'
+}
+
+stdout | test/index.spec.ts > Edge API worker > returns not found for unknown route (unit style)
+request {
+  method: 'GET',
+  path: '/does-not-exist',
+  colo: undefined,
+  country: undefined,
+  stage: 'test'
+}
+
+stdout | test/index.spec.ts > Edge API worker > responds with health payload (integration style)
+request {
+  method: 'GET',
+  path: '/health',
+  colo: undefined,
+  country: undefined,
+  stage: 'prod'
+}
+
+stdout | test/index.spec.ts > Edge API worker > responds with edge payload (integration style)
+request {
+  method: 'GET',
+  path: '/edge',
+  colo: undefined,
+  country: undefined,
+  stage: 'prod'
+}
+
+stdout | test/index.spec.ts > Edge API worker > responds with route metadata (integration style)
+request {
+  method: 'GET',
+  path: '/',
+  colo: undefined,
+  country: undefined,
+  stage: 'prod'
+}
+
+ ✓ test/index.spec.ts (6 tests) 29ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  22:51:49
+   Duration  996ms (transform 29ms, setup 0ms, collect 33ms, tests 29ms, environment 0ms, prepare 72ms)
+
+[vpw:debug] Shutting down runtimes...
+[vpw:debug] Disposing remote proxy sessions...

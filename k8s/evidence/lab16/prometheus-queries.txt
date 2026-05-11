@@ -1,0 +1,281 @@
+{
+  "alerts": {
+    "alerts": [
+      {
+        "annotations": {
+          "description": "100% of the kube-scheduler/monitoring-kube-prometheus-kube-scheduler targets in kube-system namespace are down.",
+          "runbook_url": "https://runbooks.prometheus-operator.dev/runbooks/general/targetdown",
+          "summary": "One or more targets are unreachable."
+        },
+        "endsAt": "2026-04-21T20:52:23.172Z",
+        "fingerprint": "0fa891d1f58bb07b",
+        "generatorURL": "http://monitoring-kube-prometheus-prometheus.monitoring:9090/graph?g0.expr=100+%2A+%28count+by+%28cluster%2C+job%2C+namespace%2C+service%29+%28up+%3D%3D+0%29+%2F+count+by+%28cluster%2C+job%2C+namespace%2C+service%29+%28up%29%29+%3E+10&g0.tab=1",
+        "labels": {
+          "alertname": "TargetDown",
+          "job": "kube-scheduler",
+          "namespace": "kube-system",
+          "prometheus": "monitoring/monitoring-kube-prometheus-prometheus",
+          "service": "monitoring-kube-prometheus-kube-scheduler",
+          "severity": "warning"
+        },
+        "receivers": [
+          {
+            "name": "null"
+          }
+        ],
+        "startsAt": "2026-04-21T20:42:23.172Z",
+        "status": {
+          "inhibitedBy": [],
+          "mutedBy": [],
+          "silencedBy": [],
+          "state": "active"
+        },
+        "updatedAt": "2026-04-21T20:48:36.953Z"
+      },
+      {
+        "annotations": {
+          "description": "etcd cluster \"kube-etcd\": insufficient members (0).",
+          "summary": "etcd cluster has insufficient number of members."
+        },
+        "endsAt": "2026-04-21T20:52:42.313Z",
+        "fingerprint": "40555c7dd5efb0ab",
+        "generatorURL": "http://monitoring-kube-prometheus-prometheus.monitoring:9090/graph?g0.expr=sum+without+%28instance%2C+pod%29+%28up%7Bjob%3D~%22.%2Aetcd.%2A%22%7D+%3D%3D+bool+1%29+%3C+%28%28count+without+%28instance%2C+pod%29+%28up%7Bjob%3D~%22.%2Aetcd.%2A%22%7D%29+%2B+1%29+%2F+2%29&g0.tab=1",
+        "labels": {
+          "alertname": "etcdInsufficientMembers",
+          "container": "etcd",
+          "endpoint": "http-metrics",
+          "job": "kube-etcd",
+          "namespace": "kube-system",
+          "prometheus": "monitoring/monitoring-kube-prometheus-prometheus",
+          "service": "monitoring-kube-prometheus-kube-etcd",
+          "severity": "critical"
+        },
+        "receivers": [
+          {
+            "name": "null"
+          }
+        ],
+        "startsAt": "2026-04-21T20:44:12.313Z",
+        "status": {
+          "inhibitedBy": [],
+          "mutedBy": [],
+          "silencedBy": [],
+          "state": "active"
+        },
+        "updatedAt": "2026-04-21T20:48:57.551Z"
+      },
+      {
+        "annotations": {
+          "description": "100% of the kube-controller-manager/monitoring-kube-prometheus-kube-controller-manager targets in kube-system namespace are down.",
+          "runbook_url": "https://runbooks.prometheus-operator.dev/runbooks/general/targetdown",
+          "summary": "One or more targets are unreachable."
+        },
+        "endsAt": "2026-04-21T20:52:23.172Z",
+        "fingerprint": "6d61d9872db097db",
+        "generatorURL": "http://monitoring-kube-prometheus-prometheus.monitoring:9090/graph?g0.expr=100+%2A+%28count+by+%28cluster%2C+job%2C+namespace%2C+service%29+%28up+%3D%3D+0%29+%2F+count+by+%28cluster%2C+job%2C+namespace%2C+service%29+%28up%29%29+%3E+10&g0.tab=1",
+        "labels": {
+          "alertname": "TargetDown",
+          "job": "kube-controller-manager",
+          "namespace": "kube-system",
+          "prometheus": "monitoring/monitoring-kube-prometheus-prometheus",
+          "service": "monitoring-kube-prometheus-kube-controller-manager",
+          "severity": "warning"
+        },
+        "receivers": [
+          {
+            "name": "null"
+          }
+        ],
+        "startsAt": "2026-04-21T20:42:23.172Z",
+        "status": {
+          "inhibitedBy": [],
+          "mutedBy": [],
+          "silencedBy": [],
+          "state": "active"
+        },
+        "updatedAt": "2026-04-21T20:48:36.953Z"
+      },
+      {
+        "annotations": {
+          "description": "This is an alert meant to ensure that the entire alerting pipeline is functional.\nThis alert is always firing, therefore it should always be firing in Alertmanager\nand always fire against a receiver. There are integrations with various notification\nmechanisms that send a notification when this alert is not firing. For example the\n\"DeadMansSnitch\" integration in PagerDuty.\n",
+          "runbook_url": "https://runbooks.prometheus-operator.dev/runbooks/general/watchdog",
+          "summary": "An alert that should always be firing to certify that Alertmanager is working properly."
+        },
+        "endsAt": "2026-04-21T20:54:53.172Z",
+        "fingerprint": "d200352fd868ba95",
+        "generatorURL": "http://monitoring-kube-prometheus-prometheus.monitoring:9090/graph?g0.expr=vector%281%29&g0.tab=1",
+        "labels": {
+          "alertname": "Watchdog",
+          "prometheus": "monitoring/monitoring-kube-prometheus-prometheus",
+          "severity": "none"
+        },
+        "receivers": [
+          {
+            "name": "null"
+          }
+        ],
+        "startsAt": "2026-04-21T20:41:23.172Z",
+        "status": {
+          "inhibitedBy": [],
+          "mutedBy": [],
+          "silencedBy": [],
+          "state": "active"
+        },
+        "updatedAt": "2026-04-21T20:50:56.330Z"
+      },
+      {
+        "annotations": {
+          "description": "100% of the kube-etcd/monitoring-kube-prometheus-kube-etcd targets in kube-system namespace are down.",
+          "runbook_url": "https://runbooks.prometheus-operator.dev/runbooks/general/targetdown",
+          "summary": "One or more targets are unreachable."
+        },
+        "endsAt": "2026-04-21T20:52:23.172Z",
+        "fingerprint": "daa21dd742461503",
+        "generatorURL": "http://monitoring-kube-prometheus-prometheus.monitoring:9090/graph?g0.expr=100+%2A+%28count+by+%28cluster%2C+job%2C+namespace%2C+service%29+%28up+%3D%3D+0%29+%2F+count+by+%28cluster%2C+job%2C+namespace%2C+service%29+%28up%29%29+%3E+10&g0.tab=1",
+        "labels": {
+          "alertname": "TargetDown",
+          "job": "kube-etcd",
+          "namespace": "kube-system",
+          "prometheus": "monitoring/monitoring-kube-prometheus-prometheus",
+          "service": "monitoring-kube-prometheus-kube-etcd",
+          "severity": "warning"
+        },
+        "receivers": [
+          {
+            "name": "null"
+          }
+        ],
+        "startsAt": "2026-04-21T20:42:23.172Z",
+        "status": {
+          "inhibitedBy": [],
+          "mutedBy": [],
+          "silencedBy": [],
+          "state": "active"
+        },
+        "updatedAt": "2026-04-21T20:48:36.953Z"
+      }
+    ],
+    "count": 5
+  },
+  "default_cpu": {
+    "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\",container!=\"\",image!=\"\"}[5m]))",
+    "result": []
+  },
+  "default_rx": {
+    "expr": "sum by (pod) (rate(container_network_receive_bytes_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\"}[5m]))",
+    "result": []
+  },
+  "default_tx": {
+    "expr": "sum by (pod) (rate(container_network_transmit_bytes_total{namespace=\"default\",pod=~\"devops-info-service-default-.*\"}[5m]))",
+    "result": []
+  },
+  "kube_containers": {
+    "expr": "count(kube_pod_container_info)",
+    "result": []
+  },
+  "kube_pods": {
+    "expr": "count(kube_pod_info)",
+    "result": []
+  },
+  "kubelet_running_containers": {
+    "expr": "sum(kubelet_running_containers)",
+    "result": []
+  },
+  "kubelet_running_pods": {
+    "expr": "sum(kubelet_running_pods)",
+    "result": []
+  },
+  "node_cpu_cores": {
+    "expr": "machine_cpu_cores",
+    "result": [
+      {
+        "metric": {
+          "__name__": "machine_cpu_cores",
+          "boot_id": "d659d895-5d07-46ea-ab6d-36d9815fd9c0",
+          "endpoint": "https-metrics",
+          "instance": "192.168.67.2:10250",
+          "job": "kubelet",
+          "machine_id": "e366bd4b77b9d6be2d67552f69964f40",
+          "metrics_path": "/metrics/cadvisor",
+          "namespace": "kube-system",
+          "node": "lab11",
+          "service": "monitoring-kube-prometheus-kubelet",
+          "system_uuid": "e366bd4b77b9d6be2d67552f69964f40"
+        },
+        "value": [
+          1776804678.962,
+          "10"
+        ]
+      }
+    ]
+  },
+  "node_mem_used_mib": {
+    "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / 1024 / 1024",
+    "result": [
+      {
+        "metric": {
+          "container": "node-exporter",
+          "endpoint": "http-metrics",
+          "instance": "192.168.67.2:9100",
+          "job": "node-exporter",
+          "namespace": "monitoring",
+          "pod": "monitoring-prometheus-node-exporter-vqb4l",
+          "service": "monitoring-prometheus-node-exporter"
+        },
+        "value": [
+          1776804678.942,
+          "3765.4375"
+        ]
+      }
+    ]
+  },
+  "node_mem_used_pct": {
+    "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))",
+    "result": [
+      {
+        "metric": {
+          "container": "node-exporter",
+          "endpoint": "http-metrics",
+          "instance": "192.168.67.2:9100",
+          "job": "node-exporter",
+          "namespace": "monitoring",
+          "pod": "monitoring-prometheus-node-exporter-vqb4l",
+          "service": "monitoring-prometheus-node-exporter"
+        },
+        "value": [
+          1776804678.959,
+          "71.7395397575172"
+        ]
+      }
+    ]
+  },
+  "service_up": {
+    "expr": "up{namespace=\"lab16-metrics\",service=\"devops-info-service-metrics\"}",
+    "result": [
+      {
+        "metric": {
+          "__name__": "up",
+          "container": "app",
+          "endpoint": "http",
+          "instance": "10.244.0.99:5000",
+          "job": "devops-info-service-metrics",
+          "namespace": "lab16-metrics",
+          "pod": "devops-info-service-metrics-6dfd8c7d47-snnsk",
+          "service": "devops-info-service-metrics"
+        },
+        "value": [
+          1776804679.032,
+          "1"
+        ]
+      }
+    ]
+  },
+  "ss_cpu": {
+    "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"lab15-ss\",pod=~\"devops-info-service-ss-.*\",container!=\"\",image!=\"\"}[5m]))",
+    "result": []
+  },
+  "ss_mem_mib": {
+    "expr": "sum by (pod) (container_memory_working_set_bytes{namespace=\"lab15-ss\",pod=~\"devops-info-service-ss-.*\",container!=\"\",image!=\"\"}) / 1024 / 1024",
+    "result": []
+  }
+}
