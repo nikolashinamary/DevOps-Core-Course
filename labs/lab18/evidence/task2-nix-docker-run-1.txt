@@ -1,0 +1,16 @@
+$ docker load < result
+Loaded image: devops-info-service-nix:1.0.0
+
+$ docker run -d -p 5001:5000 --name nix-container devops-info-service-nix:1.0.0
+0893a9eca55381c953cd1a0bf647a14c8e94bf28e5e477fcbdc853f1e4668fde
+
+$ curl -s http://localhost:5001/health
+{"status":"healthy","timestamp":"2026-05-11T15:22:01.483920+00:00","uptime_seconds":3}
+
+$ docker images devops-info-service-nix:1.0.0
+REPOSITORY                   TAG       IMAGE ID       CREATED        SIZE
+devops-info-service-nix      1.0.0     a52021805458   N/A            143MB
+
+$ docker history devops-info-service-nix:1.0.0
+IMAGE          CREATED   CREATED BY   SIZE      COMMENT
+a52021805458   N/A                    143MB

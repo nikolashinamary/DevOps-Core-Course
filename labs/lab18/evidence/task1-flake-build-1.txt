@@ -1,0 +1,12 @@
+these 2 derivations will be built:
+  /nix/store/4idi1jf68bk3r2mxqljr8r05wsi91jsj-devops-info-service-1.0.0.drv
+  /nix/store/7bicn3hq221xfv4dphn42bwpymsv0bic-wrap-python-hook.drv
+building '/nix/store/4idi1jf68bk3r2mxqljr8r05wsi91jsj-devops-info-service-1.0.0.drv'...
+patching sources
+configuring
+building
+installing
+post-installation fixup
+shrinking RPATHs of ELF executables and libraries in /nix/store/l1km4rvmr03x328y8qpbablhm6aqxfmr-devops-info-service-1.0.0
+checking for references to /build/ in /nix/store/l1km4rvmr03x328y8qpbablhm6aqxfmr-devops-info-service-1.0.0...
+/nix/store/l1km4rvmr03x328y8qpbablhm6aqxfmr-devops-info-service-1.0.0

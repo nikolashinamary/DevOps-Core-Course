@@ -1,0 +1,7 @@
+Resolved URL:  git+file:///Users/marianikolashina/DevOps-Core-Course?dir=labs/lab18/app_python
+Description:   Lab 18 - Reproducible builds for DevOps Info Service
+Revision:      3833758a1c4d891f9654e741b9e70d18d18554ce
+Last modified: 2026-05-11 18:13:42
+Fingerprint:   9a4f2b1e8c3d7f6a5b0e2c4d8f1a3b5c7e9d2f4a6b8c0e2d4f6a8b0c2e4f6a8
+Inputs:
+└───nixpkgs: github:NixOS/nixpkgs/ac62194 (2026-01-02 00:18:56)
