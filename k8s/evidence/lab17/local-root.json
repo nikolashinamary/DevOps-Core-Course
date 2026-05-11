@@ -1,0 +1,1 @@
+{"app":"devops-core-edge-api","course":"devops-core","stage":"prod","message":"Hello from Cloudflare Workers","routes":["/","/health","/edge","/counter","/config"],"timestamp":"2026-04-23T19:50:12.070Z"}

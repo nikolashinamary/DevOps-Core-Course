@@ -1,0 +1,139 @@
+{
+  "alerts_active": [
+    "TargetDown",
+    "etcdInsufficientMembers",
+    "TargetDown",
+    "Watchdog",
+    "TargetDown"
+  ],
+  "default_cpu": [
+    [
+      {
+        "pod": "devops-info-service-default-6958b748b4-chntf"
+      },
+      0.007084103131196094
+    ],
+    [
+      {
+        "pod": "devops-info-service-default-6958b748b4-j8c86"
+      },
+      0.0035955252875979494
+    ]
+  ],
+  "default_traffic": [],
+  "default_traffic_health": [],
+  "kubelet_running_containers": [
+    [
+      {},
+      86.0
+    ]
+  ],
+  "kubelet_running_pods": [
+    [
+      {},
+      54.0
+    ]
+  ],
+  "machine_cpu_cores": [
+    [
+      {
+        "__name__": "machine_cpu_cores",
+        "boot_id": "d659d895-5d07-46ea-ab6d-36d9815fd9c0",
+        "endpoint": "https-metrics",
+        "instance": "192.168.67.2:10250",
+        "job": "kubelet",
+        "machine_id": "e366bd4b77b9d6be2d67552f69964f40",
+        "metrics_path": "/metrics/cadvisor",
+        "namespace": "kube-system",
+        "node": "lab11",
+        "service": "monitoring-kube-prometheus-kubelet",
+        "system_uuid": "e366bd4b77b9d6be2d67552f69964f40"
+      },
+      10.0
+    ]
+  ],
+  "node_memory_used_mib": [
+    [
+      {
+        "container": "node-exporter",
+        "endpoint": "http-metrics",
+        "instance": "192.168.67.2:9100",
+        "job": "node-exporter",
+        "namespace": "monitoring",
+        "pod": "monitoring-prometheus-node-exporter-vqb4l",
+        "service": "monitoring-prometheus-node-exporter"
+      },
+      3928.1953125
+    ]
+  ],
+  "node_memory_used_pct": [
+    [
+      {
+        "container": "node-exporter",
+        "endpoint": "http-metrics",
+        "instance": "192.168.67.2:9100",
+        "job": "node-exporter",
+        "namespace": "monitoring",
+        "pod": "monitoring-prometheus-node-exporter-vqb4l",
+        "service": "monitoring-prometheus-node-exporter"
+      },
+      74.84041995024124
+    ]
+  ],
+  "service_up_default": [],
+  "service_up_metrics": [
+    [
+      {
+        "__name__": "up",
+        "container": "app",
+        "endpoint": "http",
+        "instance": "10.244.0.99:5000",
+        "job": "devops-info-service-metrics",
+        "namespace": "lab16-metrics",
+        "pod": "devops-info-service-metrics-6dfd8c7d47-snnsk",
+        "service": "devops-info-service-metrics"
+      },
+      1.0
+    ]
+  ],
+  "statefulset_cpu": [
+    [
+      {
+        "pod": "devops-info-service-ss-1"
+      },
+      0.0036740211761873503
+    ],
+    [
+      {
+        "pod": "devops-info-service-ss-2"
+      },
+      0.003645784508072255
+    ],
+    [
+      {
+        "pod": "devops-info-service-ss-0"
+      },
+      0.0035183827863339155
+    ]
+  ],
+  "statefulset_memory_mib": [
+    [
+      {
+        "pod": "devops-info-service-ss-2"
+      },
+      23.26171875
+    ],
+    [
+      {
+        "pod": "devops-info-service-ss-1"
+      },
+      23.2578125
+    ],
+    [
+      {
+        "pod": "devops-info-service-ss-0"
+      },
+      23.2421875
+    ]
+  ]
+}

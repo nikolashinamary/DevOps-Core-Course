@@ -1,0 +1,74 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 701B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.13-slim
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 278B done
+#3 DONE 0.0s
+
+#4 [1/7] FROM docker.io/library/python:3.13-slim
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 521B done
+#5 DONE 0.0s
+
+#6 [2/7] RUN groupadd --gid 1000 appuser &&     useradd --uid 1000 --gid 1000 --create-home --shell /usr/sbin/nologin appuser
+#6 DONE 0.2s
+
+#7 [3/7] WORKDIR /app
+#7 DONE 0.0s
+
+#8 [4/7] COPY requirements.txt .
+#8 DONE 0.0s
+
+#9 [5/7] RUN pip install --no-cache-dir -r requirements.txt
+#9 1.307 Collecting Flask==3.1.0 (from -r requirements.txt (line 2))
+#9 1.724   Downloading flask-3.1.0-py3-none-any.whl.metadata (2.7 kB)
+#9 1.824 Collecting prometheus-client==0.23.1 (from -r requirements.txt (line 3))
+#9 1.892   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+#9 2.003 Collecting Werkzeug>=3.1 (from Flask==3.1.0->-r requirements.txt (line 2))
+#9 2.073   Downloading werkzeug-3.1.8-py3-none-any.whl.metadata (4.0 kB)
+#9 2.160 Collecting Jinja2>=3.1.2 (from Flask==3.1.0->-r requirements.txt (line 2))
+#9 2.234   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+#9 2.319 Collecting itsdangerous>=2.2 (from Flask==3.1.0->-r requirements.txt (line 2))
+#9 2.383   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+#9 2.474 Collecting click>=8.1.3 (from Flask==3.1.0->-r requirements.txt (line 2))
+#9 2.539   Downloading click-8.3.3-py3-none-any.whl.metadata (2.6 kB)
+#9 2.614 Collecting blinker>=1.9 (from Flask==3.1.0->-r requirements.txt (line 2))
+#9 2.683   Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+#9 2.887 Collecting MarkupSafe>=2.0 (from Jinja2>=3.1.2->Flask==3.1.0->-r requirements.txt (line 2))
+#9 2.953   Downloading markupsafe-3.0.3-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.7 kB)
+#9 3.033 Downloading flask-3.1.0-py3-none-any.whl (102 kB)
+#9 3.194 Downloading prometheus_client-0.23.1-py3-none-any.whl (61 kB)
+#9 3.296 Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+#9 3.363 Downloading click-8.3.3-py3-none-any.whl (110 kB)
+#9 3.461 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#9 3.531 Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+#9 3.693 Downloading markupsafe-3.0.3-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (24 kB)
+#9 3.770 Downloading werkzeug-3.1.8-py3-none-any.whl (226 kB)
+#9 3.845 Installing collected packages: prometheus-client, MarkupSafe, itsdangerous, click, blinker, Werkzeug, Jinja2, Flask
+#9 4.175 
+#9 4.176 Successfully installed Flask-3.1.0 Jinja2-3.1.6 MarkupSafe-3.0.3 Werkzeug-3.1.8 blinker-1.9.0 click-8.3.3 itsdangerous-2.2.0 prometheus-client-0.23.1
+#9 4.177 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 4.617 
+#9 4.617 [notice] A new release of pip is available: 25.3 -> 26.1.1
+#9 4.617 [notice] To update, run: pip install --upgrade pip
+#9 DONE 4.7s
+
+#10 [6/7] COPY app.py .
+#10 DONE 0.0s
+
+#11 [7/7] RUN mkdir -p /app/data && chown -R appuser:appuser /app
+#11 DONE 0.1s
+
+#12 exporting to image
+#12 exporting layers 0.1s done
+#12 writing image sha256:d595fdaec6f13c1cf282dcfa65d1fef541c23f0ab255920f67df2ccd3ba73670 done
+#12 naming to docker.io/library/lab18-lab2-nocache1 done
+#12 DONE 0.1s

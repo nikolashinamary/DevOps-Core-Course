@@ -1,0 +1,13 @@
+argocd        argocd-applicationset-controller          ClusterIP   10.106.35.251    <none>        7000/TCP,8080/TCP            33m     app.kubernetes.io/name=argocd-applicationset-controller
+argocd        argocd-dex-server                         ClusterIP   10.107.51.136    <none>        5556/TCP,5557/TCP,5558/TCP   33m     app.kubernetes.io/name=argocd-dex-server
+argocd        argocd-metrics                            ClusterIP   10.99.73.159     <none>        8082/TCP                     33m     app.kubernetes.io/name=argocd-application-controller
+argocd        argocd-notifications-controller-metrics   ClusterIP   10.106.223.105   <none>        9001/TCP                     33m     app.kubernetes.io/name=argocd-notifications-controller
+argocd        argocd-redis                              ClusterIP   10.104.159.129   <none>        6379/TCP                     33m     app.kubernetes.io/name=argocd-redis
+argocd        argocd-repo-server                        ClusterIP   10.102.29.191    <none>        8081/TCP,8084/TCP            33m     app.kubernetes.io/name=argocd-repo-server
+argocd        argocd-server                             ClusterIP   10.96.66.222     <none>        80/TCP,443/TCP               33m     app.kubernetes.io/name=argocd-server
+argocd        argocd-server-metrics                     ClusterIP   10.107.44.126    <none>        8083/TCP                     33m     app.kubernetes.io/name=argocd-server
+dev           devops-info-service-dev                   NodePort    10.103.169.239   <none>        80:30083/TCP                 8m46s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-dev,app.kubernetes.io/name=devops-info-service
+lab11         lab11-app-devops-info-service             NodePort    10.109.228.123   <none>        80:30080/TCP                 12d     app.kubernetes.io/component=web,app.kubernetes.io/instance=lab11-app,app.kubernetes.io/name=devops-info-service
+lab12         lab12-app-devops-info-service             NodePort    10.100.9.142     <none>        80:30081/TCP                 8d      app.kubernetes.io/component=web,app.kubernetes.io/instance=lab12-app,app.kubernetes.io/name=devops-info-service
+lab13         devops-info-service-main                  NodePort    10.103.55.111    <none>        80:30082/TCP                 11m     app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-main,app.kubernetes.io/name=devops-info-service
+prod          devops-info-service-prod                  NodePort    10.100.153.159   <none>        80:30084/TCP                 8m22s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-prod,app.kubernetes.io/name=devops-info-service

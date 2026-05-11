@@ -1,0 +1,80 @@
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+** server can't find devops-info-service-dependency.lab16-wait.svc.cluster.local: NXDOMAIN
+
+waiting for dependency
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	devops-info-service-dependency.lab16-wait.svc.cluster.local
+Address: 10.106.153.185
+

@@ -1,0 +1,7 @@
+Build 1:
+ecafa92dca6712a47183387bbd064ffcb08fe0d214725767b5c1de9027cdb6a9  result
+store path: /nix/store/d8yx0cffg9dp0db00c5g7ivla384p4is-docker-image-devops-info-service-nix.tar.gz
+
+Build 2:
+ecafa92dca6712a47183387bbd064ffcb08fe0d214725767b5c1de9027cdb6a9  result
+store path: /nix/store/d8yx0cffg9dp0db00c5g7ivla384p4is-docker-image-devops-info-service-nix.tar.gz

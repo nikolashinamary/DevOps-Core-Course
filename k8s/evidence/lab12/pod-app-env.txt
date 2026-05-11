@@ -1,0 +1,9 @@
+APP_FEATURE_VISITS=true
+APP_DEPLOY_ENV=dev
+APP_NAME=devops-info-service
+APP_CONFIG_RELOAD_STRATEGY=checksum-rollout
+APP_USERNAME=change-me
+APP_LOG_LEVEL=INFO
+APP_REVISION=dev
+APP_ENV=dev
+APP_PASSWORD=change-me

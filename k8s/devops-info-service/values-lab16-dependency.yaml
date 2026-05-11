@@ -1,0 +1,20 @@
+fullnameOverride: devops-info-service-dependency
+
+replicaCount: 1
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab16-dependency
+  appRevision: lab16-init
+
+service:
+  type: ClusterIP
+
+hooks:
+  enabled: false
+
+monitoring:
+  serviceMonitor:
+    enabled: false

@@ -1,0 +1,4 @@
+NAME                              REVISION                                   AGE
+devops-info-service-partition-0   devops-info-service-partition-578fff78c9   2026-04-21T20:05:22Z
+devops-info-service-partition-1   devops-info-service-partition-578fff78c9   2026-04-21T20:05:28Z
+devops-info-service-partition-2   devops-info-service-partition-948f96f7d    2026-04-21T20:07:41Z

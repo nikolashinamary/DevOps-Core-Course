@@ -1,0 +1,28 @@
+fullnameOverride: devops-info-service-partition
+
+workload:
+  kind: StatefulSet
+
+replicaCount: 3
+
+image:
+  tag: "lab12"
+
+env:
+  appEnv: lab15-partition-v1
+  appRevision: lab15-partition
+
+service:
+  type: NodePort
+  nodePort: 30094
+  headless: true
+
+statefulset:
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 2
+
+hooks:
+  enabled: false

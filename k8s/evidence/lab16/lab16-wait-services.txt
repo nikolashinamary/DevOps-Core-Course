@@ -1,0 +1,3 @@
+NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE     SELECTOR
+devops-info-service-dependency   ClusterIP   10.106.153.185   <none>        80/TCP         2m3s    app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-dependency,app.kubernetes.io/name=devops-info-service
+devops-info-service-init-wait    NodePort    10.101.179.213   <none>        80:30097/TCP   9m34s   app.kubernetes.io/component=web,app.kubernetes.io/instance=devops-info-service-init-wait,app.kubernetes.io/name=devops-info-service

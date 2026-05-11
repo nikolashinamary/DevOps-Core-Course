@@ -1,0 +1,6 @@
+NAME              STATUS   AGE
+default           Active   7m46s
+kube-node-lease   Active   7m46s
+kube-public       Active   7m46s
+kube-system       Active   7m46s
+lab09             Active   5m40s

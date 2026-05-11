@@ -1,0 +1,3 @@
+devops-info-service-partition-0 -> lab15-partition-v2 2
+devops-info-service-partition-1 -> lab15-partition-v1 2
+devops-info-service-partition-2 -> lab15-partition-v2 2

@@ -1,0 +1,6 @@
+NAME                                       READY   STATUS              RESTARTS   AGE   IP            NODE    NOMINATED NODE   READINESS GATES
+devops-info-service-dev-5b8f65969c-94vfv   0/1     ContainerCreating   0          1s    <none>        lab11   <none>           <none>
+devops-info-service-dev-5b8f65969c-cchg6   0/1     ContainerCreating   0          1s    <none>        lab11   <none>           <none>
+devops-info-service-dev-5b8f65969c-djrvd   0/1     ContainerCreating   0          1s    <none>        lab11   <none>           <none>
+devops-info-service-dev-5b8f65969c-ndtrj   1/1     Running             0          11m   10.244.0.27   lab11   <none>           <none>
+devops-info-service-dev-5b8f65969c-qcz7x   0/1     ContainerCreating   0          1s    <none>        lab11   <none>           <none>

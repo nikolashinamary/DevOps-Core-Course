@@ -1,0 +1,43 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 701B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.13-slim
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 278B done
+#3 DONE 0.0s
+
+#4 [1/7] FROM docker.io/library/python:3.13-slim
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 521B done
+#5 DONE 0.0s
+
+#6 [5/7] RUN pip install --no-cache-dir -r requirements.txt
+#6 CACHED
+
+#7 [2/7] RUN groupadd --gid 1000 appuser &&     useradd --uid 1000 --gid 1000 --create-home --shell /usr/sbin/nologin appuser
+#7 CACHED
+
+#8 [4/7] COPY requirements.txt .
+#8 CACHED
+
+#9 [6/7] COPY app.py .
+#9 CACHED
+
+#10 [3/7] WORKDIR /app
+#10 CACHED
+
+#11 [7/7] RUN mkdir -p /app/data && chown -R appuser:appuser /app
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:7905ea5c6e8a8af415075e0f9676449e07866e9e9844171fc628c07f9bb29b31 done
+#12 naming to docker.io/library/lab18-lab2-test1 done
+#12 DONE 0.0s
