@@ -1,0 +1,8 @@
+github_token               = "ghp_replace_with_token"
+github_owner               = "your-github-username"
+repository_name            = "DevOps-Core-Course"
+repository_description     = "DevOps course repository managed by Terraform"
+repository_visibility      = "public"
+default_branch             = "master"
+required_approving_review_count = 1
+

@@ -1,0 +1,84 @@
+---
+- name: Detect stale Docker apt source entries
+  ansible.builtin.command:
+    cmd: grep -RIl "download.docker.com/linux/ubuntu" /etc/apt/sources.list /etc/apt/sources.list.d
+  register: docker_apt_source_files
+  changed_when: false
+  failed_when: false
+  tags:
+    - common
+    - system
+
+- name: Remove stale Docker apt source entries before apt update
+  ansible.builtin.lineinfile:
+    path: "{{ item }}"
+    regexp: ".*download\\.docker\\.com/linux/ubuntu.*"
+    state: absent
+  loop: "{{ docker_apt_source_files.stdout_lines }}"
+  when:
+    - docker_apt_source_files.rc == 0
+    - docker_apt_source_files.stdout_lines | length > 0
+  tags:
+    - common
+    - system
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    lock_timeout: 600
+    update_cache_retries: 10
+    update_cache_retry_max_delay: 30
+  tags:
+    - common
+    - system
+
+- name: Install common packages
+  ansible.builtin.apt:
+    name: "{{ common_packages }}"
+    state: present
+    lock_timeout: 600
+  tags:
+    - common
+    - packages
+
+- name: Read current timezone
+  ansible.builtin.command:
+    cmd: cat /etc/timezone
+  register: current_timezone
+  changed_when: false
+  failed_when: false
+  when:
+    - timezone is defined
+    - timezone | length > 0
+  tags:
+    - common
+    - timezone
+
+- name: Set timezone
+  ansible.builtin.command:
+    cmd: "timedatectl set-timezone {{ timezone }}"
+  when:
+    - timezone is defined
+    - timezone | length > 0
+    - current_timezone.stdout | default('') | trim != timezone
+  tags:
+    - common
+    - timezone
+
+- name: Ensure pip is installed
+  ansible.builtin.pip:
+    name: pip
+    state: present
+  tags:
+    - common
+    - pip
+
+- name: Create .ssh directory for root
+  ansible.builtin.file:
+    path: /root/.ssh
+    state: directory
+    mode: '0700'
+  tags:
+    - common
+    - ssh
