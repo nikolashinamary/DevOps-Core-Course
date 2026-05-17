@@ -1,0 +1,20 @@
+Name:             devops-info-ingress
+Labels:           <none>
+Namespace:        lab09
+Address:          192.168.49.2
+Ingress Class:    nginx
+Default backend:  <default>
+TLS:
+  tls-secret terminates local.example.com
+Rules:
+  Host               Path  Backends
+  ----               ----  --------
+  local.example.com  
+                     /app1(/|$)(.*)   devops-info-service:80 (10.244.0.11:5000,10.244.0.12:5000,10.244.0.13:5000)
+                     /app2(/|$)(.*)   devops-info-service-go:80 (10.244.0.18:8080,10.244.0.17:8080)
+Annotations:         nginx.ingress.kubernetes.io/rewrite-target: /$2
+                     nginx.ingress.kubernetes.io/use-regex: true
+Events:
+  Type    Reason  Age                   From                      Message
+  ----    ------  ----                  ----                      -------
+  Normal  Sync    3m7s (x2 over 3m37s)  nginx-ingress-controller  Scheduled for sync

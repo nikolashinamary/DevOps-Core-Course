@@ -1,0 +1,23 @@
+yandex_vpc_network.network: Creating...
+yandex_compute_disk.boot_disk: Creating...
+yandex_vpc_network.network: Creation complete after 3s [id=enp34m5bmgtgpgotam9g]
+yandex_vpc_subnet.subnet: Creating...
+yandex_vpc_security_group.vm_sg: Creating...
+yandex_vpc_subnet.subnet: Creation complete after 0s [id=e9bkrht39k8rg0dr1f2u]
+yandex_vpc_security_group.vm_sg: Creation complete after 2s [id=enplq5mderm3mnkee7m0]
+yandex_compute_disk.boot_disk: Creation complete after 9s [id=fhm2ubm1rsbj9hocssai]
+yandex_compute_instance.vm: Creating...
+yandex_compute_instance.vm: Still creating... [00m10s elapsed]
+yandex_compute_instance.vm: Still creating... [00m20s elapsed]
+yandex_compute_instance.vm: Still creating... [00m30s elapsed]
+yandex_compute_instance.vm: Still creating... [00m40s elapsed]
+yandex_compute_instance.vm: Creation complete after 45s [id=fhm9b6i8p18p33mm0git]
+
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+external_ip = "89.169.138.140"
+internal_ip = "192.168.10.31"
+ssh_command = "ssh ubuntu@89.169.138.140"
+vm_id = "fhm9b6i8p18p33mm0git"

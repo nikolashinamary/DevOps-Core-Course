@@ -1,0 +1,2 @@
+lab05-vm | CHANGED | rc=0 >>
+{"status":"healthy","timestamp":"2026-02-18T22:25:45.153629+00:00","uptime_seconds":315}
