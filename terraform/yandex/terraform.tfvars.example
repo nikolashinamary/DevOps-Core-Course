@@ -1,0 +1,18 @@
+yc_token       = "replace-with-yc-iam-token"
+cloud_id       = "replace-with-cloud-id"
+folder_id      = "replace-with-folder-id"
+zone           = "ru-central1-a"
+ssh_username   = "ubuntu"
+ssh_public_key = "ssh-rsa AAAA... user@example.com"
+
+# Free-tier oriented defaults are set in variables.tf:
+# cores=2, memory_gb=1, core_fraction=20, disk_size_gb=10, preemptible=true
+# Override below only if needed.
+# cores         = 2
+# memory_gb     = 1
+# core_fraction = 20
+# disk_size_gb  = 10
+# preemptible   = true
+
+# Restrict SSH to your own IP for better security.
+allowed_ssh_cidrs = ["203.0.113.5/32"]

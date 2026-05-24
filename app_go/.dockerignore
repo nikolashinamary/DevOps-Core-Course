@@ -1,0 +1,28 @@
+# Go binaries
+devops-info-service
+devops-info-service.exe
+devops-info-service-*
+
+# Go build cache
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+docs/
+README.md

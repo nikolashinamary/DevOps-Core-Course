@@ -1,0 +1,1 @@
+pod "lab12-app-devops-info-service-7f59cdc74d-466cz" deleted from lab12 namespace
