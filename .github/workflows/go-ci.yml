@@ -1,0 +1,125 @@
+name: Go CI/CD
+
+on:
+  push:
+    branches: [ "master", "lab03" ]
+    paths:
+      - "app_go/**"
+      - '.github/workflows/go-ci.yml'
+  pull_request:
+    paths:
+      - "app_go/**"
+      - '.github/workflows/go-ci.yml'
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/devops-info-service-go
+  WORKING_DIR: ./app_go
+  GO_VERSION: '1.21'
+
+jobs:
+  test-and-lint:
+    name: Test & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Go setup
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Caching
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('app_go/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Tests & coverage
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          go test ./... -coverprofile=coverage.out
+          go tool cover -func=coverage.out | tee coverage.txt
+          TOTAL=$(go tool cover -func=coverage.out | grep total: | awk '{print substr($3, 1, length($3)-1)}')
+          echo "Total coverage: $TOTAL%"
+          if (( $(echo "$TOTAL < 50" | bc -l) )); then
+            echo "Coverage below 50%"
+            exit 1
+          fi
+
+      - name: Coverate transformation
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          go install github.com/boumenot/gocover-cobertura@latest
+          gocover-cobertura < coverage.out > coverage.xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          format: cobertura
+          file: ${{ env.WORKING_DIR }}/coverage.xml
+          flag-name: go
+          parallel: true
+  
+  security:
+    name: Snyk Vulnerabilities check
+    runs-on: ubuntu-latest
+    needs: test-and-lint
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Go setup
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: app_go/go.sum
+
+      - name: Snyk Vulnerabilities check
+        uses: snyk/actions/golang@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=app_go/go.mod --severity-threshold=high
+
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: test-and-lint
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ env.WORKING_DIR }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
