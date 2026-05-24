@@ -1,0 +1,3 @@
+deployment.apps/devops-info-service-go created
+service/devops-info-service-go created
+ingress.networking.k8s.io/devops-info-ingress created

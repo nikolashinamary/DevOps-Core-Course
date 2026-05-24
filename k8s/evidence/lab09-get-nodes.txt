@@ -1,0 +1,2 @@
+NAME    STATUS   ROLES           AGE     VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION                       CONTAINER-RUNTIME
+lab09   Ready    control-plane   7m46s   v1.35.1   192.168.49.2   <none>        Debian GNU/Linux 12 (bookworm)   6.9.6-orbstack-00147-gb0567c7c0069   docker://29.2.1

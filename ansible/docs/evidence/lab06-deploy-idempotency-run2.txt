@@ -1,0 +1,101 @@
+
+PLAY [Deploy application] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lab06-vm]
+
+TASK [docker : Install prerequisites for Docker] *******************************
+ok: [lab06-vm]
+
+TASK [docker : Ensure apt keyrings directory exists] ***************************
+ok: [lab06-vm]
+
+TASK [docker : Add Docker GPG key] *********************************************
+ok: [lab06-vm]
+
+TASK [docker : Remove old Docker repository entry from /etc/apt/sources.list] ***
+ok: [lab06-vm]
+
+TASK [docker : Find apt source list files] *************************************
+ok: [lab06-vm]
+
+TASK [docker : Remove stale Docker repository entries from sources.list.d] *****
+skipping: [lab06-vm] => (item=/etc/apt/sources.list.d/docker.list) 
+skipping: [lab06-vm]
+
+TASK [docker : Add Docker repository] ******************************************
+ok: [lab06-vm]
+
+TASK [docker : Update apt cache after adding Docker repository] ****************
+ok: [lab06-vm]
+
+TASK [docker : Install Docker packages] ****************************************
+ok: [lab06-vm]
+
+TASK [docker : Ensure Docker service is running] *******************************
+ok: [lab06-vm]
+
+TASK [docker : Add users to docker group] **************************************
+ok: [lab06-vm] => (item=ubuntu)
+
+TASK [docker : Install Docker SDK for Python] **********************************
+ok: [lab06-vm]
+
+TASK [docker : Ensure Docker service is enabled and started] *******************
+ok: [lab06-vm]
+
+TASK [web_app : Include wipe tasks] ********************************************
+included: /Users/marianikolashina/DevOps-Core-Course/ansible/roles/web_app/tasks/wipe.yml for lab06-vm
+
+TASK [web_app : Check whether compose file exists] *****************************
+skipping: [lab06-vm]
+
+TASK [web_app : Stop and remove Docker Compose services] ***********************
+skipping: [lab06-vm]
+
+TASK [web_app : Remove docker-compose file] ************************************
+skipping: [lab06-vm]
+
+TASK [web_app : Remove application directory] **********************************
+skipping: [lab06-vm]
+
+TASK [web_app : Log wipe completion] *******************************************
+skipping: [lab06-vm]
+
+TASK [web_app : Create application directory] **********************************
+ok: [lab06-vm]
+
+TASK [web_app : Login to Docker Hub] *******************************************
+ok: [lab06-vm]
+
+TASK [web_app : Template Docker Compose manifest] ******************************
+ok: [lab06-vm]
+
+TASK [web_app : Deploy containers with Docker Compose] *************************
+ok: [lab06-vm]
+
+TASK [web_app : Wait for application port] *************************************
+ok: [lab06-vm]
+
+TASK [web_app : Check application health endpoint] *****************************
+ok: [lab06-vm]
+
+TASK [web_app : Display health check result] ***********************************
+ok: [lab06-vm] => {
+    "msg": "Application is healthy. Compose changed=False"
+}
+
+TASK [Show running containers] *************************************************
+ok: [lab06-vm]
+
+TASK [Display container status] ************************************************
+ok: [lab06-vm] => {
+    "msg": [
+        "NAMES                 IMAGE                                         STATUS         PORTS",
+        "devops-info-service   nikolashinamaria/devops-info-service:latest   Up 4 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp"
+    ]
+}
+
+PLAY RECAP *********************************************************************
+lab06-vm                   : ok=23   changed=0    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+

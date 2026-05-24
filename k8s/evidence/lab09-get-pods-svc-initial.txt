@@ -1,0 +1,7 @@
+NAME                                       READY   STATUS    RESTARTS   AGE     IP           NODE    NOMINATED NODE   READINESS GATES
+pod/devops-info-service-54499576b4-frrpn   1/1     Running   0          5m40s   10.244.0.5   lab09   <none>           <none>
+pod/devops-info-service-54499576b4-gkg2n   1/1     Running   0          5m40s   10.244.0.4   lab09   <none>           <none>
+pod/devops-info-service-54499576b4-qthgr   1/1     Running   0          5m40s   10.244.0.3   lab09   <none>           <none>
+
+NAME                          TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE     SELECTOR
+service/devops-info-service   NodePort   10.99.66.23   <none>        80:30080/TCP   5m40s   app.kubernetes.io/component=web,app.kubernetes.io/name=devops-info-service

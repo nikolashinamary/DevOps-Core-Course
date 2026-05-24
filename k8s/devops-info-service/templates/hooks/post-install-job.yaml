@@ -1,0 +1,38 @@
+{{- if and .Values.hooks.enabled .Values.hooks.postInstall.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "devops-info-service.fullname" . }}-post-install"
+  labels:
+    {{- include "devops-info-service.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "{{ .Values.hooks.postInstall.weight }}"
+    "helm.sh/hook-delete-policy": "{{ .Values.hooks.deletePolicy }}"
+spec:
+  backoffLimit: {{ .Values.hooks.backoffLimit }}
+  template:
+    metadata:
+      labels:
+        {{- include "devops-info-service.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: post-install-smoke-test
+          image: "{{ .Values.hooks.image.repository }}:{{ .Values.hooks.image.tag }}"
+          imagePullPolicy: {{ .Values.hooks.image.pullPolicy }}
+          command:
+            - python
+            - -u
+            - -c
+            - |
+              import time
+              import urllib.request
+              response = urllib.request.urlopen(
+                  "http://{{ include "devops-info-service.fullname" . }}:{{ .Values.service.port }}/health",
+                  timeout=5,
+              )
+              print(response.read().decode())
+              time.sleep({{ .Values.hooks.postInstall.sleepSeconds }})
+              print("Post-install smoke test passed")
+{{- end }}
