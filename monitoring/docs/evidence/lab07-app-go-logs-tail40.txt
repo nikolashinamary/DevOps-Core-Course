@@ -1,0 +1,23 @@
+app-go-1  | 2026/03/10 16:23:57 Application starting...
+app-go-1  | 2026/03/10 16:23:57 Configuration: HOST=0.0.0.0, PORT=8080
+app-go-1  | 2026/03/10 16:23:57 Server listening on 0.0.0.0:8080
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /
+app-go-1  | 2026/03/10 16:27:42 Request: GET /

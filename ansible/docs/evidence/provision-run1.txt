@@ -1,0 +1,75 @@
+
+PLAY [Provision web servers] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lab05-vm]
+
+TASK [common : Detect stale Docker apt source entries] *************************
+ok: [lab05-vm]
+
+TASK [common : Remove stale Docker apt source entries before apt update] *******
+changed: [lab05-vm] => (item=/etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list)
+changed: [lab05-vm] => (item=/etc/apt/sources.list.d/docker.list)
+
+TASK [common : Update apt cache] ***********************************************
+ok: [lab05-vm]
+
+TASK [common : Install common packages] ****************************************
+ok: [lab05-vm]
+
+TASK [common : Read current timezone] ******************************************
+ok: [lab05-vm]
+
+TASK [common : Set timezone] ***************************************************
+skipping: [lab05-vm]
+
+TASK [common : Ensure pip is installed] ****************************************
+ok: [lab05-vm]
+
+TASK [common : Create .ssh directory for root] *********************************
+ok: [lab05-vm]
+
+TASK [docker : Install prerequisites for Docker] *******************************
+ok: [lab05-vm]
+
+TASK [docker : Ensure apt keyrings directory exists] ***************************
+ok: [lab05-vm]
+
+TASK [docker : Add Docker GPG key] *********************************************
+ok: [lab05-vm]
+
+TASK [docker : Remove old Docker repository entry from /etc/apt/sources.list] ***
+ok: [lab05-vm]
+
+TASK [docker : Find apt source list files] *************************************
+ok: [lab05-vm]
+
+TASK [docker : Remove stale Docker repository entries from sources.list.d] *****
+ok: [lab05-vm] => (item=/etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list)
+ok: [lab05-vm] => (item=/etc/apt/sources.list.d/docker.list)
+
+TASK [docker : Add Docker repository] ******************************************
+changed: [lab05-vm]
+
+TASK [docker : Update apt cache after adding Docker repo] **********************
+changed: [lab05-vm]
+
+TASK [docker : Install Docker packages] ****************************************
+changed: [lab05-vm]
+
+TASK [docker : Ensure Docker service is running] *******************************
+ok: [lab05-vm]
+
+TASK [docker : Add users to docker group] **************************************
+changed: [lab05-vm] => (item=ubuntu)
+ok: [lab05-vm] => (item=ubuntu)
+
+TASK [docker : Install Docker SDK for Python] **********************************
+changed: [lab05-vm]
+
+RUNNING HANDLER [docker : Restart docker] **************************************
+changed: [lab05-vm]
+
+PLAY RECAP *********************************************************************
+lab05-vm                   : ok=21   changed=7    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
