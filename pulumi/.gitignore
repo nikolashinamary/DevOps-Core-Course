@@ -1,0 +1,6 @@
+venv/
+.venv/
+Pulumi.*.yaml
+.pulumi/
+__pycache__/
+

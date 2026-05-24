@@ -1,0 +1,6 @@
+promtail-1  | level=info ts=2026-03-10T16:23:57.366545269Z caller=promtail.go:133 msg="Reloading configuration file" md5sum=5e6f304c370e0ead918d97057c5df804
+promtail-1  | level=info ts=2026-03-10T16:23:57.368591822Z caller=server.go:354 msg="server listening on addresses" http=[::]:9080 grpc=[::]:46419
+promtail-1  | level=info ts=2026-03-10T16:23:57.369133034Z caller=main.go:173 msg="Starting Promtail" version="(version=3.0.0, branch=HEAD, revision=b4f7181c7a)"
+promtail-1  | level=warn ts=2026-03-10T16:23:57.369260785Z caller=promtail.go:263 msg="enable watchConfig"
+promtail-1  | level=info ts=2026-03-10T16:24:02.369339382Z caller=target_group.go:128 msg="added Docker target" containerID=6ad6c415828f7bb3081d726da582411567158a59cc7792e5ae660bf3da33adda
+promtail-1  | level=info ts=2026-03-10T16:24:02.36951155Z caller=target_group.go:128 msg="added Docker target" containerID=536d3e5a6a136a2bafe2df9f2fa0b83c62276468a3d78306a70b68d54bf8c18a

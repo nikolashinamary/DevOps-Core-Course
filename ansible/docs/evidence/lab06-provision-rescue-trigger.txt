@@ -1,0 +1,27 @@
+
+PLAY [Provision web servers] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lab06-vm]
+
+TASK [docker : Install prerequisites for Docker] *******************************
+ok: [lab06-vm]
+
+TASK [docker : Ensure apt keyrings directory exists] ***************************
+ok: [lab06-vm]
+
+TASK [docker : Add Docker GPG key] *********************************************
+fatal: [lab06-vm]: FAILED! => {"changed": false, "dest": "/etc/apt/keyrings/docker.asc", "elapsed": 0, "gid": 0, "group": "root", "mode": "0644", "msg": "Request failed: <urlopen error [Errno -3] Temporary failure in name resolution>", "owner": "root", "size": 3817, "state": "file", "uid": 0, "url": "https://invalid.example.invalid/docker-gpg"}
+
+TASK [docker : Wait before retrying Docker apt repository setup] ***************
+ok: [lab06-vm]
+
+TASK [docker : Retry apt cache update] *****************************************
+changed: [lab06-vm]
+
+TASK [docker : Retry Docker GPG key installation] ******************************
+fatal: [lab06-vm]: FAILED! => {"changed": false, "dest": "/etc/apt/keyrings/docker.asc", "elapsed": 0, "gid": 0, "group": "root", "mode": "0644", "msg": "Request failed: <urlopen error [Errno -3] Temporary failure in name resolution>", "owner": "root", "size": 3817, "state": "file", "uid": 0, "url": "https://invalid.example.invalid/docker-gpg"}
+
+PLAY RECAP *********************************************************************
+lab06-vm                   : ok=5    changed=1    unreachable=0    failed=1    skipped=0    rescued=1    ignored=0   
+

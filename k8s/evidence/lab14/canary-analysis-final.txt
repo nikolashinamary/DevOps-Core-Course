@@ -1,0 +1,8 @@
+NAME                                          STATUS       AGE
+devops-info-service-canary-5859b87786-2-1     Successful   11m
+devops-info-service-canary-5859b87786-2-1.1   Successful   10m
+devops-info-service-canary-5859b87786-2-1.2   Successful   10m
+devops-info-service-canary-585cdf9bdc-6-1     Running      12s
+devops-info-service-canary-5c4995cfc7-5-1     Successful   3m5s
+devops-info-service-canary-5f4576d578-3-1     Successful   5m41s
+devops-info-service-canary-675dd78856-4-1     Failed       5m35s
